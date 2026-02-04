@@ -1,0 +1,80 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+// Основные стили для хэдера
+.header
+  $paddingSide: 4.8rem
+
+  &__wrapper
+    display: flex
+
+  &__logo-inner
+    display: flex
+    align-items: center
+    justify-content: center
+    background-color: variables.$colorLogoBack
+    padding: 2.4rem 4.8rem
+
+  &__inner
+    display: flex
+    flex-direction: column
+    width: 100%
+
+  &__item
+    display: flex
+    align-items: center
+    justify-content: space-between
+    &:nth-child(1)
+      padding: 2rem $paddingSide
+      background-color: rgba(37, 43, 51, 1)
+      color: variables.$mainColor
+    &:nth-child(2)
+      padding: 1.6rem $paddingSide
+
+
+  &__nav-list
+    display: flex
+    align-items: center
+    gap: $paddingSide
+
+  &__list-item.has-children
+    display: flex
+    align-items: center
+    gap: .8rem
+
+  &__text-inner
+    display: flex
+    align-items: center
+    gap: 24px
+
+  &__text
+    max-width: 34.2rem
+    @include mixins.text
+    text-align: right
+
+  &__info-wrapper
+    display: flex
+    gap: $paddingSide
+
+  &__info
+    font-weight: 600
+    font-size: 2.4rem
+
+  &__info-text
+    color: variables.$colorTextSecond
+    font-size: 1.4rem
+
+  &__button-wrapper
+    display: flex
+    align-items: center
+    gap: 2.4rem
+
+  &__button-text
+    text-align: right
+    max-width: 29rem
+    @include mixins.text(variables.$colorTextSecond)
+
+  &__button
+    @include mixins.buttonMain()
+
+

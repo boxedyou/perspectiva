@@ -1,0 +1,41 @@
+// Подключение переменных
+@use 'variables'
+
+// Миксин на кнопки(общие)
+@mixin buttonMain($backGround: variables.$colorButtonBack)
+  display: flex
+  align-items: center
+  justify-content: center
+  border-radius: variables.$borderRadius
+  padding: 1rem 4.8rem
+  background-color: $backGround
+  color: variables.$mainColor
+  font-weight: 600
+  gap: 12px
+
+@mixin buttonSecond($backGround: variables.$colorButtonBack)
+  display: flex
+  align-items: center
+  justify-content: center
+  border-radius: variables.$borderRadius
+  padding: 1rem 2rem
+  border: 1px solid variables.$borderColor
+  color: variables.$colorMainBlack
+  &.active,
+  &:active
+    color: variables.$mainColor
+    background-color: variables.$borderColor
+
+// Миксин на Заголовки(общие)
+@mixin h2Title // Заголовок 2-уровня (h2)
+  font-size: variables.$h2FontSize
+  line-height: variables.$h2FontHeight
+  margin-bottom: 4rem
+  // Если есть соседний элемент после него
+  &:has(+ *)
+    margin-bottom: 2.4rem
+
+// Миксин на текста(общие)
+@mixin text($color: variables.$colorText)
+  font-size: 1.6rem
+  color: $color
