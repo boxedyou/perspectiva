@@ -1,0 +1,44 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+// Основные стили для objects блока
+.objects
+  @include mixins.sectionIndentBottom
+  --objectWidth: calc(33.33% - .6rem)
+  @media (width <= 1300px)
+    --objectWidth: calc(50% - .4rem)
+  @media (width <= 768px)
+    --objectWidth: 100%
+
+  &__title
+    @include mixins.h2Title
+
+  &__filter-inner
+    display: flex
+    gap: .6rem
+    margin-bottom: 4rem
+    @media (width <= 1440px)
+      margin-bottom: 2.4rem
+    @media (width <= 991px)
+      margin-bottom: 1.6rem
+
+  &__filter-button
+    @include mixins.buttonSecond()
+
+  &__wrapper
+    display: flex
+    flex-wrap: wrap
+    align-items: stretch
+    gap: .8rem
+    margin-bottom: 4rem
+    @media (width <= 1440px)
+      margin-bottom: 2.4rem
+    @media (width <= 768px)
+      margin-bottom: 1.6rem
+    & > *
+      width: var(--objectWidth)
+
+  &__link
+    width: var(--objectWidth)
+    @include mixins.buttonMain(variables.$colorButtonBackSecond, variables.$mainColor)

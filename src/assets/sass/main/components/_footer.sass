@@ -1,0 +1,95 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+// Основные стили для подвала
+.footer
+  --indentSide: 4.8rem
+  --listItemIndent: 1.6rem
+  background-color: variables.$colorMainBlack
+  padding: var(--indentSide)
+  color: variables.$mainColor
+  @media (width < 1710px)
+    --indentSide: 2.4rem
+    --listItemIndent: 1.4rem
+  @media (width <= 1440px)
+    --indentSide: 1.6rem
+
+  &__logo
+    margin-bottom: var(--indentSide)
+
+  &__inner
+    display: flex
+    justify-content: space-between
+    align-items: flex-start
+    flex-wrap: wrap
+    padding-bottom: var(--indentSide)
+    margin-bottom: var(--indentSide)
+    border-bottom: 1px solid rgba(37, 43, 51, 1)
+    gap: 1.6rem
+
+
+  &__list, &__sub-list
+    display: flex
+    flex-direction: column
+    gap: var(--listItemIndent)
+    @media (width < 1710px )
+      font-size: 1.4rem
+
+  &__list-item
+    &:nth-child(1)
+      color: variables.$colorText
+
+  &__sub-list
+    margin-top: var(--listItemIndent)
+
+  &__sub-item
+    display: flex
+    align-items: center
+    gap: .8rem
+    &:before
+      content: '-'
+
+  &__info-wrapper
+    display: flex
+    flex-direction: column
+    gap: 2.4rem
+    @media (width <= 1440px)
+      gap: 1.6rem
+
+  &__info-title, &__info-text
+    color: variables.$colorText
+    @media (width < 1710px )
+      font-size: 1.4rem
+
+  &__info-link
+    display: block
+    font-size: 2rem
+    margin-bottom: .4rem
+    @media (width < 1710px )
+      font-size: 1.6rem
+
+  &__mail
+    text-decoration: underline
+
+  &__text, &__mail, &__bottom-link
+    @media (width < 1710px )
+      font-size: 1.4rem
+
+  &__social-inner
+    display: flex
+    gap: .8rem
+
+  &__bottom
+    display: flex
+    align-items: center
+    flex-wrap: wrap
+    gap: 12.6rem
+    @media (width <= 1440px )
+      gap: 1.6rem
+
+  &__bottom-text
+    color: variables.$colorText
+    @media (width < 1710px )
+      font-size: 1.4rem
+

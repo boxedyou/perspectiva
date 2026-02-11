@@ -1,0 +1,57 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+// Основные стили для contact-us секции
+.contact-us
+  @include mixins.sectionIndentBottom
+  --gap: .8rem
+
+  &__title
+    @include mixins.h2Title
+
+  &__wrapper
+    display: flex
+    flex-direction: column
+    gap: var(--gap)
+
+  &__inner
+    display: flex
+    flex-wrap: wrap
+    gap: var(--gap)
+
+  &__item
+    display: flex
+    flex-direction: column
+    gap: 2.4rem
+    padding: 4rem
+    background-color: variables.$mainColor
+    border-radius: variables.$borderRadiusMedium
+    overflow: clip
+    width: calc(33.33% - .6rem)
+    @media (width <= 1440px)
+      padding: 2.8rem
+      gap: 2rem
+    @media (width <= 991px)
+      width: 100%
+      padding: 1.6rem
+      gap: 1.6rem
+
+  &__item-title
+    font-size: 2.4rem
+    @media (width <= 1440px)
+      font-size: 2rem
+    @media (width <= 991px)
+      font-size: 1.6rem
+
+  &__text
+    color: variables.$colorTextSecond
+    font-size: 14px
+
+  &__info
+    font-weight: 600
+    @media (width <= 991px)
+      font-size: 1.4rem
+    &:not(:last-of-type)
+      margin-bottom: .4rem
+

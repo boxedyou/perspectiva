@@ -8,6 +8,7 @@
 
 /* Основные цвета */
 $mainColor: rgba(255, 255, 255, 1)
+$secondColor: rgba(22, 26, 31, 1)
 $colorMainBlack: rgba(22, 26, 31, 1)
 $colorText: rgba(188, 205, 224, 1)
 $colorTextSecond: rgba(88, 104, 122, 1)
@@ -19,18 +20,41 @@ $colorButtonBackSecond: rgba(22, 26, 31, 1)
 
 /* Цвета границ */
 $borderColor: rgba(188, 205, 224, 1)
+$borderColorSecond: rgba(216, 225, 235, 1)
 
 /* ========================================
    Border Radius - Скругления
    ======================================== */
 
 $borderRadius: 6px
+$borderRadiusMedium: 8px
+
 
 /* ========================================
-   Заголовки
+   CSS переменные в SASS
    ======================================== */
-
-$h2FontSize: 4.4rem
-$h2FontHeight: 1.2
-
-
+body
+  /* ========================================
+    Отступы
+    ======================================== */
+  --sectionMargin: 10rem
+  --textMargin: 2.4rem
+  @media (width <= 1440px)
+    --sectionMargin: 8rem
+  @media (width <= 991px)
+    --sectionMargin: 6rem
+  @media (width <= 768px)
+    --sectionMargin: 4.4rem
+  @media (width <= 370px)
+    --sectionMargin: 3.6rem
+  /* ========================================
+   Заголовки второго уровня
+   ======================================== */
+  --h2FontHeight: 1.2
+  --h2FontSize: 4.4rem
+  @media (width <= 1440px)
+    --h2FontSize: 3.6rem
+  @media (width <= 560px)
+    --h2FontSize: 2.4rem
+  @media (width <= 370px)
+    --h2FontSize: 1.8rem

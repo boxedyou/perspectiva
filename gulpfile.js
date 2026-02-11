@@ -43,7 +43,7 @@ const path = {
     },
     src: {
         html: srcPath + "*.html",
-        css: srcPath + "assets/sass/**/*.{sass,scss}", // FIX: рекурсивно
+        css: srcPath + "assets/sass/**/*.{sass,scss}",
         js: srcPath + "assets/js/*.js",
         images: srcPath + "assets/images/**/*.{png,jpg,jpeg,gif,svg}",
         fonts: srcPath + "assets/fonts/**/*.{eot,woff,woff2,ttf,svg}",
@@ -51,7 +51,7 @@ const path = {
     },
     watch: {
         html: srcPath + "**/*.html",
-        css: srcPath + "assets/sass/**/*.{sass,scss}", // FIX: рекурсивно
+        css: srcPath + "assets/sass/**/*.{sass,scss}",
         js: srcPath + "assets/js/**/*.js",
         images: srcPath + "assets/images/**/*.{png,jpg,jpeg,gif,svg}",
         fonts: srcPath + "assets/fonts/**/*.{eot,woff,woff2,ttf,svg}",
@@ -82,7 +82,7 @@ function html() {
 
 /* CSS */
 function css() {
-    return src(path.src.css, { base: srcPath + "assets/sass/" }) // сохраняет структуру
+    return src(path.src.css, { base: srcPath + "assets/sass/" })
         .pipe(plumber({
             errorHandler: function (err) {
                 notify.onError({
@@ -93,7 +93,7 @@ function css() {
             }
         }))
         .pipe(sourcemaps.init())
-        .pipe(sass())
+        .pipe(sass().on('error', sass.logError))
         .pipe(removeComments())
         .pipe(cssnano({
             zIndex: false,

@@ -1,0 +1,147 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+// Основные стили для production блока
+.production
+  @include mixins.sectionIndentBottom
+  --gapCalc: 1.6rem
+  --indentMain: 2.4rem
+  --buttonSize: 2rem
+  @media (width <= 370px)
+    --buttonSize: 1.6rem
+
+  &__title
+    @include mixins.h2Title
+
+  &__subtitle
+    color: variables.$colorTextSecond
+    margin-bottom: var(--indentMain)
+
+  &__wrapper
+    display: flex
+    gap: 5.6rem
+    padding: 6.4rem
+    border-radius: 1.2rem
+    background-color: variables.$mainColor
+    @media (width <= 1440px)
+      padding: calc(var(--indentMain)*2)
+      gap: 3.6rem
+    @media (width <= 1060px)
+      overflow: clip
+      flex-direction: column
+      padding: var(--indentMain) var(--gapCalc)
+      gap: var(--indentMain)
+    @media (width <= 370px)
+      padding: 1.8rem
+      gap: 1.8rem
+
+  &__inner
+    width: 100%
+    &:nth-child(2)
+      position: relative
+      max-width: 48rem
+      overflow: clip
+      @media (width <= 1060px)
+        max-width: 100%
+      & .production__button
+        position: absolute
+        @include mixins.buttonMain(variables.$mainColor, variables.$colorButtonBackSecond)
+        margin-block: 0 var(--buttonSize)
+        margin-inline: var(--buttonSize)
+        width: calc(100% - var(--buttonSize) * 2)
+        bottom: 0
+        @media (width <= 370px)
+          font-size: 1.4rem
+          padding: 1rem
+      & .production__img
+        height: 100%
+        border-radius: variables.$borderRadius
+
+  &__certificates-inner
+    display: flex
+    gap: 1.2rem
+    margin-bottom: 4rem
+    @media (width <= 1060px )
+      margin-bottom: var(--indentMain)
+      gap: .8rem
+      overflow-x: auto
+      width: calc(100% + calc(var(--gapCalc)*2))
+      margin-left: calc(-1 * var(--gapCalc))
+      padding-inline: var(--gapCalc)
+
+  &__certificates
+    min-width: 14rem
+
+  &__info-wrapper
+    --gapIndent: 1.6rem
+    display: flex
+    flex-wrap: wrap
+    gap: var(--gapIndent) calc(var(--gapIndent) * 2)
+    margin-bottom: 4rem
+    @media (width <= 1440px)
+      --gapIndent: 1.2rem
+      margin-bottom: var(--indentMain)
+    @media (width <= 1060px)
+      flex-direction: column
+
+  &__info-inner
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    gap: .8rem
+    width: calc(50% - var(--gapIndent))
+    line-height: 1
+    @media (width <= 1060px)
+      width: 100%
+
+  &__info-number
+    font-size: 5.2rem
+    font-weight: 600
+    @media (width <= 1440px)
+      font-size: 4.2rem
+    @media (width <= 1060px)
+      font-size: 3.6rem
+    @media (width <= 560px)
+      font-size: 3.2rem
+    @media (width <= 370px)
+      font-size: 2.4rem
+
+
+  &__info-text-big
+    font-size: 2.8rem
+    font-weight: 600
+    @media (width <= 1440px)
+      font-size: 2.4rem
+    @media (width <= 1060px)
+      font-size: 2rem
+    @media (width <= 370px)
+      font-size: 1.8rem
+
+  &__info-text-small
+    color: variables.$colorTextSecond
+    @media (width <= 1440px)
+      font-size: 1.4rem
+
+  &__button-wrapper
+    display: flex
+    align-items: flex-start
+    gap: .8rem
+    @media (width <= 560px)
+      flex-direction: column
+
+  &__img
+    @media (width <= 1060px)
+      max-height: 54rem
+      width: 100%
+      align-self: center
+      object-fit: cover
+    @media (width <= 370px)
+      max-height: 38rem
+
+  &__button
+    @include mixins.buttonMain()
+    @media (width <= 560px)
+      width: 100%
+    &:nth-of-type(2)
+      @include mixins.buttonMain(variables.$colorButtonBackSecond, variables.$mainColor)

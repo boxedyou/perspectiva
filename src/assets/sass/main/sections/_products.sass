@@ -1,0 +1,142 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+// Основные стили для products блока
+.products
+  @include mixins.sectionIndentBottom
+
+  &__title
+    @include mixins.h2Title
+
+  &__wrapper
+    display: flex
+    flex-wrap: wrap
+    gap: .8rem
+
+  &__item
+    --item-padding: 2.4rem
+    --item-padding-large: 3.2rem
+
+    width: calc(25% - .6rem)
+    display: flex
+    flex-direction: column
+    padding: var(--item-padding)
+    border: 1px solid variables.$borderColor
+    border-radius: variables.$borderRadiusMedium
+
+    @media (width <= 1440px)
+      --item-padding: 1.6rem
+      --item-padding-large: 2.4rem
+
+    @media (width <= 1100px)
+      width: calc(50% - .4rem)
+
+    @media (width <= 768px)
+      --item-padding-large: 1.6rem
+      width: 100%
+
+    @media (width <= 560px)
+      position: relative
+      padding-right: 8.8rem
+
+    @media (width <= 370px)
+      padding-right: 1.6rem
+
+  // Стили для первых двух элементов
+  &__item:nth-child(-n+2)
+    width: calc(50% - .4rem)
+    padding: var(--item-padding-large)
+
+    @media (width <= 768px)
+      width: 100%
+
+    .products__img
+      overflow: clip
+      border-radius: variables.$borderRadiusMedium
+      margin-bottom: 2.4rem
+      order: 1
+      max-height: 48rem
+
+      @media (width <= 1440px)
+        margin-bottom: 1.6rem
+        max-height: 196px
+        max-width: 100%
+        object-fit: cover
+
+      @media (width <= 560px)
+        position: static
+        transform: translateY(0)
+
+    .products__item-title
+      font-size: 2.8rem
+      margin-bottom: 1.2rem
+      order: 2
+
+      @media (width <= 1440px)
+        font-size: 2rem
+
+      @media (width <= 370px)
+        font-size: 1.6rem
+
+    .products__item-text
+      margin-bottom: 2.4rem
+      order: 3
+
+      @media (width <= 1440px)
+        margin-bottom: 1.6rem
+        font-size: 1.4rem
+
+    .products__item-link
+      order: 4
+
+  // Кнопки для первых двух элементов
+  &__item:nth-child(1) .products__item-link
+    @include mixins.buttonMain()
+
+  &__item:nth-child(2) .products__item-link
+    @include mixins.buttonMain(variables.$colorButtonBackSecond)
+
+  &__item-title
+    font-size: 2rem
+    margin-bottom: .8rem
+
+    @media (width <= 1440px)
+      font-size: 1.6rem
+
+  &__item-text
+    color: variables.$colorTextSecond
+    margin-bottom: 2.4rem
+
+    @media (width <= 1440px)
+      font-size: 1.4rem
+
+    @media (width <= 560px)
+      margin-bottom: 0
+
+    @media (width <= 370px)
+      margin-bottom: 1.6rem
+
+  &__img
+    margin-top: auto
+    order: 3
+    aspect-ratio: 1
+
+    @media (width <= 1440px)
+      max-width: 5.6rem
+      max-height: 5.6rem
+
+    @media (width <= 560px)
+      position: absolute
+      right: 16px
+      top: 50%
+      transform: translateY(-50%)
+
+    @media (width <= 370px)
+      position: static
+      transform: translateY(0)
+
+  &__item-link
+    @media (width <= 560px)
+      & svg
+        display: none

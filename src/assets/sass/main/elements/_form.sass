@@ -1,0 +1,130 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+// Основные стили для form элемента
+.form
+  padding: 4rem
+  background-color: variables.$mainColor
+  border-radius: 1.2rem
+  @media (width <= 1440px)
+    padding: 2.8rem
+  @media (width <= 991px)
+    padding: 1.6rem
+
+  &__title
+    font-size: 3.6rem
+    margin-bottom: 1.2rem
+    @media (width <= 1440px)
+      font-size: 2.8rem
+    @media (width <= 991px)
+      font-size: 2rem
+    @media (width <= 370px)
+      font-size: 1.6rem
+
+  &__subtitle
+    margin-bottom: 3.2rem
+    @media (width <= 1440px)
+      margin-bottom: 2.4rem
+
+  &__inner
+    display: flex
+    gap: 2.4rem
+    margin-bottom: 3.2rem
+    @media (width <= 991px)
+      flex-direction: column
+      gap: 1.6rem
+      margin-bottom: 2.4rem
+
+  &__label
+    display: flex
+    flex-direction: column
+    gap: 1.2rem
+    width: 100%
+
+  &__label-text
+    font-size: 1.4rem
+    color: variables.$colorTextSecond
+
+  &__label-required
+    color: rgba(184, 22, 24, 1)
+
+  &__input
+    padding: 12px
+    background-color: rgba(240, 245, 250, 1)
+    border: 1px solid rgba(188, 205, 224, 1)
+    border-radius: .6rem
+    transition: all .4s
+    &::placeholder
+      @media (width <= 991px)
+        font-size: 1.4rem
+    &:active, &:focus-visible
+      border-color: rgba(240, 245, 250, 1)
+
+  &__button-inner
+    display: flex
+    align-items: center
+    gap: 2.4rem
+    @media (width <= 768px)
+      flex-direction: column
+      align-items: flex-start
+      gap: 1.2rem
+
+  &__button
+    @include mixins.buttonMain()
+    width: 100%
+    max-width: 49.6rem
+    @media (width <= 768px)
+      max-width: 100%
+
+  &__text-checkbox
+    font-size: 1.4rem
+    color: variables.$colorTextSecond
+    @media (width <= 370px)
+      font-size: 1.2rem
+      line-height: 1.1
+
+  &__text-link
+    text-decoration: underline
+    color: variables.$secondColor
+    transition:  all .4s
+
+  &__checkbox-inner
+    position: relative
+    display: flex
+    align-items: center
+    gap: 1.2rem
+    & > .form__checkbox:checked + .form__fake-checkbox:before
+      opacity: 1
+
+  &__checkbox
+    position: absolute
+    width: 1px
+    height: 1px
+    opacity: 0
+    z-index: -1
+    pointer-events: none
+
+  &__fake-checkbox
+    position: relative
+    display: flex
+    width: 2.4rem
+    height: 2.4rem
+    aspect-ratio: 1
+    border: 1px solid rgba(216, 225, 235, 1)
+    border-radius: .4rem
+    @media (width <= 370px)
+      width: 1.8rem
+      height: 1.8rem
+    &:before
+      position: absolute
+      content: ''
+      inset: 0
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 1L3.5 7L1 4.27273' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
+      background-position: center
+      background-size: contain
+      background-repeat: no-repeat
+      margin: .2rem
+      opacity: 0
+      transition: opacity .4s linear
+

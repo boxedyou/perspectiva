@@ -2,40 +2,57 @@
 @use 'variables'
 
 // Миксин на кнопки(общие)
-@mixin buttonMain($backGround: variables.$colorButtonBack)
+@mixin buttonMain($backGround: variables.$colorButtonBack, $color: variables.$mainColor)
   display: flex
   align-items: center
   justify-content: center
   border-radius: variables.$borderRadius
-  padding: 1rem 4.8rem
+  padding: 1.6rem 4.8rem
   background-color: $backGround
-  color: variables.$mainColor
+  color: $color
   font-weight: 600
   gap: 12px
+  @media (width <= 1710px)
+    padding: 1.6rem 3.6rem
+  @media (width < 1440px)
+    padding: 1.6rem
 
-@mixin buttonSecond($backGround: variables.$colorButtonBack)
+@mixin buttonSecond()
   display: flex
   align-items: center
   justify-content: center
   border-radius: variables.$borderRadius
-  padding: 1rem 2rem
-  border: 1px solid variables.$borderColor
-  color: variables.$colorMainBlack
+  padding: 1.6rem 2rem
+  border: 1px solid rgba(88, 104, 122, 1)
+  color: rgba(22, 26, 31, 1)
   &.active,
   &:active
     color: variables.$mainColor
-    background-color: variables.$borderColor
+    background-color: rgba(88, 104, 122, 1)
 
 // Миксин на Заголовки(общие)
 @mixin h2Title // Заголовок 2-уровня (h2)
-  font-size: variables.$h2FontSize
-  line-height: variables.$h2FontHeight
+  font-size: var(--h2FontSize)
+  line-height: var(--h2FontHeight)
   margin-bottom: 4rem
-  // Если есть соседний элемент после него
-  &:has(+ *)
+  @media (width <= 991px)
+    margin-bottom: 3rem
+  @media (width <= 560px)
     margin-bottom: 2.4rem
+  // Если есть соседний элемент после него
+  &:has(+ p)
+    margin-bottom: 2.4rem
+    @media (width <= 560px)
+      margin-bottom: 1.2rem
+
+
 
 // Миксин на текста(общие)
 @mixin text($color: variables.$colorText)
   font-size: 1.6rem
   color: $color
+
+// Миксин на отступы(общие)
+
+@mixin sectionIndentBottom
+  margin-bottom: var(--sectionMargin)

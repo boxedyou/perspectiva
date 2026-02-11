@@ -1,0 +1,58 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+// Основные стили для map блока
+.map-yandex
+  border-radius: 1.6rem
+  overflow: hidden
+  &__item-map-inner, &__map-yandex
+    border-radius: 1.6rem
+    overflow: hidden
+    min-height: 732px
+    @media (max-width: 640px)
+      min-height: 640px
+
+.map
+  @include mixins.sectionIndentBottom
+
+  &__title
+    @include mixins.h2Title
+
+  &__subtitle
+    margin-bottom: 2.4rem
+
+.map-project
+  position: relative
+  width: 100%
+  height: 732px
+  background-image: url("../images/map-projects/map-back.jpg")
+  background-position: center
+  background-size: cover
+  background-repeat: no-repeat
+  border-radius: variables.$borderRadiusMedium
+  overflow: clip
+  @media (width <= 991px)
+    height: 560px
+
+.map-project__loader
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  width: 52px
+  height: 52px
+  border: 6px solid rgba(255,255,255,1)
+  border-top-color: rgba(196, 37, 57, 1)
+  border-radius: 50%
+  animation: spin 1s linear infinite
+  z-index: 10
+
+@keyframes spin
+  to
+    transform: translate(-50%, -50%) rotate(360deg)
+
+.map-project__loader.hidden
+  opacity: 0
+  visibility: hidden
+  transition: opacity 0.4s ease, visibility 0.4s ease

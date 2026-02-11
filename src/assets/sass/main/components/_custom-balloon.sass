@@ -1,0 +1,79 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+.ymaps-2-1-79-zoom
+  position: relative
+  top: -100px
+  @media (width <=768px)
+    transform: rotate(90deg)
+    top: -180px
+    left: 90px
+
+// Основные стили для кастомного баллуна в Яндекс картах
+.custom-balloon
+  display: flex
+  flex-direction: column
+  position: relative
+  min-width: max-content
+  min-height: fit-content
+  background-color: white
+  border: 4px solid rgba(196, 37, 57, 1)
+  border-radius: variables.$borderRadiusMedium
+  padding: 2.4rem
+  @media (width <= 991px)
+    position: relative
+    left: -50vw
+    transform: translateX(calc(50vw))
+  @media (width <=768px)
+    min-width: calc(100vw - 56px)
+
+  &__close
+    position: absolute
+    right: 1.2rem
+    top: 1.2rem
+    cursor: pointer
+
+  &__wrapper
+    display: flex
+    align-items: flex-start
+    gap: 1.2rem
+
+  &__city
+    font-size: 2rem
+    margin-bottom: 1.6rem
+
+  &__link
+    display: flex
+    align-items: center
+    gap: .6rem
+    color: rgba(196, 37, 57, 1)
+    font-size: 1.4rem
+    &:after
+      content: ''
+      width: 3.2rem
+      height: 2rem
+      background-image: url("data:image/svg+xml,%3Csvg width='32' height='20' viewBox='0 0 32 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 6L26 10M26 10L22 14M26 10H6' stroke='%23C42539' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
+      background-repeat: no-repeat
+      background-position: center
+      background-size: contain
+
+  &__img
+    border-radius: 6px
+    width: 80px
+    height: 80px
+    aspect-ratio: 1
+    object-fit: cover
+
+  &__company
+    font-weight: 600
+    margin-bottom: .8rem
+
+  &__description
+    font-size: 1.4rem
+    margin-bottom: .6rem
+
+  &__city-bottom
+    color: variables.$colorTextSecond
+    font-size: 1.4rem
+    margin-bottom: .8rem

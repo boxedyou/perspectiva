@@ -31,3 +31,24 @@ function enqueue_css_files() {
 function enqueue_js_files($defer = true) {
   return enqueue_all_js(ASSETS_PATH, ASSETS_URL, $defer);
 }
+
+/**
+ * Экранирование атрибутов HTML (аналог esc_attr)
+ */
+function esc_attr($text) {
+  return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+}
+
+/**
+ * Экранирование URL (аналог esc_url)
+ */
+function esc_url($url) {
+  return htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+}
+
+/**
+ * Экранирование HTML (аналог esc_html)
+ */
+function esc_html($text) {
+  return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+}
