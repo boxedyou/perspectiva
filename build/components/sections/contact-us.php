@@ -21,7 +21,7 @@ $base_url = '/perspectiva/build/';
             <div class="contact-us__wrapper">
                 <div class="contact-us__inner">
                     <div class="contact-us__item">
-                        <img class="contact-us__icon" src="./assets/images/contact-us/icon-1.svg" alt="Иконка" title="Иконка" width="64" height="64" loading="lazy">
+                        <img class="contact-us__icon" src="<?= get_template_directory_uri() ?>/assets/images/contact-us/icon-1.svg" alt="Иконка" title="Иконка" width="64" height="64" loading="lazy">
                         <h3 class="contact-us__item-title">Отдел продаж</h3>
                         <div class="contact-us__info-inner">
                             <p class="contact-us__text">Режим работы</p>
@@ -38,7 +38,7 @@ $base_url = '/perspectiva/build/';
                         </div>
                     </div>
                     <div class="contact-us__item">
-                        <img class="contact-us__icon" src="./assets/images/contact-us/icon-2.svg" alt="Иконка" title="Иконка" width="64" height="64" loading="lazy">
+                        <img class="contact-us__icon" src="<?= get_template_directory_uri() ?>/assets/images/contact-us/icon-2.svg" alt="Иконка" title="Иконка" width="64" height="64" loading="lazy">
                         <h3 class="contact-us__item-title">Отдел снабжения и логистики</h3>
                         <div class="contact-us__info-inner">
                             <p class="contact-us__text">Телефон</p>
@@ -50,7 +50,7 @@ $base_url = '/perspectiva/build/';
                         </div>
                     </div>
                     <div class="contact-us__item">
-                        <img class="contact-us__icon" src="./assets/images/contact-us/icon-3.svg" alt="Иконка" title="Иконка" width="64" height="64" loading="lazy">
+                        <img class="contact-us__icon" src="<?= get_template_directory_uri() ?>/assets/images/contact-us/icon-3.svg" alt="Иконка" title="Иконка" width="64" height="64" loading="lazy">
                         <h3 class="contact-us__item-title">Отдел маркетинга</h3>
                         <div class="contact-us__info-inner">
                             <p class="contact-us__text">Предложения по рекламе и продвижению товаров отправляйте на почту:</p>

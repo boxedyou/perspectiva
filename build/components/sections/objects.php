@@ -67,10 +67,6 @@ $all_objects = [
 $objects_count = isset($objects_count) ? min($objects_count, count($all_objects)) : count($all_objects);
 $objects_to_show = array_slice($all_objects, 0, $objects_count);
 
-// Убеждаемся, что функции экранирования подключены
-if (!function_exists('esc_attr')) {
-  require_once __DIR__ . '/../../function.php';
-}
 ?>
 
 <section class="objects">
@@ -94,11 +90,10 @@ if (!function_exists('esc_attr')) {
             $object_item_title = $object['object_title'];
             $object_place = $object['place'];
             $object_text = $object['text'];
-
             // Подключаем шаблон объекта
             include __DIR__ . '/../elements/object.php';
           endforeach; ?>
         </div>
-        <a class="objects__link" href="">Смотреть все объекты</a>
+        <a class="objects__link" href="#">Смотреть все объекты</a>
     </div>
 </section>

@@ -1,21 +1,24 @@
 <?php
+/**
+ * Main template file
+ *
+ * @package Perspectiva
+ */
 
-// Подключаем head
-include __DIR__ . '/components/head.php';
-// Подключаем header
-include __DIR__ . '/components/header.php'; ?>
-    <main class="main-page">
-      <?php
-      include __DIR__ . '/components/sections/hero.php';
-      include __DIR__ . '/components/sections/production.php';
-      include __DIR__ . '/components/sections/products.php';
-      include __DIR__ . '/components/sections/map-projects.php';
-      include __DIR__ . '/components/sections/objects.php';
-      include __DIR__ . '/components/sections/contact-us.php';
-      ?>
-    </main>
+get_header();
+?>
 
-<?php // Подключаем footer
-include __DIR__ . '/components/footer.php';
+<main class="main-page">
+    <?php
+    // Подключаем секции главной страницы
+    get_template_part('components/sections/hero');
+    get_template_part('components/sections/production');
+    get_template_part('components/sections/products');
+    get_template_part('components/sections/map-projects');
+    get_template_part('components/sections/objects');
+    get_template_part('components/sections/contact-us');
+    ?>
+</main>
 
-
+<?php
+get_footer();

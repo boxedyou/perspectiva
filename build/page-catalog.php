@@ -1,18 +1,22 @@
 <?php
-// Подключаем head
-include __DIR__ . '/components/head.php';
-// Подключаем header
-include __DIR__ . '/components/header.php'; ?>
-  <main class="main-catalog">
-    <?php
-    include __DIR__ . '/components/elements/breadcrumbs.php';
-    include __DIR__ . '/components/sections/products.php';
-    include __DIR__ . '/components/sections/contact-us.php';
-    include __DIR__ . '/components/sections/seo.php';
-    ?>
-  </main>
+/**
+ * Template for catalog page
+ *
+ * @package Perspectiva
+ */
 
-<?php // Подключаем footer
-include __DIR__ . '/components/footer.php';
+get_header();
+?>
+<main class="main-catalog">
+    <?php
+    get_template_part('components/elements/breadcrumbs');
+    get_template_part('components/sections/products');
+    get_template_part('components/sections/contact-us');
+    get_template_part('components/sections/seo');
+    ?>
+</main>
+
+<?php
+get_footer();
 
 

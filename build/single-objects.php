@@ -1,22 +1,26 @@
 <?php
-// Подключаем head
-include __DIR__ . '/components/head.php';
-// Подключаем header
-include __DIR__ . '/components/header.php'; ?>
-  <main class="main-objects">
-    <?php
-    include __DIR__ . '/components/elements/breadcrumbs.php';
-    include __DIR__ . '/components/sections/single-category-hero.php';
-    include __DIR__ . '/components/sections/description.php';
-    include __DIR__ . '/components/sections/products.php';
-    include __DIR__ . '/components/sections/objects-product.php';
-    include __DIR__ . '/components/sections/similar-product.php';
-    include __DIR__ . '/components/sections/contact-us.php';
-    include __DIR__ . '/components/sections/seo.php';
-    ?>
-  </main>
+/**
+ * Template for single objects
+ *
+ * @package Perspectiva
+ */
 
-<?php // Подключаем footer
-include __DIR__ . '/components/footer.php';
+get_header();
+?>
+<main class="main-objects">
+    <?php
+    get_template_part('components/elements/breadcrumbs');
+    get_template_part('components/sections/single-category-hero');
+    get_template_part('components/sections/description');
+    get_template_part('components/sections/products');
+    get_template_part('components/sections/objects-product');
+    get_template_part('components/sections/similar-product');
+    get_template_part('components/sections/contact-us');
+    get_template_part('components/sections/seo');
+    ?>
+</main>
+
+<?php
+get_footer();
 
 
