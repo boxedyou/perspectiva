@@ -1,0 +1,41 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+@use 'object'
+
+.news-element
+  display: flex
+  flex-direction: column
+  @extend .object
+
+  &__img-inner
+    @extend .object__img-inner
+    margin-bottom: 1.6rem
+    & img
+      width: 100%
+      max-height: 32rem
+
+  &__tags-inner
+    @extend .object__tags-inner
+
+  &__tag
+    @extend .object__tag
+
+  &__title
+    @extend .object__title
+
+  &__date, &__text
+    @extend .object__text
+    margin-bottom: 1.6rem
+
+  &__link
+    display: flex
+    align-items: center
+    gap: .8rem
+    color: rgba(196, 37, 57, 1)
+    font-weight: 600
+    margin-top: auto
+    @media (width <= 991px)
+      font-size: 1.4rem
+      & svg
+        max-width: 18px

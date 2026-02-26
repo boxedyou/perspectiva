@@ -1,0 +1,67 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+
+.seo
+  @include mixins.sectionIndentBottom
+
+  &__wrapper
+    padding: 4rem
+    border-radius: variables.$borderRadiusMedium
+    background-color: variables.$mainColor
+    @media (width < 1560px )
+      padding: 2.4rem
+    @media (width <= 991px )
+      padding: 2.4rem 1.6rem
+
+  & h2
+    font-size: 3.6rem
+    margin-bottom: 1.6rem
+    @media (width < 1560px )
+      font-size: 2rem
+
+  & h3
+    font-size: 2.8rem
+    margin-block: 3.2rem 1.6rem
+    @media (width < 1560px )
+      font-size: 1.8rem
+
+  & ul, ol
+    &:not(:last-child)
+      margin-bottom: 3.2rem
+      @media (width < 1560px )
+        margin-bottom: 2.4rem
+
+  & p
+    @media (width < 1560px )
+      font-size: 1.4rem
+    &:not(:last-child)
+      margin-bottom: 1.6rem
+
+  & ul
+    padding-left: 3.2rem
+    @media (width < 1560px )
+      padding-left: 2.8rem
+    & li
+      position: relative
+      @media (width < 1560px )
+        font-size: 1.4rem
+      &:before
+        position: absolute
+        content: ''
+        width: 8px
+        height: 8px
+        aspect-ratio: 1
+        border-radius: 50%
+        left: -3.2rem
+        background-color: rgba(196, 37, 57, 1)
+        top: 1rem
+        @media (width < 1560px )
+          left: -2.8rem
+          top: .8rem
+      &:not(:last-child)
+        margin-bottom: 1.6rem
+        @media (width < 1560px )
+          margin-bottom: 1.2rem
+

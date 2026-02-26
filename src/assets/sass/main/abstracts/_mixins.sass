@@ -16,6 +16,8 @@
     padding: 1.6rem 3.6rem
   @media (width < 1440px)
     padding: 1.6rem
+  @media (width <= 991px)
+    font-size: 1.4rem
 
 @mixin buttonSecond()
   display: flex
@@ -25,6 +27,9 @@
   padding: 1.6rem 2rem
   border: 1px solid rgba(88, 104, 122, 1)
   color: rgba(22, 26, 31, 1)
+  @media (width <=991px)
+    font-size: 1.4rem
+    padding: .8rem 1.2rem
   &.active,
   &:active
     color: variables.$mainColor

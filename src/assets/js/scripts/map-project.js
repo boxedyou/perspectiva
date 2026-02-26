@@ -175,21 +175,6 @@ function createMapMarkers(points, map) {
     const placemarks = points.map(point => {
         const screenWidth = window.innerWidth;
 
-        // Определяем смещение баллуна в зависимости от ширины экрана
-        let balloonOffsetX = 0;
-        let balloonOffsetY = 0;
-
-        if (screenWidth <= 991) {
-            // Для мобильных - центрируем баллун (смещение влево на половину ширины)
-            // Ширина баллуна примерно 472px, поэтому смещаем на -236px
-            balloonOffsetX = -236;
-            balloonOffsetY = 0;
-        } else {
-            // Для больших экранов - смещение вправо
-            balloonOffsetX = 118; // balloonWidth / 4
-            balloonOffsetY = 0;
-        }
-
         return new ymaps.Placemark(point.coords, {
             city: point.city || point.title,
             title: point.title,
@@ -201,7 +186,6 @@ function createMapMarkers(points, map) {
         }, {
             balloonLayout: CustomBalloonLayout,
             balloonPanelMaxMapArea: 0,
-            balloonOffset: [balloonOffsetX, balloonOffsetY],
             iconLayout: 'default#image',
             iconImageHref: pinUrl,
             iconImageSize: [40, 40],

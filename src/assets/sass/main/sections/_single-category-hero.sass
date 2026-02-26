@@ -1,0 +1,209 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+.single-category-hero
+  --indent: 4.8rem
+  --marginElement: 2.4rem
+  margin-bottom: var(--indent)
+  @media (width <=1560px)
+    --indent: 3.6rem
+    --marginElement: 1.6rem
+  @media (width <= 991px)
+    --indent: 2.4rem
+
+
+  &__title
+    font-size: 5.2rem
+    margin-bottom: var(--indent)
+    @media (width <=1560px)
+      font-size: 4.0rem
+    @media (width <= 991px)
+      font-size: 3.2rem
+    @media (width <= 370px)
+      font-size: 2.4rem
+
+  &__wrapper
+    display: flex
+    gap: 4.8rem
+    background-color: rgba(255, 255, 255, 1)
+    padding: 6.4rem
+    border-radius: 1.2rem
+    @media (width <= 1560px)
+      gap: 2.4rem
+      padding: 2.4rem
+    @media (width <= 991px)
+      flex-direction: column
+      padding: 2.4rem 1.6rem
+
+  &__item
+    width: calc(50% - 2.4rem)
+    @media (width <= 1560px)
+      width: calc(50% - 1.2rem)
+    @media (width <= 991px)
+      width: 100%
+
+  &__slide
+    border-radius: .8rem
+    overflow: clip
+    margin-bottom: 1.2rem
+    & img
+      width: 100%
+
+  &__slide-thumb
+    overflow: clip
+    border-radius: .4rem
+    transition: all .4s
+    & img
+      width: 100%
+    &.swiper-slide-active
+      padding: .4rem
+      border: 1px solid rgba(22, 26, 31, 1)
+
+  &__item-title
+    font-size: 3.2rem
+    margin-bottom: var(--marginElement)
+    @media (width <= 1560px)
+      font-size: 2rem
+
+  &__text
+    display: flex
+    align-items: center
+    font-weight: 600
+    gap: 1rem
+    margin-bottom: 1.2rem
+    @media (width <= 1560px)
+      font-size: 1.4rem
+
+  &__list
+    display: flex
+    align-items: center
+    gap: 1.6rem
+    margin-bottom: var(--marginElement)
+    flex-wrap: wrap
+    @media (width <= 1560px)
+      gap: .8rem
+
+  &__list-item
+    width: 2.4rem
+    height: 2.4rem
+    aspect-ratio: 1
+    border-radius: .4rem
+    cursor: pointer
+    &:nth-child(1)
+      background-color: rgba(224, 69, 87, 1)
+    &:nth-child(2)
+      background-color: rgba(200, 187, 20, 1)
+    &:nth-child(3)
+      background-color: rgba(184, 185, 152, 1)
+    &:nth-child(4)
+      background-color: rgba(81, 105, 141, 1)
+    &:nth-child(5)
+      background-color: rgba(26, 104, 103, 1)
+    &:nth-child(6)
+      background-color: rgba(144, 183, 216, 1)
+    &:nth-child(7)
+      background-color: rgba(195, 212, 224, 1)
+    &:nth-child(8)
+      background-color: rgba(3, 93, 219, 1)
+    &:nth-child(9)
+      background-color: rgba(1, 160, 202, 1)
+    &.active
+      position: relative
+      &:before
+        position: absolute
+        content: ''
+        inset: 0
+        margin: -.4rem
+        border: 1px solid rgba(22, 26, 31, 1)
+        border-radius: .4rem
+
+  &__size-inner
+    display: flex
+    flex-wrap: wrap
+    gap: .8rem
+    margin-bottom: var(--marginElement)
+
+  &__size
+    padding: .8rem 1.2rem
+    font-size: 1.4rem
+    border: 1px solid rgba(188, 205, 224, 1)
+    border-radius: .6rem
+    cursor: pointer
+    &.active
+      background-color: rgba(88, 104, 122, 1)
+      color: rgba(255, 255, 255, 1)
+      border-color: rgba(88, 104, 122, 1)
+
+  &__price-wrapper
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 2.4rem 2.8rem
+    background-color: rgba(243, 247, 251, 1)
+    border-radius: .8rem
+    margin-bottom: var(--marginElement)
+    @media (width <= 1560px)
+      padding: 1.6rem
+    @media (width <= 768px)
+      flex-direction: column
+      align-items: flex-start
+      gap: 1.6rem
+
+  &__price-inner
+    display: flex
+    flex-direction: column
+    gap: 1.2rem
+    @media (width <= 1560px)
+      gap: .8rem
+
+  &__price
+    font-size: 2.8rem
+    font-weight: 600
+    @media (width <= 1560px)
+      font-size: 2rem
+
+  &__price-text
+    color: rgba(88, 104, 122, 1)
+    @media (width <= 1560px)
+      font-size: 1.4rem
+
+  &__button
+    @include mixins.buttonMain()
+    white-space: nowrap
+    @media (width <= 1560px)
+      font-size: 1.4rem
+    @media (width <= 768px)
+      width: 100%
+
+  &__text-second
+    margin-bottom: .8rem
+    @media (width <= 1560px)
+      font-size: 1.4rem
+
+  &__link
+    display: flex
+    align-items: center
+    gap: .8rem
+    color: rgba(196, 37, 57, 1)
+    margin-bottom: var(--marginElement)
+    @media (width <= 1560px)
+      font-size: 1.4rem
+
+  &__info-inner
+    --infoIndent: 1.6rem
+    display: flex
+    flex-wrap: wrap
+    gap: var(--infoIndent)
+
+  &__info
+    display: flex
+    align-items: center
+    gap: var(--infoIndent)
+    width: calc(50% - calc(var(--infoIndent) / 2))
+    @media (width <= 1560px)
+      font-size: 1.4rem
+    @media (width <= 600px)
+      width: 100%
+
+

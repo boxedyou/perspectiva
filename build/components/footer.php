@@ -10,7 +10,7 @@ if (!function_exists('enqueue_js_files')) {
       <div class="footer__wrapper">
           <div class="footer__inner">
               <ul class="footer__list">
-                  <li class="footer__list-item"><a class="footer__list-item-link" href="#">Продукция</a></li>
+                  <li class="footer__list-item"><a class="footer__list-item-link" href="<?= isset($links['catalog-category']) ? $links['catalog-category'] : '/perspectiva/build/page-catalog-category.php' ?>">Продукция</a></li>
                   <li class="footer__list-item has-children"><a class="footer__list-item-link" href="#">Вентфасады</a>
                     <ul class="footer__sub-list">
                         <li class="footer__sub-item">
@@ -42,7 +42,7 @@ if (!function_exists('enqueue_js_files')) {
                   <li class="footer__list-item"><a class="footer__list-item-link" href="#">О компании</a></li>
                   <li class="footer__list-item"><a class="footer__list-item-link" href="#">Производство</a></li>
                   <li class="footer__list-item"><a class="footer__list-item-link" href="#">Сертификаты</a></li>
-                  <li class="footer__list-item"><a class="footer__list-item-link" href="#">Новости и статьи</a></li>
+                  <li class="footer__list-item"><a class="footer__list-item-link" href="<?= isset($links['page-news']) ? $links['page-news'] : '/perspectiva/build/page-news.php' ?>">Новости и статьи</a></li>
                   <li class="footer__list-item"><a class="footer__list-item-link" href="#">Контакты</a></li>
                   <li class="footer__list-item"><a class="footer__list-item-link" href="#">Политика конфиденциальности</a></li>
               </ul>

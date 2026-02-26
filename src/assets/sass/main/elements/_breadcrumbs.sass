@@ -1,0 +1,26 @@
+// Подключаем миксины и переменные
+@use '../abstracts/variables'
+
+.breadcrumbs
+  padding-block: 48px 24px
+  padding-left: max(16px, calc(100% - 1600px) / 2)
+
+
+  &__list
+    display: flex
+    overflow: auto
+    width: calc(100% + 16px)
+    margin-left: -16px
+    padding-inline: 16px
+
+
+  &__item
+    font-size: 14px
+    white-space: nowrap
+
+    &:has(.breadcrumbs__link)
+      color: variables.$colorTextSecond
+
+  &__separator
+    margin-inline: 12px
+    color: variables.$colorText

@@ -10,7 +10,7 @@
                 </a>
                 <nav class="header__nav">
                     <ul class="header__nav-list">
-                        <li class="header__list-item has-children">Каталог
+                        <li class="header__list-item has-children"><a href="<?= isset($links['catalog']) ? $links['catalog'] : '/perspectiva/build/page-catalog.php' ?>">Каталог</a>
                             <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M0.5 0.5L5.5 5.5L10.5 0.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
@@ -27,7 +27,9 @@
                                 <li class="header__sub-list-item"></li>
                             </ul>
                         </li>
-                        <li class="header__list-item">Объекты с нашей продукцией</li>
+                        <li class="header__list-item">
+                            <a href="<?= isset($links['page-category']) ? $links['page-category'] : '/perspectiva/build/page-category.php' ?>">Объекты с нашей продукцией</a>
+                        </li>
                         <li class="header__list-item">Отзывы</li>
                         <li class="header__list-item">Контакты</li>
                     </ul>

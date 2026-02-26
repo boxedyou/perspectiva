@@ -1,0 +1,35 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+.objects-product
+  @include mixins.sectionIndentBottom
+
+  &__title
+    @include mixins.h2Title
+    margin-bottom: 0
+
+  &__swiper
+    @media (width <= 991px)
+      width: calc(100% + 36px)
+      margin-left: -16px
+
+  &__slide
+    display: flex
+    & .category-item
+      width: 100%
+      max-width: 100%
+    & .object
+      width: 100%
+
+  &__title-inner
+    display: flex
+    justify-content: space-between
+    margin-bottom: 4.6rem
+    @media (width <= 991px)
+      margin-bottom: 2.4rem
+
+  &__button-inner
+    display: flex
+    align-items: center
+    gap: .8rem

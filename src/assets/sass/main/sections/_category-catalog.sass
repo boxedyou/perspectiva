@@ -1,0 +1,40 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+.category-catalog
+  @include mixins.sectionIndentBottom
+
+  &__filter-inner
+    display: flex
+    gap: .6rem
+    margin-bottom: 4.8rem
+    overflow-x: auto
+    @media (width < 1440px)
+      margin-bottom: 2.4rem
+
+  &__filter
+    @include mixins.buttonSecond
+
+  &__wrapper
+    display: flex
+    gap: .8rem
+    flex-wrap: wrap
+
+    & > *
+      width: calc(25% - .6rem)
+      @media (width < 1440px)
+        width: calc(33.33% - .6rem)
+      @media (width <= 991px)
+        width: calc(50% - .4rem)
+      @media (width <= 660px)
+        width: 100%
+
+  &__button
+    @include mixins.buttonMain(rgba(255, 255, 255, 1), Показать ещё)
+    width: calc(25% - .6rem)
+    margin-top: 4.8rem
+    @media (width <= 991px)
+      margin-top: 2.4rem
+      width: 100%
+      opacity: 1
