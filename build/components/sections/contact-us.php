@@ -1,12 +1,4 @@
-<?php
-// Определяем текущую страницу
-$current_script = basename($_SERVER['PHP_SELF']);
-$single_news = ($current_script === 'single-news.php');
-
-// Определяем базовый URL для ссылок
-$base_url = '/perspectiva/build/';
-?>
-<?php if ($single_news) : ?>
+<?php if (is_singular('news')) : ?>
     <section class="contact-us">
         <div class="container">
             <div class="contact-us__wrapper">

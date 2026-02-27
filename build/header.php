@@ -32,29 +32,15 @@ $logo_mobile_url = get_assets_url('images/logo/logo-mobile.svg');
                     <img class="header__logo-mobile" src="<?php echo esc_url($logo_mobile_url); ?>" alt="<?php bloginfo('name'); ?>" width="172" height="40" loading="lazy">
                 </a>
                 <nav class="header__nav">
-                    <?php
-                    if (has_nav_menu('primary')) {
-                        wp_nav_menu(array(
-                            'theme_location' => 'primary',
-                            'container' => false,
-                            'menu_class' => 'header__nav-list',
-                            'fallback_cb' => false,
-                            'walker' => new Perspectiva_Walker_Nav_Menu(),
-                        ));
-                    } else {
-                        // Fallback меню, если меню не настроено
-                        ?>
                         <ul class="header__nav-list">
-                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/catalog')); ?>">Каталог</a></li>
-                            <li class="header__list-item">Прайс-лист</li>
-                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/about')); ?>">О компании</a></li>
-                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/objects')); ?>">Объекты с нашей продукцией</a></li>
-                            <li class="header__list-item">Отзывы</li>
-                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/contact')); ?>">Контакты</a></li>
+                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/catalog/')); ?>">Каталог</a></li>
+                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/price-list/')); ?>">Прайс-лист</a></li>
+<!--                            <li class="header__list-item"><a href="--><?php //echo esc_url(home_url('/about')); ?><!--">О компании</a></li>-->
+                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/category/')); ?>">Объекты с нашей продукцией</a></li>
+<!--                            <li class="header__list-item">Отзывы</li>-->
+<!--                            <li class="header__list-item"><a href="--><?php //echo esc_url(home_url('/contact')); ?><!--">Контакты</a></li>-->
                         </ul>
-                        <?php
-                    }
-                    ?>
+
                 </nav>
                 <div class="header__text-inner">
                     <p class="header__text">Производство и продажа фиброцементных панелей и фасадных систем</p>

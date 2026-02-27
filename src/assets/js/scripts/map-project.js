@@ -4,6 +4,10 @@ if (typeof window.mapLoaded === 'undefined') {
 
 const loaderYandexProject = document.querySelector(".map-project__loader");
 
+// Базовые URL, которые пришли из WP через wp_localize_script
+const siteUrl = (window.ajaxurl_object && window.ajaxurl_object.site_url) || '/';
+const assetsUrl = (window.ajaxurl_object && window.ajaxurl_object.assets_url) || '';
+
 // Тестовые данные проектов
 const projectsData = [
     {
@@ -12,8 +16,8 @@ const projectsData = [
         title: 'Проект 1',
         company_name: 'Компания 1',
         description: 'Описание проекта 1',
-        link: '/project/1',
-        img: '/perspectiva/build/assets/images/object/1.jpg'
+        link: siteUrl + 'project/1',
+        img: assetsUrl + '/images/object/1.jpg'
     },
     {
         coords: [59.9343, 30.3351], // Санкт-Петербург
@@ -21,8 +25,8 @@ const projectsData = [
         title: 'Проект 2',
         company_name: 'Компания 2',
         description: 'Описание проекта 2',
-        link: '/project/2',
-        img: '/perspectiva/build/assets/images/object/2.jpg'
+        link: siteUrl + 'project/2',
+        img: assetsUrl + '/images/object/2.jpg'
     },
     {
         coords: [56.8431, 60.6454], // Екатеринбург
@@ -30,8 +34,8 @@ const projectsData = [
         title: 'Проект 3',
         company_name: 'Компания 3',
         description: 'Описание проекта 3',
-        link: '/project/3',
-        img: '/perspectiva/build/assets/images/object/3.jpg'
+        link: siteUrl + 'project/3',
+        img: assetsUrl + '/images/object/3.jpg'
     },
     {
         coords: [55.0084, 82.9357], // Новосибирск
@@ -39,8 +43,8 @@ const projectsData = [
         title: 'Проект 4',
         company_name: 'Компания 4',
         description: 'Описание проекта 4',
-        link: '/project/4',
-        img: '/perspectiva/build/assets/images/object/4.jpg'
+        link: siteUrl + 'project/4',
+        img: assetsUrl + '/images/object/4.jpg'
     },
     {
         coords: [55.0080, 82.9350], // Новосибирск
@@ -48,8 +52,8 @@ const projectsData = [
         title: 'Проект 4',
         company_name: 'Компания 4',
         description: 'Описание проекта 4',
-        link: '/project/4',
-        img: '/perspectiva/build/assets/images/object/4.jpg'
+        link: siteUrl + 'project/4',
+        img: assetsUrl + '/images/object/4.jpg'
     },
     {
         coords: [53.2001, 50.15], // Самара
@@ -57,8 +61,8 @@ const projectsData = [
         title: 'Проект 5',
         company_name: 'Компания 5',
         description: 'Описание проекта 5',
-        link: '/project/5',
-        img: '/perspectiva/build/assets/images/object/5.jpg'
+        link: siteUrl + 'project/5',
+        img: assetsUrl + '/images/object/5.jpg'
     },
     {
         coords: [56.3269, 44.0075], // Нижний Новгород
@@ -66,8 +70,8 @@ const projectsData = [
         title: 'Проект 6',
         company_name: 'Компания 6',
         description: 'Описание проекта 6',
-        link: '/project/6',
-        img: '/perspectiva/build/assets/images/object/6.jpg'
+        link: siteUrl + 'project/6',
+        img: assetsUrl + '/images/object/6.jpg'
     }
 ];
 
@@ -168,9 +172,8 @@ function createMapMarkers(points, map) {
         )
     });
 
-    // Определяем базовый путь автоматически
-    const basePath = window.location.pathname.split('/build/')[0] + '/build';
-    const pinUrl = basePath + '/assets/images/map-projects/pin.svg';
+    // URL иконки пина относительно assets (из WP)
+    const pinUrl = assetsUrl + '/images/map-projects/pin.svg';
 
     const placemarks = points.map(point => {
         const screenWidth = window.innerWidth;
@@ -250,4 +253,3 @@ const mapElement = document.getElementById("map-project");
 if (mapElement && !targetYandexProject) {
     loadYandexMap();
 }
-

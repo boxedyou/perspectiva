@@ -1,59 +1,97 @@
 <?php
-/**
- * Подключение CSS и JS файлов с временными метками для cache busting
- */
+add_action( 'wp_enqueue_scripts', 'foundationpress_scripts' );
 
-/**
- * Получить версию файла на основе времени модификации
- */
-function get_file_version($file_path) {
-  if (file_exists($file_path)) {
-    return filemtime($file_path);
+function foundationpress_scripts() {
+  // Базовый handle от названия сайта: напр. "perspectiva"
+  $handle_base = sanitize_title( get_bloginfo( 'name' ) );
+
+  $main_style_handle   = $handle_base . '-main';
+  $theme_style_handle  = $handle_base . '-theme';
+  $theme_script_handle = $handle_base . '-scripts';
+
+  // Пути к файлам
+  $style_src  = get_template_directory() . '/assets/css/main.min.css';
+  $script_src = get_template_directory() . '/assets/js/index.min.js';
+
+  // Временные метки для кэша
+  $style_version  = file_exists( $style_src ) ? filemtime( $style_src ) : false;
+  $script_version = file_exists( $script_src ) ? filemtime( $script_src ) : false;
+
+  // =============== Стили ===============
+
+  // Основной style.css
+  wp_enqueue_style(
+    $main_style_handle,
+    get_template_directory_uri() . '/style.css',
+    [],
+    filemtime( get_template_directory() . '/style.css' ),
+    'all'
+  );
+
+  // Тема (assets/css/main.min.css), зависит от основного стиля
+  wp_enqueue_style(
+    $theme_style_handle,
+    get_template_directory_uri() . '/assets/css/main.min.css',
+    [ $main_style_handle ],
+    $style_version,
+    'all'
+  );
+
+  // =============== Скрипты ===============
+
+  // 1. Убираем стандартную WP jQuery и migrate
+  wp_deregister_script( 'jquery' );
+  wp_deregister_script( 'jquery-migrate' );
+
+  // 2. Подключаем jQuery с CDN
+  wp_register_script(
+    'jquery',
+    'https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js',
+    [],
+    '3.7.1',
+    true
+  );
+  wp_enqueue_script( 'jquery' );
+
+  // 3. Подключаем jQuery Migrate с CDN
+  wp_register_script(
+    'jquery-migrate',
+    'https://code.jquery.com/jquery-migrate-3.4.1.min.js',
+    [ 'jquery' ],
+    '3.4.1',
+    true
+  );
+  wp_enqueue_script( 'jquery-migrate' );
+
+  // 4. Подключаем твой основной скрипт, handle от названия сайта
+  wp_enqueue_script(
+    $theme_script_handle,
+    get_template_directory_uri() . '/assets/js/index.min.js',
+    [ 'jquery', 'jquery-migrate' ],
+    $script_version,
+    true
+  );
+
+  // === Передача базовых URL в JS ===
+  wp_localize_script(
+    $theme_script_handle,
+    'ajaxurl_object',
+    [
+      'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+      'site_url'   => home_url( '/' ),       // базовый URL сайта
+      'assets_url' => get_assets_url(),      // базовый URL /assets (из inc/get_url.php)
+    ]
+  );
+
+  // Для одиночных постов
+  if ( is_single() ) {
+    wp_add_inline_script(
+      $theme_script_handle,
+      'const viewCounterAjax = ' . json_encode( [
+        'ajax_url' => admin_url( 'admin-ajax.php' ),
+        'post_id'  => get_the_ID(),
+      ] ) . ';',
+      'before'
+    );
   }
-  return time();
-}
-
-/**
- * Подключить все CSS файлы из папки
- */
-function enqueue_all_css($assets_path, $assets_url) {
-  $css_dir = $assets_path . '/css/';
-  $output = '';
-
-  if (is_dir($css_dir)) {
-    $files = glob($css_dir . '*.css');
-    foreach ($files as $file) {
-      $filename = basename($file);
-      $file_url = $assets_url . '/css/' . $filename;
-      $version = get_file_version($file);
-      $output .= '<link rel="stylesheet" href="' . $file_url . '?v=' . $version . '">' . "\n    ";
-    }
-  }
-
-  return $output;
-}
-
-/**
- * Подключить все JS файлы из папки
- */
-function enqueue_all_js($assets_path, $assets_url, $defer = false) {
-  $js_dir = $assets_path . '/js/';
-  $output = '';
-
-  if (is_dir($js_dir)) {
-    $files = glob($js_dir . '*.js');
-    foreach ($files as $file) {
-      $filename = basename($file);
-      // Пропускаем .map файлы
-      if (strpos($filename, '.map') !== false) {
-        continue;
-      }
-      $file_url = $assets_url . '/js/' . $filename;
-      $version = get_file_version($file);
-      $defer_attr = $defer ? ' defer' : '';
-      $output .= '<script src="' . $file_url . '?v=' . $version . '"' . $defer_attr . '></script>' . "\n    ";
-    }
-  }
-
-  return $output;
 }

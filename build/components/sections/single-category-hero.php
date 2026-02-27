@@ -6,68 +6,68 @@
                 <div class="single-category-hero__swiper swiper" data-single-category-hero-swiper>
                     <div class="single-category-hero__swiper-wrapper swiper-wrapper">
                         <div class="single-category-hero__slide swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="720" height="540" loading="lazy">
                         </div>
                     </div>
                 </div>
                 <div class="single-category-hero__swiper-thumb swiper" data-single-category-hero-swiper-thumb>
                     <div class="single-category-hero__swiper-wrapper-thumb swiper-wrapper">
                         <div class="single-category-hero__slide-thumb swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide-thumb swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide-thumb swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide-thumb swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide-thumb swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide-thumb swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide-thumb swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide-thumb swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide-thumb swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
                         </div>
                         <div class="single-category-hero__slide-thumb swiper-slide">
-                            <img src="./assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
+                            <img src="<?= get_template_directory_uri() ?>/assets/images/single-category-hero/1.jpg" alt="Фото" title="Фото" width="100" height="76" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -118,19 +118,19 @@
                 </a>
                 <div class="single-category-hero__info-inner">
                     <div class="single-category-hero__info">
-                        <img class="single-category-hero__info-img" src="./assets/images/info/1.svg" alt="Фото" title="Фото" width="24" height="24" loading="lazy">
+                        <img class="single-category-hero__info-img" src="<?= get_template_directory_uri() ?>/assets/images/info/1.svg" alt="Фото" title="Фото" width="24" height="24" loading="lazy">
                         <p class="single-category-hero__info-text">Гарантия <b>10 лет</b> на защитно-декоративные покрытия изделий</p>
                     </div>
                     <div class="single-category-hero__info">
-                        <img class="single-category-hero__info-img" src="./assets/images/info/2.svg" alt="Фото" title="Фото" width="24" height="24" loading="lazy">
+                        <img class="single-category-hero__info-img" src="<?= get_template_directory_uri() ?>/assets/images/info/2.svg" alt="Фото" title="Фото" width="24" height="24" loading="lazy">
                         <p class="single-category-hero__info-text">Осуществляем <b>доставку</b> по всей России</p>
                     </div>
                     <div class="single-category-hero__info">
-                        <img class="single-category-hero__info-img" src="./assets/images/info/3.svg" alt="Фото" title="Фото" width="24" height="24" loading="lazy">
+                        <img class="single-category-hero__info-img" src="<?= get_template_directory_uri() ?>/assets/images/info/3.svg" alt="Фото" title="Фото" width="24" height="24" loading="lazy">
                         <p class="single-category-hero__info-text"><b>В основе</b> панелей использован лист фиброцемента</p>
                     </div>
                     <div class="single-category-hero__info">
-                        <img class="single-category-hero__info-img" src="./assets/images/info/4.svg" alt="Фото" title="Фото" width="24" height="24" loading="lazy">
+                        <img class="single-category-hero__info-img" src="<?= get_template_directory_uri() ?>/assets/images/info/4.svg" alt="Фото" title="Фото" width="24" height="24" loading="lazy">
                         <p class="single-category-hero__info-text">Плиты «ФАСАД-КОЛОР» напрямую от <b>производителя</b></p>
                     </div>
                 </div>

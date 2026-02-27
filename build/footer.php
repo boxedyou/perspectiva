@@ -15,40 +15,40 @@
             <div class="footer__inner">
                 <ul class="footer__list">
                     <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/catalog')); ?>">Продукция</a></li>
-                    <li class="footer__list-item has-children"><a class="footer__list-item-link" href="#">Вентфасады</a>
-                        <ul class="footer__sub-list">
-                            <li class="footer__sub-item">
-                                <a class="footer__sub-item-link" href="#">Фиброцементные панели «ФАСАД-КОЛОР»</a>
-                            </li>
-                            <li class="footer__sub-item">
-                                <a class="footer__sub-item-link" href="#">Хризотилцементные плиты «ФАСАД-КОЛОР»</a>
-                            </li>
-                            <li class="footer__sub-item">
-                                <a class="footer__sub-item-link" href="#">Фиброцементные панели «ФАСАД-КОЛОР»</a>
-                            </li>
-                            <li class="footer__sub-item">
-                                <a class="footer__sub-item-link" href="#">Фиброцементные панели «ФАСАД-КОЛОР»</a>
-                            </li>
-                            <li class="footer__sub-item">
-                                <a class="footer__sub-item-link" href="#">Фиброцементные панели «ФАСАД-КОЛОР»</a>
-                            </li>
-                            <li class="footer__sub-item">
-                                <a class="footer__sub-item-link" href="#">Фиброцементные панели «ФАСАД-КОЛОР»</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Фибросайдинг</a></li>
-                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Прайс-листы</a></li>
+<!--                    <li class="footer__list-item has-children"><a class="footer__list-item-link" href="#">Вентфасады</a>-->
+<!--                        <ul class="footer__sub-list">-->
+<!--                            <li class="footer__sub-item">-->
+<!--                                <a class="footer__sub-item-link" href="#">Фиброцементные панели «ФАСАД-КОЛОР»</a>-->
+<!--                            </li>-->
+<!--                            <li class="footer__sub-item">-->
+<!--                                <a class="footer__sub-item-link" href="#">Хризотилцементные плиты «ФАСАД-КОЛОР»</a>-->
+<!--                            </li>-->
+<!--                            <li class="footer__sub-item">-->
+<!--                                <a class="footer__sub-item-link" href="#">Фиброцементные панели «ФАСАД-КОЛОР»</a>-->
+<!--                            </li>-->
+<!--                            <li class="footer__sub-item">-->
+<!--                                <a class="footer__sub-item-link" href="#">Фиброцементные панели «ФАСАД-КОЛОР»</a>-->
+<!--                            </li>-->
+<!--                            <li class="footer__sub-item">-->
+<!--                                <a class="footer__sub-item-link" href="#">Фиброцементные панели «ФАСАД-КОЛОР»</a>-->
+<!--                            </li>-->
+<!--                            <li class="footer__sub-item">-->
+<!--                                <a class="footer__sub-item-link" href="#">Фиброцементные панели «ФАСАД-КОЛОР»</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Фибросайдинг</a></li>-->
+<!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Прайс-листы</a></li>-->
                     <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/objects')); ?>">Объекты с нашей продукцией</a></li>
                 </ul>
                 <ul class="footer__list">
                     <li class="footer__list-item"><a class="footer__list-item-link" href="#">Информация</a></li>
-                    <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/about')); ?>">О компании</a></li>
-                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Производство</a></li>
-                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Сертификаты</a></li>
-                    <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/news')); ?>">Новости и статьи</a></li>
-                    <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/contact')); ?>">Контакты</a></li>
-                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Политика конфиденциальности</a></li>
+<!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="--><?php //echo esc_url(home_url('/about')); ?><!--">О компании</a></li>-->
+                    <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/production/')); ?>">Производство</a></li>
+<!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Сертификаты</a></li>-->
+                    <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/news/')); ?>">Новости и статьи</a></li>
+<!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="--><?php //echo esc_url(home_url('/contact')); ?><!--">Контакты</a></li>-->
+<!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Политика конфиденциальности</a></li>-->
                 </ul>
                 <div class="footer__info-wrapper">
                     <p class="footer__info-title">Контакты</p>

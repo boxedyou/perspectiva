@@ -122,11 +122,6 @@ $all_news = [
     'link' => '#'
   ]
 ];
-
-// Убеждаемся, что функции экранирования подключены
-if (!function_exists('esc_attr')) {
-  require_once __DIR__ . '/../../function.php';
-}
 ?>
 
 <section class="materials">

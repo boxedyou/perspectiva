@@ -1,88 +1,161 @@
 <?php
 /**
- * Breadcrumbs component
+ * Breadcrumbs component for WordPress
  * Хлебные крошки для навигации
  */
 
-// Убеждаемся, что функции подключены
-if (!function_exists('esc_url')) {
-  require_once __DIR__ . '/../../function.php';
+if (!defined('ABSPATH')) {
+  exit;
 }
 
-// Определяем базовый URL
-$base_url = '/perspectiva/build/';
-
-// Определяем текущую страницу
-$current_script = basename($_SERVER['PHP_SELF']);
-
-// Массив страниц с их названиями
-$pages = [
-  'index.php' => [
-    'title' => 'Главная',
-    'url' => $base_url . 'index.php'
-  ],
-  'page-catalog.php' => [
-    'title' => 'Каталог',
-    'url' => $base_url . 'page-catalog.php'
-  ],
-  'page-price.php' => [
-    'title' => 'Прайс-лист',
-    'url' => $base_url . 'page-price.php'
-  ],
-  'page-about.php' => [
-    'title' => 'О компании',
-    'url' => $base_url . 'page-about.php'
-  ],
-  'single-objects.php' => [
-    'title' => 'Объекты',
-    'url' => $base_url . 'single-objects.php'
-  ],
-  'page-reviews.php' => [
-    'title' => 'Отзывы',
-    'url' => $base_url . 'page-reviews.php'
-  ],
-  'page-contacts.php' => [
-    'title' => 'Контакты',
-    'url' => $base_url . 'page-contacts.php'
-  ],
-  'page-ventfacades.php' => [
-    'title' => 'Вентфасады',
-    'url' => $base_url . 'page-ventfacades.php'
-  ],
-  'page-fibrosiding.php' => [
-    'title' => 'Фибросайдинг',
-    'url' => $base_url . 'page-fibrosiding.php'
-  ]
-];
-
-// Строим цепочку breadcrumbs
 $breadcrumbs = [];
 
-// Всегда добавляем главную страницу
+// Главная
 $breadcrumbs[] = [
   'title' => 'Главная',
-  'url' => $base_url . 'index.php',
-  'active' => ($current_script === 'index.php')
+  'url'   => home_url('/'),
+  'active' => false
 ];
 
-// Добавляем текущую страницу, если это не главная
-if ($current_script !== 'index.php' && isset($pages[$current_script])) {
+if (is_front_page()) {
+  $breadcrumbs[0]['active'] = true;
+} elseif (is_home()) {
+  // Страница блога
   $breadcrumbs[] = [
-    'title' => $pages[$current_script]['title'],
-    'url' => $pages[$current_script]['url'],
+    'title'  => get_the_title(get_option('page_for_posts')),
+    'url'    => get_permalink(get_option('page_for_posts')),
     'active' => true
   ];
-}
+} elseif (is_singular()) {
+  $post = get_queried_object();
 
-// Если страница не найдена в массиве, используем имя файла
-if ($current_script !== 'index.php' && !isset($pages[$current_script])) {
-  $page_name = str_replace(['page-', '.php'], '', $current_script);
-  $page_name = ucfirst($page_name);
+  // Для иерархических типов (страницы, кастомные) — родительская цепочка
+  if (is_post_type_hierarchical($post->post_type) && $post->post_parent) {
+    $ancestors = array_reverse(get_post_ancestors($post->ID));
+    foreach ($ancestors as $ancestor_id) {
+      $breadcrumbs[] = [
+        'title'  => get_the_title($ancestor_id),
+        'url'    => get_permalink($ancestor_id),
+        'active' => false
+      ];
+    }
+  }
+
+  // Для записей — архив типа (каталог, новости и т.д.)
+  if (is_single() && !is_page()) {
+    $post_type = get_post_type();
+    $post_type_obj = get_post_type_object($post_type);
+    if ($post_type_obj && $post_type_obj->has_archive) {
+      $breadcrumbs[] = [
+        'title'  => $post_type_obj->labels->name,
+        'url'    => get_post_type_archive_link($post_type),
+        'active' => false
+      ];
+    }
+    // Таксономии (категории, теги)
+    $taxonomies = get_object_taxonomies($post_type);
+    foreach ($taxonomies as $taxonomy) {
+      $terms = get_the_terms($post->ID, $taxonomy);
+      if ($terms && !is_wp_error($terms)) {
+        $term = array_shift($terms);
+        // Родительские категории
+        if ($term->parent) {
+          $ancestors = get_ancestors($term->term_id, $taxonomy);
+          $ancestors = array_reverse($ancestors);
+          foreach ($ancestors as $ancestor_id) {
+            $ancestor = get_term($ancestor_id, $taxonomy);
+            if ($ancestor && !is_wp_error($ancestor)) {
+              $breadcrumbs[] = [
+                'title'  => $ancestor->name,
+                'url'    => get_term_link($ancestor),
+                'active' => false
+              ];
+            }
+          }
+        }
+        $breadcrumbs[] = [
+          'title'  => $term->name,
+          'url'    => get_term_link($term),
+          'active' => false
+        ];
+        break; // Берём только одну таксономию
+      }
+    }
+  }
+
   $breadcrumbs[] = [
-    'title' => $page_name,
-    'url' => $base_url . $current_script,
+    'title'  => get_the_title(),
+    'url'    => get_permalink(),
     'active' => true
   ];
+} elseif (is_post_type_archive()) {
+  $post_type = get_queried_object();
+  $breadcrumbs[] = [
+    'title'  => $post_type->labels->name,
+    'url'    => get_post_type_archive_link($post_type->name),
+    'active' => true
+  ];
+} elseif (is_tax() || is_category() || is_tag()) {
+  $term = get_queried_object();
+
+  if ($term->parent) {
+    $ancestors = get_ancestors($term->term_id, $term->taxonomy);
+    $ancestors = array_reverse($ancestors);
+    foreach ($ancestors as $ancestor_id) {
+      $ancestor = get_term($ancestor_id, $term->taxonomy);
+      if ($ancestor && !is_wp_error($ancestor)) {
+        $breadcrumbs[] = [
+          'title'  => $ancestor->name,
+          'url'    => get_term_link($ancestor),
+          'active' => false
+        ];
+      }
+    }
+  }
+
+  $breadcrumbs[] = [
+    'title'  => $term->name,
+    'url'    => get_term_link($term),
+    'active' => true
+  ];
+} elseif (is_search()) {
+  $breadcrumbs[] = [
+    'title'  => 'Поиск: ' . get_search_query(),
+    'url'    => '',
+    'active' => true
+  ];
+} elseif (is_404()) {
+  $breadcrumbs[] = [
+    'title'  => 'Страница не найдена',
+    'url'    => '',
+    'active' => true
+  ];
+} elseif (is_author()) {
+  $breadcrumbs[] = [
+    'title'  => 'Автор: ' . get_the_author(),
+    'url'    => '',
+    'active' => true
+  ];
+} elseif (is_date()) {
+  if (is_year()) {
+    $breadcrumbs[] = [
+      'title'  => get_the_date('Y'),
+      'url'    => '',
+      'active' => true
+    ];
+  } elseif (is_month()) {
+    $breadcrumbs[] = [
+      'title'  => get_the_date('F Y'),
+      'url'    => '',
+      'active' => true
+    ];
+  } elseif (is_day()) {
+    $breadcrumbs[] = [
+      'title'  => get_the_date(),
+      'url'    => '',
+      'active' => true
+    ];
+  }
 }
 ?>
 
@@ -91,9 +164,9 @@ if ($current_script !== 'index.php' && !isset($pages[$current_script])) {
     <?php foreach ($breadcrumbs as $index => $crumb) : ?>
       <li class="breadcrumbs__item">
         <?php if ($crumb['active'] && $index === count($breadcrumbs) - 1) : ?>
-          <span class="breadcrumbs__current" aria-current="page"><?= esc_html($crumb['title']) ?></span>
+          <span class="breadcrumbs__current" aria-current="page"><?php echo esc_html($crumb['title']); ?></span>
         <?php else : ?>
-          <a class="breadcrumbs__link" href="<?= esc_url($crumb['url']) ?>"><?= esc_html($crumb['title']) ?></a>
+          <a class="breadcrumbs__link" href="<?php echo esc_url($crumb['url']); ?>"><?php echo esc_html($crumb['title']); ?></a>
           <span class="breadcrumbs__separator" aria-hidden="true">/</span>
         <?php endif; ?>
       </li>

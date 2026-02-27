@@ -1,5 +1,5 @@
-<a class="category-item" href="<?= isset($links['single-category']) ? $links['single-category'] : '/perspectiva/build/single-category.php' ?>" data-filter-target="Вентфасады">
-    <img class="category-item__img" src="./assets/images/category-item/1.png" alt="Фото" title="Фото" width="346" height="240" loading="lazy">
+<a class="category-item"  href="<?php echo esc_url( get_permalink( 23 ) ); ?>" data-filter-target="Вентфасады">
+    <img class="category-item__img" src="<?= get_template_directory_uri() ?>/assets/images/category-item/1.png" alt="Фото" title="Фото" width="346" height="240" loading="lazy">
     <h3 class="category-item__title">Фиброцементные панели «ФАСАД-КОЛОР»</h3>
     <p class="category-item__text">Цвета:</p>
     <ul class="category-item__color-wrapper">

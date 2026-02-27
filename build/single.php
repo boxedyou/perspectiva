@@ -20,10 +20,10 @@ get_header();
                 get_template_part('single-news');
                 break;
             case 'objects':
-                get_template_part('single-objects');
+                get_template_part('single-object.php');
                 break;
             case 'category':
-                get_template_part('single-category');
+                get_template_part('single-category-product.php');
                 break;
             default:
                 // Стандартный вывод записи

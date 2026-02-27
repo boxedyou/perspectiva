@@ -69,19 +69,19 @@
               <h3>Сертификаты</h3>
                 <div class="certificates">
                       <div class="certificate">
-                          <img src="./assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
+                          <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
                           <p>Сертификат соответствия на плиты фиброцементные «Фасад-Колор»</p>
                       </div>
                       <div class="certificate">
-                          <img src="./assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
+                          <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
                           <p>Сертификат соответствия на плиты фиброцементные «Фасад-Колор»</p>
                       </div>
                       <div class="certificate">
-                          <img src="./assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
+                          <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
                           <p>Сертификат соответствия на плиты фиброцементные «Фасад-Колор»</p>
                       </div>
                       <div class="certificate">
-                          <img src="./assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
+                          <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
                           <p>Сертификат соответствия на плиты фиброцементные «Фасад-Колор»</p>
                       </div>
                   </div>

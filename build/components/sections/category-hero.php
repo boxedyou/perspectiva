@@ -12,7 +12,7 @@
           </svg></button>
       </div>
       <div class="category-hero__item">
-          <img class="category-hero__img" src="./assets/images/hero/house.jpg" alt="Фото" title="Фото" width="576" height="400" loading="lazy">
+          <img class="category-hero__img" src="<?= get_template_directory_uri() ?>/assets/images/hero/house.jpg" alt="Фото" title="Фото" width="576" height="400" loading="lazy">
       </div>
     </div>
   </div>
