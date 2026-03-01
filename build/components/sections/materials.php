@@ -1,156 +1,70 @@
 <?php
-// Данные всех новостей
-$all_news = [
-  [
-    'image' => '1.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Новости', 'Вентфасады'],
-    'date' => '15.02.2026',
-    'item_title' => 'Подшивка крыши софитами',
-    'text' => 'Когда крыша уже покрыта черепицей или металлопрофилем, кажется, что дом полностью защищён и готов к любым капризам погоды. Но опытные строители знают: финальный штрих, который завершает работу и придает дому...',
-    'link' => '/perspectiva/build/single-news.php',
-  ],
-  [
-    'image' => '2.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Акции', 'Вентфасады'],
-    'date' => '14.02.2026',
-    'item_title' => 'Заголовок новости 2',
-    'text' => 'Описание новости 2...',
-    'link' => '#'
-  ],
-  [
-    'image' => '3.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Статьи', 'Фибросайдинг'],
-    'date' => '13.02.2026',
-    'item_title' => 'Заголовок новости 3',
-    'text' => 'Описание новости 3...',
-    'link' => '#'
-  ],
-  [
-    'image' => '4.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Новости'],
-    'date' => '12.02.2026',
-    'item_title' => 'Заголовок новости 4',
-    'text' => 'Описание новости 4...',
-    'link' => '#'
-  ],
-  [
-    'image' => '5.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Акции'],
-    'date' => '11.02.2026',
-    'item_title' => 'Заголовок новости 5',
-    'text' => 'Описание новости 5...',
-    'link' => '#'
-  ],
-  [
-    'image' => '6.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Статьи', 'Вентфасады'],
-    'date' => '10.02.2026',
-    'item_title' => 'Заголовок новости 6',
-    'text' => 'Описание новости 6...',
-    'link' => '#'
-  ],
-  [
-    'image' => '7.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Выставки'],
-    'date' => '09.02.2026',
-    'item_title' => 'Заголовок новости 7',
-    'text' => 'Описание новости 7...',
-    'link' => '#'
-  ],
-  [
-    'image' => '8.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Новости', 'Фибросайдинг'],
-    'date' => '08.02.2026',
-    'item_title' => 'Заголовок новости 8',
-    'text' => 'Описание новости 8...',
-    'link' => '#'
-  ],
-  [
-    'image' => '9.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Акции', 'Вентфасады'],
-    'date' => '07.02.2026',
-    'item_title' => 'Заголовок новости 9',
-    'text' => 'Описание новости 9...',
-    'link' => '#'
-  ],
-  [
-    'image' => '10.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Статьи'],
-    'date' => '06.02.2026',
-    'item_title' => 'Заголовок новости 10',
-    'text' => 'Описание новости 10...',
-    'link' => '#'
-  ],
-  [
-    'image' => '11.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Новости', 'Выставки'],
-    'date' => '05.02.2026',
-    'item_title' => 'Заголовок новости 11',
-    'text' => 'Описание новости 11...',
-    'link' => '#'
-  ],
-  [
-    'image' => '12.jpg',
-    'alt' => 'Новости',
-    'title' => 'Новости',
-    'tags' => ['Акции', 'Фибросайдинг'],
-    'date' => '04.02.2026',
-    'item_title' => 'Заголовок новости 12',
-    'text' => 'Описание новости 12...',
-    'link' => '#'
-  ]
+/**
+ * Блок «Другие материалы по теме»
+ * Выводит похожие статьи по таксономии news_tags
+ * Используется на single-news
+ */
+
+$related_query = null;
+$current_post_id = get_the_ID();
+
+// Термины текущей новости
+$terms = get_the_terms($current_post_id, 'news_tags');
+$term_ids = [];
+
+if ($terms && !is_wp_error($terms)) {
+  $term_ids = wp_list_pluck($terms, 'term_id');
+}
+
+$query_args = [
+  'post_type'      => 'news',
+  'posts_per_page' => -1,
+  'post_status'   => 'publish',
+  'post__not_in'  => [$current_post_id],
+  'orderby'       => 'date',
+  'order'         => 'DESC',
 ];
+
+// Похожие по тегам
+if (!empty($term_ids)) {
+  $query_args['tax_query'] = [
+    [
+      'taxonomy' => 'news_tags',
+      'field'    => 'term_id',
+      'terms'    => $term_ids,
+    ],
+  ];
+}
+
+$related_query = new WP_Query($query_args);
 ?>
 
 <section class="materials">
-  <div class="container">
-    <div class="materials__title-inner">
-      <h2 class="materials__title">Другие материалы по теме</h2>
-      <div class="materials__button-inner">
-        <div class="materials__button swiper-button-prev" data-materials-swiper-prev></div>
-        <div class="materials__button swiper-button-next" data-materials-swiper-next></div>
-      </div>
-    </div>
-    <div class="materials__swiper swiper" data-materials-swiper>
-      <div class="materials__slider-wrapper swiper-wrapper">
-        <?php foreach ($all_news as $news) :
-          // Передаем данные в шаблон
-          $news_image = $news['image'];
-          $news_alt = $news['alt'];
-          $news_title = $news['title'];
-          $news_tags = $news['tags'];
-          $news_date = $news['date'];
-          $news_item_title = $news['item_title'];
-          $news_text = $news['text'];
-          $news_link = $news['link']; ?>
-        <div class="materials__slide swiper-slide">
-         <?php include __DIR__ . '/../elements/news-element.php'; ?>
+    <div class="container">
+        <div class="materials__title-inner">
+            <h2 class="materials__title">Другие материалы по теме</h2>
+            <div class="materials__button-inner">
+                <div class="materials__button swiper-button-prev" data-materials-swiper-prev></div>
+                <div class="materials__button swiper-button-next" data-materials-swiper-next></div>
+            </div>
         </div>
-
-        <?php endforeach; ?>
-      </div>
+        <div class="materials__swiper swiper" data-materials-swiper>
+            <div class="materials__slider-wrapper swiper-wrapper">
+              <?php
+              if ($related_query->have_posts()) :
+                while ($related_query->have_posts()) : $related_query->the_post();
+                  ?>
+                    <div class="materials__slide swiper-slide">
+                      <?php get_template_part('components/elements/news-element'); ?>
+                    </div>
+                <?php
+                endwhile;
+                wp_reset_postdata();
+              else :
+                ?>
+                  <p class="materials__empty">Другие материалы пока отсутствуют.</p>
+              <?php endif; ?>
+            </div>
+        </div>
     </div>
-  </div>
 </section>

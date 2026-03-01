@@ -24,7 +24,7 @@ get_header();
                 get_template_part('page-category');
                 break;
             case 'news':
-                get_template_part('page-news');
+                get_template_part('page-novosti-i-stati.php');
                 break;
             default:
                 // Стандартный вывод контента

@@ -35,5 +35,10 @@ require_once( 'inc/shielding.php' );
  */
 require_once( 'inc/remove_default_post.php' );
 
+/**
+ * Кастомные ссылки пагинации для страниц с кастомными запросами
+ */
+
+require_once( 'inc/custom_link_pagination.php' );
 
 

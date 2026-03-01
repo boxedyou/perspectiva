@@ -15,7 +15,7 @@ get_header();
         
         switch ($post_type) {
             case 'news':
-                get_template_part('page-news');
+                get_template_part('page-novosti-i-stati.php');
                 break;
             default:
                 // Стандартный вывод архива
