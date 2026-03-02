@@ -50,7 +50,12 @@
                         </div>
                     </div>
                 </div>
-              <?php include __DIR__ . '/../elements/form.php'; ?>
+                <div class="contact-us__form-inner">
+                    <h2 class="contact-us__form-inner-title">Есть вопросы? Задавайте, мы перезвоним!</h2>
+                    <p class="contact-us__form-inner-subtitle">Наши специалисты оперативно проконсультируют вас и подготовят предварительный расчёт стоимости продукции и работ.</p>
+                  <?php include __DIR__ . '/../elements/form.php'; ?>
+                </div>
+
             </div>
         </div>
     </section>

@@ -1,0 +1,55 @@
+.popup-ral
+  position: fixed
+  display: none
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background-color: rgba(255, 255, 255, 1)
+  z-index: 100
+  &.is-open
+    display: flex
+
+  &__wrapper
+    max-width: 120rem
+    margin: auto
+    padding: 0 16px
+
+  &__title
+    font-size: 3.6rem
+    margin-bottom: 4.8rem
+    @media (width <= 1560px)
+      font-size: 2.4rem
+      margin-bottom: 3.6rem
+
+  &__list
+    display: flex
+    flex-wrap: wrap
+    gap: 1.2rem
+
+  &__list-item
+    cursor: pointer
+    transition: all .4s
+    @media (width <= 1560px)
+      font-size: 1.4rem
+    &.active
+      & .popup-ral__list-color
+        padding: .4rem
+        outline: 2px solid rgba(22, 26, 31, 1)
+
+  &__list-color
+    display: block
+    width: 8.8rem
+    height: 5.6rem
+    border-radius: .8rem
+    aspect-ratio: 1
+    margin-bottom: 1.2rem
+    @media (width <= 1560px)
+      width: 6.4rem
+      height: 4.8rem
+
+  &__close
+    cursor: pointer
+    position: absolute
+    top: 2.8rem
+    right: 2.8rem

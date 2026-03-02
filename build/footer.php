@@ -97,6 +97,11 @@
         </div>
     </div>
 </footer>
+<?php
+
+get_template_part('components/popups/popup-callback');
+?>
+
 
 <?php wp_footer(); ?>
 </body>

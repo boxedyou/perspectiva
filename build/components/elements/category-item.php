@@ -2,17 +2,10 @@
     <img class="category-item__img" src="<?= get_template_directory_uri() ?>/assets/images/category-item/1.png" alt="Фото" title="Фото" width="346" height="240" loading="lazy">
     <h3 class="category-item__title">Фиброцементные панели «ФАСАД-КОЛОР»</h3>
     <p class="category-item__text">Цвета:</p>
-    <ul class="category-item__color-wrapper">
-        <li class="category-item__color"></li>
-        <li class="category-item__color"></li>
-        <li class="category-item__color"></li>
-        <li class="category-item__color"></li>
-        <li class="category-item__color"></li>
-        <li class="category-item__color"></li>
-        <li class="category-item__color"></li>
-        <li class="category-item__color"></li>
-        <li class="category-item__color"></li>
-    </ul>
+    <div class="category-item__color-inner">
+        <button class="category-item__color-choose"><span></span></button>
+        <span class="category-item__color-text">— Цвет выбирается из палитры RAL</span>
+    </div>
     <p class="category-item__text">Размеры:</p>
     <div class="category-item__size-wrapper">
         <p class="category-item__size">1200*3000*8 мм</p>

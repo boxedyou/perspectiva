@@ -25,11 +25,12 @@
         padding-bottom: 0
 
     &:nth-child(2)
+      display: flex
+      align-self: flex-end
       min-width: 43.6rem
       position: relative
-      background: rgba(240, 245, 250, 1)
-      padding: 10px
       overflow: hidden
+      max-height: 37.2rem
       @media (width <= 991px)
         min-width: auto
 
@@ -58,5 +59,8 @@
     @include mixins.buttonMain()
 
   &__img
-    max-height: 372px
     width: 100%
+    mask-image: url("../images/hero/bg-img-frame.svg")
+    mask-size: auto 100%
+    mask-position: center
+    mask-repeat: no-repeat

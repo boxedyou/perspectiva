@@ -17,10 +17,12 @@
   &__item
     font-size: 14px
     white-space: nowrap
+    &:not(:first-child)
+      &:before
+        content: '/'
+        margin-inline: 1.2rem
 
-    &:has(.breadcrumbs__link)
+    &:has(a)
       color: variables.$colorTextSecond
 
-  &__separator
-    margin-inline: 12px
-    color: variables.$colorText
+

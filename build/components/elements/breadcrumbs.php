@@ -17,8 +17,8 @@ $breadcrumbs = [];
 
 // === 1. ПЕРВЫЙ ЭЛЕМЕНТ: Главная страница (всегда присутствует) ===
 $breadcrumbs[] = [
-  'title' => 'Главная',
-  'url'   => home_url('/'),
+  'title'  => 'Главная',
+  'url'    => home_url('/'),
   'active' => false
 ];
 
@@ -41,7 +41,6 @@ if (is_front_page()) {
   $post = get_queried_object();
 
   // --- 2.1. Для иерархических типов (страницы, проекты с родителями) ---
-  // Добавляем цепочку родительских страниц от корня к текущему
   if (is_post_type_hierarchical($post->post_type) && $post->post_parent) {
     $ancestors = array_reverse(get_post_ancestors($post->ID));
     foreach ($ancestors as $ancestor_id) {
@@ -57,7 +56,6 @@ if (is_front_page()) {
   if (is_single() && !is_page()) {
     $post_type = get_post_type();
 
-    // Специальный случай: news — ссылка на страницу новостей (page-news)
     if ($post_type === 'news') {
       $news_page = get_page_by_path('novosti-i-stati');
       if ($news_page) {
@@ -68,7 +66,6 @@ if (is_front_page()) {
         ];
       }
     } else {
-      // Остальные типы: архив типа записи (если есть)
       $post_type_obj = get_post_type_object($post_type);
       if ($post_type_obj && $post_type_obj->has_archive) {
         $breadcrumbs[] = [
@@ -79,14 +76,12 @@ if (is_front_page()) {
       }
     }
 
-    // --- 2.3. Таксономии (категории, теги) ---
-    // Добавляем родительские термины и текущий термин
+    // --- 2.3. Таксономии (категории, теги) — не для news ---
     $taxonomies = ($post_type === 'news') ? [] : get_object_taxonomies($post_type);
     foreach ($taxonomies as $taxonomy) {
       $terms = get_the_terms($post->ID, $taxonomy);
       if ($terms && !is_wp_error($terms)) {
         $term = array_shift($terms);
-        // Родительские термины
         if ($term->parent) {
           $ancestors = get_ancestors($term->term_id, $taxonomy);
           $ancestors = array_reverse($ancestors);
@@ -101,13 +96,12 @@ if (is_front_page()) {
             }
           }
         }
-        // Текущий термин
         $breadcrumbs[] = [
           'title'  => $term->name,
           'url'    => get_term_link($term),
           'active' => false
         ];
-        break; // Используем только одну таксономию
+        break;
       }
     }
   }
@@ -120,7 +114,6 @@ if (is_front_page()) {
   ];
 
 } elseif (is_post_type_archive()) {
-  // Архив кастомного типа (например, /news/, /objects/)
   $post_type = get_queried_object();
   $breadcrumbs[] = [
     'title'  => $post_type->labels->name,
@@ -129,10 +122,8 @@ if (is_front_page()) {
   ];
 
 } elseif (is_tax() || is_category() || is_tag()) {
-  // Страница таксономии (категория, тег)
   $term = get_queried_object();
 
-  // Родительские термины
   if ($term->parent) {
     $ancestors = get_ancestors($term->term_id, $term->taxonomy);
     $ancestors = array_reverse($ancestors);
@@ -148,7 +139,6 @@ if (is_front_page()) {
     }
   }
 
-  // Текущий термин
   $breadcrumbs[] = [
     'title'  => $term->name,
     'url'    => get_term_link($term),
@@ -177,7 +167,6 @@ if (is_front_page()) {
   ];
 
 } elseif (is_date()) {
-  // Архив по дате (год, месяц, день)
   if (is_year()) {
     $breadcrumbs[] = ['title' => get_the_date('Y'), 'url' => '', 'active' => true];
   } elseif (is_month()) {
@@ -186,22 +175,49 @@ if (is_front_page()) {
     $breadcrumbs[] = ['title' => get_the_date(), 'url' => '', 'active' => true];
   }
 }
+
+// === 3. JSON-LD для BreadcrumbList ===
+$json_ld_items = [];
+foreach ($breadcrumbs as $index => $crumb) {
+  $item = [
+    '@type'    => 'ListItem',
+    'position' => $index + 1,
+    'name'     => $crumb['title'],
+  ];
+  if (!empty($crumb['url'])) {
+    $item['item'] = $crumb['url'];
+  }
+  $json_ld_items[] = $item;
+}
+$json_ld = [
+  '@context'        => 'https://schema.org',
+  '@type'           => 'BreadcrumbList',
+  'itemListElement' => $json_ld_items,
+];
 ?>
 
-<!-- Вывод разметки хлебных крошек (Schema.org, доступность) -->
+<script type="application/ld+json"><?php echo wp_json_encode($json_ld); ?></script>
+
 <nav class="breadcrumbs" aria-label="Хлебные крошки">
-    <ol class="breadcrumbs__list">
-      <?php foreach ($breadcrumbs as $index => $crumb) : ?>
-          <li class="breadcrumbs__item">
-            <?php if ($crumb['active'] && $index === count($breadcrumbs) - 1) : ?>
-                <!-- Активный (текущий) элемент — span без ссылки -->
-                <span class="breadcrumbs__current" aria-current="page"><?php echo esc_html($crumb['title']); ?></span>
+    <ul class="breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <?php foreach ($breadcrumbs as $index => $crumb) :
+        $position = $index + 1;
+        $is_active = $crumb['active'] && $index === count($breadcrumbs) - 1;
+        ?>
+          <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <?php if ($is_active) : ?>
+                <span itemprop="name"><?php echo esc_html($crumb['title']); ?></span>
+              <?php if (!empty($crumb['url'])) : ?>
+                    <meta itemprop="item" content="<?php echo esc_url($crumb['url']); ?>">
+              <?php endif; ?>
+                <meta itemprop="position" content="<?php echo (int) $position; ?>">
             <?php else : ?>
-                <!-- Обычный элемент — ссылка + разделитель -->
-                <a class="breadcrumbs__link" href="<?php echo esc_url($crumb['url']); ?>"><?php echo esc_html($crumb['title']); ?></a>
-                <span class="breadcrumbs__separator" aria-hidden="true">/</span>
+                <a href="<?php echo esc_url($crumb['url']); ?>" title="<?php echo esc_attr($crumb['title']); ?>" itemprop="item">
+                    <span itemprop="name"><?php echo esc_html($crumb['title']); ?></span>
+                    <meta itemprop="position" content="<?php echo (int) $position; ?>">
+                </a>
             <?php endif; ?>
           </li>
       <?php endforeach; ?>
-    </ol>
+    </ul>
 </nav>
