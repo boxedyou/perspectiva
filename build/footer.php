@@ -38,17 +38,17 @@
 <!--                        </ul>-->
 <!--                    </li>-->
 <!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Фибросайдинг</a></li>-->
-<!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Прайс-листы</a></li>-->
+                    <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/price-list/')); ?>">Прайс-листы</a></li>
                     <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/objects')); ?>">Объекты с нашей продукцией</a></li>
                 </ul>
                 <ul class="footer__list">
                     <li class="footer__list-item"><a class="footer__list-item-link" href="#">Информация</a></li>
-<!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="--><?php //echo esc_url(home_url('/about')); ?><!--">О компании</a></li>-->
+                    <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/about/')); ?>">О компании</a></li>
                     <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/production/')); ?>">Производство</a></li>
-<!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Сертификаты</a></li>-->
+                    <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/certificates/')); ?>">Сертификаты</a></li>
                     <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/novosti-i-stati/')); ?>">Новости и статьи</a></li>
-<!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="--><?php //echo esc_url(home_url('/contact')); ?><!--">Контакты</a></li>-->
-<!--                    <li class="footer__list-item"><a class="footer__list-item-link" href="#">Политика конфиденциальности</a></li>-->
+                    <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/contacts/')); ?>">Контакты</a></li>
+                    <li class="footer__list-item"><a class="footer__list-item-link" href="<?php echo esc_url(home_url('/politic/')); ?>">Политика конфиденциальности</a></li>
                 </ul>
                 <div class="footer__info-wrapper">
                     <p class="footer__info-title">Контакты</p>

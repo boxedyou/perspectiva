@@ -2,7 +2,31 @@
     <section class="contact-us">
         <div class="container">
             <div class="contact-us__wrapper">
-              <?php include __DIR__ . '/../elements/form.php'; ?>
+              <?php get_template_part('components/elements/form'); ?>
+            </div>
+        </div>
+    </section>
+<?php elseif (is_page('contacts')) : ?>
+    <section class="contact-us">
+        <div class="container">
+            <div class="contact-us__wrapper">
+                <div class="contact-us__form-inner">
+                    <h2 class="contact-us__form-inner-title">Напишите нам</h2>
+                    <p class="contact-us__form-inner-subtitle">Наши специалисты оперативно проконсультируют вас и подготовят предварительный расчёт стоимости продукции и работ.</p>
+                  <?php get_template_part('components/elements/form'); ?>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php elseif (is_page('politic')) : ?>
+    <section class="contact-us">
+        <div class="container">
+            <div class="contact-us__wrapper">
+                <div class="contact-us__form-inner">
+                    <h2 class="contact-us__form-inner-title">Задать вопрос</h2>
+                    <p class="contact-us__form-inner-subtitle">Вентилируемый фасад сегодня считается одним из наиболее эффективных решений, позволяющих защитить стены от влаги и перепадов температуры, а также обеспечить отличную теплоизоляцию и создать красивый вид дома!</p>
+                  <?php get_template_part('components/elements/form'); ?>
+                </div>
             </div>
         </div>
     </section>
@@ -53,7 +77,7 @@
                 <div class="contact-us__form-inner">
                     <h2 class="contact-us__form-inner-title">Есть вопросы? Задавайте, мы перезвоним!</h2>
                     <p class="contact-us__form-inner-subtitle">Наши специалисты оперативно проконсультируют вас и подготовят предварительный расчёт стоимости продукции и работ.</p>
-                  <?php include __DIR__ . '/../elements/form.php'; ?>
+                  <?php get_template_part('components/elements/form'); ?>
                 </div>
 
             </div>

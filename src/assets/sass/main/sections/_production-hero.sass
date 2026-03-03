@@ -1,0 +1,97 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+.production-hero
+  --indent: 6.4rem
+  margin-bottom: 4.8rem
+  @media (width <= 1560px)
+    margin-bottom: 3.6rem
+    --indent: 4.8rem
+    @media (width <= 1400px)
+      margin-bottom: 2.4rem
+      --indent: 3.6rem
+    @media (width <= 991px)
+      --indent: 2.4rem
+  &--not-back
+    & .production-hero__wrapper
+      background-image: none
+
+  &__title
+    font-size: 4.4rem
+    line-height: 1.2
+    margin-bottom: 4.8rem
+    @media (width <= 1560px)
+      --indent: 4.8rem
+      margin-bottom: 3.6rem
+      font-size: 3.6rem
+    @media (width <= 1400px)
+      --indent: 3.6rem
+    @media (width <= 991px)
+      --indent: 2.4rem
+      margin-bottom: 2.4rem
+      font-size: 2.4rem
+    @media (width <= 370px)
+      font-size: 2rem
+      margin-bottom: 2rem
+
+  &__wrapper
+    display: flex
+    gap: var(--indent)
+    padding: var(--indent)
+    background-color: rgba(255, 255, 255, 1)
+    border-radius: 1.2rem
+    background-image: url("../images/logo/bg-logolike-img.png")
+    background-position: bottom center
+    background-size: 80%
+    background-repeat: no-repeat
+    @media (width <= 991px)
+      background-image: url("../images/logo/bg-logolike-img-mob.png")
+      flex-direction: column
+      background-size: cover
+      background-position: top 230px center
+    @media (width <= 560px)
+      background-size: contain
+      background-position: top 400px center
+      padding: var(--indent) 1.6rem
+
+  &__item
+    &:nth-child(1)
+      max-width: 96rem
+
+      & h2
+        font-size: 4.4rem
+        margin-bottom: 1.6rem
+        line-height: 1.2
+        @media (width <= 1560px)
+          font-size: 3.2rem
+        @media (width <= 991px)
+          font-size: 2.4rem
+        @media (width <= 370px)
+          font-size: 2rem
+
+
+    & img
+      width: 100%
+      min-width: 29.6rem
+      border-radius: .8rem
+      overflow: clip
+      max-height: 66rem
+
+  &__gallery
+    position: relative
+
+  &__icon
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+
+  &__link
+    @include mixins.buttonMain()
+    margin-top: 4rem
+    max-width: fit-content
+    @media (width <= 1560px)
+      margin-top: 2.4rem
+
+

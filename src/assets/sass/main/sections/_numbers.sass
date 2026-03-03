@@ -1,0 +1,36 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+@use 'production'
+
+.numbers
+  @include mixins.sectionIndentBottom
+
+  &__wrapper
+    display: flex
+    flex-wrap: wrap
+    gap: 1.6rem
+    @media (width < 1440px)
+      gap: 1.2rem
+
+  &__info-inner
+    @extend .production__info-inner
+    width: calc(25% - 1.2rem)
+    @media (width < 1440px)
+      align-items: center
+      width: calc(50% - .6rem)
+    @media (width <= 768px)
+      width: 100%
+      align-items: flex-start
+
+  &__info-number
+    @extend .production__info-number
+
+  &__info-text-big
+    @extend .production__info-text-big
+
+  &__info-text-small
+    @extend .production__info-text-small
+    line-height: 1.3
+    @media ( 768px <=  width < 1440px)
+      text-align: center

@@ -1,0 +1,154 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+@use 'news-content'
+
+.politic
+  @include mixins.sectionIndentBottom
+
+  &__title
+    font-size: 5.2rem
+    margin-bottom: 4.8rem
+    @media (width <= 1560px)
+      font-size: 4.6rem
+      margin-bottom: 3.2rem
+    @media (width <= 991px)
+      font-size: 3.2rem
+      margin-bottom: 2.4rem
+    @media (width <= 560px)
+      font-size: 2.4rem
+    @media (width <= 370px)
+      font-size: 2rem
+      margin-bottom: 1.8rem
+
+  &__wrapper
+    display: flex
+    gap: 4.8rem
+    @media (width <= 1560px)
+      gap: 3.6rem
+    @media (width <= 991px)
+      gap: 2.4rem
+      flex-direction: column
+
+  &__sidebar
+    min-width: 32.8rem
+    @media (width <= 991px)
+      min-width: auto
+
+  &__sidebar-title
+    display: flex
+    justify-content: space-between
+    align-items: center
+    font-weight: 600
+    cursor: pointer
+
+  &__subject-menus
+    margin-top: 1.2rem
+    @media (width <= 991px)
+      display: none
+
+  &__menus-list
+    display: flex
+    flex-direction: column
+    gap: .8rem
+    counter-reset: sidebar-number
+
+  &__menu-item
+    counter-increment: sidebar-number
+    padding: .8rem 1.2rem
+    border: 1px solid rgba(188, 205, 224, 1)
+    border-radius: .6rem
+    transition: all .4s
+    cursor: pointer
+    &:before
+      content: counter(sidebar-number)'. '
+    &.active
+      background-color: rgba(88, 104, 122, 1)
+      border-color: rgba(88, 104, 122, 1)
+      color: rgba(255, 255, 255, 1)
+  &__item
+    --indent: 4.8rem
+    & p:first-child
+      margin-bottom: var(--indent)
+      @media (width <= 1560px)
+        --indent: 3.6rem
+      @media (width <= 991px)
+        --indent: 2.4rem
+    & ol
+      counter-reset: counter
+      & li
+        counter-increment: counter
+        font-size: 3.6rem
+        font-weight: 600
+        margin-bottom: var(--indent)
+        @media (width <= 1560px)
+          font-size: 2.4rem
+        @media (width <= 991px)
+          font-size: 2rem
+        &:before
+          content: counter(counter)'. '
+        & ol
+          counter-reset: sub-counter
+          margin-top: 2.4rem
+          & li
+            counter-increment: sub-counter
+            font-size: 1.6rem
+            font-weight: 400
+            margin-bottom: 1.6rem
+            @media (width <= 1560px)
+              font-size: 1.4rem
+            &:before
+              content: counter(counter)'.'counter(sub-counter)'. '
+            & ol
+              counter-reset: sub-level-counter
+              & li
+                counter-increment: sub-level-counter
+                &:before
+                  content: counter(counter)'.'counter(sub-counter)'.'counter(sub-level-counter)'. '
+
+    & ul
+      counter-reset: counter sub-counter sub-level-counter
+      margin-top: 2.4rem
+      flex-direction: column
+      padding-left: 3.2rem
+      gap: 0 !important
+      @media (width <= 1560px)
+        gap: 1.2rem
+      & li
+        position: relative
+        &:before
+          display: none
+        &:after
+          position: absolute
+          content: ''
+          background-image: url("data:image/svg+xml,%3Csvg width='8' height='9' viewBox='0 0 8 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 0L8 2.25V6.75L4 9L0 6.75V2.25L4 0Z' fill='%23C42539'/%3E%3C/svg%3E%0A")
+          width: 8px
+          height: 8px
+          aspect-ratio: 1
+          top: 10px
+          background-position: center
+          background-size: cover
+          background-repeat: no-repeat
+          left: -2.4rem
+          @media (width <= 1560px)
+            top: 6px
+
+    & blockquote
+      background-color: rgba(255, 255, 255, 1)
+      border-radius: .8rem
+      margin-top: 2.4rem
+      padding: 2.8rem 3.2rem
+      @media (width <= 1560px)
+        padding: 1.6rem
+        margin-top: 1.8rem
+      & p
+        @media (width <= 1560px)
+          font-size: 1.4rem
+        &:first-child
+          font-weight: 600
+          margin-bottom: 1.6rem
+          font-size: 2rem
+          @media (width <= 1560px)
+            font-size: 1.6rem
+
+

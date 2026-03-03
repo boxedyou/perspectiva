@@ -1,0 +1,102 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+
+.contacts-main
+  @include mixins.sectionIndentBottom
+
+  &__title
+    font-size: 4.4rem
+    margin-bottom: 4.8rem
+    @media (width <= 1560px)
+      font-size: 3.2rem
+      margin-bottom: 3.2rem
+    @media (width <= 991px)
+      font-size: 2.4rem
+      margin-bottom: 2.4rem
+    @media (width <= 370px)
+      font-size: 2rem
+      margin-bottom: 2rem
+
+  &__wrapper
+    display: flex
+    align-items: stretch
+    gap: 1rem
+    @media (width <= 991px)
+      flex-direction: column
+
+  &__item-inner
+    display: flex
+    flex-direction: column
+    background-color: rgba(255, 255, 255, 1)
+    border: 1px solid rgba(240, 245, 250, 1)
+    border-radius: .8rem
+    padding: 4.2rem
+    @media (width <= 1560px)
+      padding: 3.2rem
+    @media (width <= 991px)
+      padding: 2.4rem
+    @media (width <= 560px)
+      padding: 1.6rem
+
+  &__item
+    width: 100%
+    &:nth-child(1)
+      display: flex
+      flex-direction: column
+      gap: .8rem
+    &:nth-child(2)
+      max-width: 51.2rem
+      @media (width <= 991px)
+        max-width: 100%
+        & .map-yandex, & .map-yandex__item-map-inner, & .map-yandex__map-preloader, & .map-yandex__map-yandex
+          min-height: 46.6rem
+
+  &__item-top
+    --indent: 2.4rem
+    display: flex
+    align-items: center
+    gap: var(--indent)
+    margin-bottom: var(--indent)
+    @media (width <= 1560)
+      --indent: 1.6rem
+    @media (width <= 560px)
+      align-items: flex-start
+      flex-direction: column
+
+  &__box-inner
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    gap: 2.4rem
+
+  &__item-box
+    max-width: 50rem
+
+  &__item-top-text
+    font-weight: 600
+    font-size: 2.8rem
+    @media (width <= 1560px)
+      font-size: 2rem
+    @media (width <= 560px)
+      font-size: 1.6rem
+
+  &__text
+    color: rgba(88, 104, 122, 1)
+    font-size: 1.4rem
+    margin-bottom: .4rem
+
+  &__text-weight
+    font-weight: 600
+    @media (width <= 560px)
+      font-size: 1.4rem
+    &:not(:last-of-type)
+      margin-bottom: .4rem
+    &--big
+      font-size: 2.4rem
+      @media (width <= 1560px)
+        font-size: 2rem
+      @media (width <= 991px)
+        font-size: 1.6rem
+      @media (width <= 560px)
+        font-size: 1.4rem

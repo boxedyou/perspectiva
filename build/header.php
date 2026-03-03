@@ -35,10 +35,9 @@ $logo_mobile_url = get_assets_url('images/logo/logo-mobile.svg');
                         <ul class="header__nav-list">
                             <li class="header__list-item"><a href="<?php echo esc_url(home_url('/catalog/')); ?>">Каталог</a></li>
                             <li class="header__list-item"><a href="<?php echo esc_url(home_url('/price-list/')); ?>">Прайс-лист</a></li>
-<!--                            <li class="header__list-item"><a href="--><?php //echo esc_url(home_url('/about')); ?><!--">О компании</a></li>-->
+                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/about/')); ?>">О компании</a></li>
                             <li class="header__list-item"><a href="<?php echo esc_url(home_url('/category/')); ?>">Объекты с нашей продукцией</a></li>
-<!--                            <li class="header__list-item">Отзывы</li>-->
-<!--                            <li class="header__list-item"><a href="--><?php //echo esc_url(home_url('/contact')); ?><!--">Контакты</a></li>-->
+                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/contacts/')); ?>">Контакты</a></li>
                         </ul>
 
                 </nav>

@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     (function () {
         //= libs/fancybox.js
         //= libs/swiper.js
+        //= scripts/cookie-save.js
+        //= scripts/cookie-show.js
         //= scripts/fancybox_int.js
         //= scripts/hero_indent_text.js
         //= scripts/map-project.js
@@ -12,5 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
         //= scripts/color_choose.js
         //= scripts/size_choose.js
         //= scripts/info_copy_paste.js
+        //= scripts/spell.js
+        //= scripts/lazy_map-loading.js
+        //= scripts/utm_save.js
     }) ()
 }, false) ;

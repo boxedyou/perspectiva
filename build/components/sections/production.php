@@ -21,22 +21,22 @@
               </div>
               <div class="production__info-wrapper">
                   <div class="production__info-inner">
-                      <p class="production__info-number">15</p>
+                      <p class="production__info-number" data-spell time="1" max="15">15</p>
                       <p class="production__info-text-big">лет гарантии</p>
                       <p class="production__info-text-small">100% гарантия качества на фасадные панели</p>
                   </div>
                   <div class="production__info-inner">
-                      <p class="production__info-number">500</p>
+                      <p class="production__info-number" data-spell time="1" max="500">500</p>
                       <p class="production__info-text-big">тысяч м <sup>2</sup></p>
                       <p class="production__info-text-small">Произведено облицованных поверхностей</p>
                   </div>
                   <div class="production__info-inner">
-                      <p class="production__info-number">12</p>
+                      <p class="production__info-number" data-spell time="1" max="12">12</p>
                       <p class="production__info-text-big">лет работы</p>
                       <p class="production__info-text-small">Зарекомендовали себя надежным производителем и поставщиком качественных материалов</p>
                   </div>
                   <div class="production__info-inner">
-                      <p class="production__info-number">15</p>
+                      <p class="production__info-number" data-spell time="1" max="15">15</p>
                       <p class="production__info-text-big">лет гарантии</p>
                       <p class="production__info-text-small">100% гарантия качества на фасадные панели</p>
                   </div>

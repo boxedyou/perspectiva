@@ -9,22 +9,24 @@ function foundationpress_scripts() {
   $theme_style_handle  = $handle_base . '-theme';
   $theme_script_handle = $handle_base . '-scripts';
 
-  // Пути к файлам
+  // Пути к файлам на диске
   $style_src  = get_template_directory() . '/assets/css/main.min.css';
   $script_src = get_template_directory() . '/assets/js/index.min.js';
 
-  // Временные метки для кэша
+  // Временные метки для кэша (версия файлов)
   $style_version  = file_exists( $style_src ) ? filemtime( $style_src ) : false;
   $script_version = file_exists( $script_src ) ? filemtime( $script_src ) : false;
 
   // =============== Стили ===============
 
-  // Основной style.css
+  // Основной style.css темы
   wp_enqueue_style(
     $main_style_handle,
     get_template_directory_uri() . '/style.css',
     [],
-    filemtime( get_template_directory() . '/style.css' ),
+    file_exists( get_template_directory() . '/style.css' )
+      ? filemtime( get_template_directory() . '/style.css' )
+      : null,
     'all'
   );
 
@@ -39,7 +41,7 @@ function foundationpress_scripts() {
 
   // =============== Скрипты ===============
 
-  // 1. Убираем стандартную WP jQuery и migrate
+  // 1. Убираем стандартные jQuery и jQuery Migrate WordPress
   wp_deregister_script( 'jquery' );
   wp_deregister_script( 'jquery-migrate' );
 
@@ -63,7 +65,7 @@ function foundationpress_scripts() {
   );
   wp_enqueue_script( 'jquery-migrate' );
 
-  // 4. Подключаем твой основной скрипт, handle от названия сайта
+  // 4. Основной скрипт темы (assets/js/index.min.js)
   wp_enqueue_script(
     $theme_script_handle,
     get_template_directory_uri() . '/assets/js/index.min.js',
@@ -78,16 +80,16 @@ function foundationpress_scripts() {
     'ajaxurl_object',
     [
       'ajaxurl'    => admin_url( 'admin-ajax.php' ),
-      'site_url'   => home_url( '/' ),       // базовый URL сайта
-      'assets_url' => get_assets_url(),      // базовый URL /assets (из inc/get_url.php)
+      'site_url'   => home_url( '/' ),
+      'assets_url' => function_exists( 'get_assets_url' ) ? get_assets_url() : get_template_directory_uri() . '/assets',
     ]
   );
 
-  // Для одиночных постов
+  // === Inline-данные для single-записей (например, для счётчика просмотров) ===
   if ( is_single() ) {
     wp_add_inline_script(
       $theme_script_handle,
-      'const viewCounterAjax = ' . json_encode( [
+      'const viewCounterAjax = ' . wp_json_encode( [
         'ajax_url' => admin_url( 'admin-ajax.php' ),
         'post_id'  => get_the_ID(),
       ] ) . ';',

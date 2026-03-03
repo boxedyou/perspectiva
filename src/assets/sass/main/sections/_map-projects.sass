@@ -4,14 +4,19 @@
 
 // Основные стили для map блока
 .map-yandex
+  width: 100%
+  height: 100%
   border-radius: 1.6rem
   overflow: hidden
-  &__item-map-inner, &__map-yandex
+  &__item-map-inner, &__map-yandex, &__map-preloader
     border-radius: 1.6rem
     overflow: hidden
-    min-height: 732px
-    @media (max-width: 640px)
-      min-height: 640px
+    width: 100%
+    height: 100%
+  &__item-map-inner
+    background-size: cover
+    background-repeat: no-repeat
+    background-position: center
 
 .map
   @include mixins.sectionIndentBottom

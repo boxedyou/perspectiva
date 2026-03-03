@@ -1,0 +1,19 @@
+.loading
+  position: relative
+  &:after
+    position: absolute
+    content: ''
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    width: 52px
+    height: 52px
+    border: 6px solid rgba(255,255,255,1)
+    border-top-color: rgba(196, 37, 57, 1)
+    border-radius: 50%
+    animation: spin 1s linear infinite
+    z-index: 10
+
+@keyframes spin
+  to
+    transform: translate(-50%, -50%) rotate(360deg)
