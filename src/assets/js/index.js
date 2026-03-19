@@ -17,5 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         //= scripts/spell.js
         //= scripts/lazy_map-loading.js
         //= scripts/utm_save.js
+        //= scripts/burger_menu_open.js
+        //= scripts/send.js
     }) ()
 }, false) ;

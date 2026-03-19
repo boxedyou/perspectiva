@@ -6,18 +6,20 @@
               <h2 class="production__title">Собственное производство российских фиброцементных панелей в ТСК «Перспектива»</h2>
               <p class="production__subtitle">Торгово-строительная компания «Перспектива» — это завод фиброцементных фасадных панелей «Фасад-Колор» российского производства. В основе наших панелей используются листы фиброцемента – листы грунтуются и окрашиваются силами нашего производства. Мы предлагаем два типа гладкоокрашенных покрытий для фиброцементных панелей – покрытие «Антивандальное» и покрытие «Премиум».</p>
               <div class="production__certificates-inner">
-                  <a class="production__certificates" href="<?= get_template_directory_uri() ?>/assets/images/certificates/1.png" data-fancybox="certificates-gallery" data-caption="Сертификаты">
-                      <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="224" height="312" loading="lazy">
-                  </a>
-                  <a class="production__certificates" href="<?= get_template_directory_uri() ?>/assets/images/certificates/2.png" data-fancybox="certificates-gallery" data-caption="Сертификаты">
-                      <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/2.png" alt="Сертификаты" title="Сертификаты" width="224" height="312" loading="lazy">
-                  </a>
-                  <a class="production__certificates" href="<?= get_template_directory_uri() ?>/assets/images/certificates/3.png" data-fancybox="certificates-gallery" data-caption="Сертификаты">
-                      <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/3.png" alt="Сертификаты" title="Сертификаты" width="224" height="312" loading="lazy">
-                  </a>
-                  <a class="production__certificates" href="<?= get_template_directory_uri() ?>/assets/images/certificates/4.png" data-fancybox="certificates-gallery" data-caption="Сертификаты">
-                      <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/4.png" alt="Сертификаты" title="Сертификаты" width="224" height="312" loading="lazy">
-                  </a>
+                <?php
+                $certificates = get_field('certificates', 43);
+                $certificates = is_array($certificates) ? array_slice($certificates, 0, 4) : [];
+                foreach ($certificates as $certificate) : ?>
+                    <a class="production__certificates"
+                       href="<?= $certificate['url'] ?>"
+                       data-fancybox="certificates-gallery"
+                       data-caption="<?= $certificate['caption'] ?>">
+                        <img src="<?= $certificate['url'] ?>"
+                             alt="<?= $certificate['alt'] ?>"
+                             title="<?= $certificate['title'] ?>"
+                             width="224" height="312" loading="lazy">
+                    </a>
+                <?php endforeach; ?>
               </div>
               <div class="production__info-wrapper">
                   <div class="production__info-inner">

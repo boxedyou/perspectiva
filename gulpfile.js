@@ -1,36 +1,36 @@
-"use strict"
+"use strict";
 
-const { src, dest } = require("gulp")
-const gulp = require("gulp")
-const removeComments = require('gulp-strip-css-comments')
-const size = require('gulp-size')
-const rename = require('gulp-rename')
-const gzip = require('gulp-gzip')
-const fileinclude = require('gulp-file-include')
-const cached = require('gulp-cached')
-const dependents = require('gulp-dependents')
-const sass = require('gulp-sass')(require('sass'))
-const debug = require('gulp-debug')
-const favicons = require('gulp-favicons')
-const cssnano = require('gulp-cssnano')
-const uglify = require('gulp-uglify')
-const fonter = require('gulp-fonter-unx')
-const ttf2woff2 = require('gulp-ttf2woff2')
-const rigger = require('gulp-rigger')
-const filter = require('gulp-filter')
-const plumber = require('gulp-plumber')
-const gulpHtmlImgWrapper = require('gulp-html-img-wrapper')
-const panini = require('panini')
-const imagemin = require('gulp-imagemin')
-const webp = require('gulp-webp')
-const autoprefixer = require("gulp-autoprefixer")
-const sourcemaps = require('gulp-sourcemaps')
-const notify = require('gulp-notify')
-const browserSync = require('browser-sync').create()
+const gulp = require("gulp");
+const { src, dest } = gulp;
+const removeComments = require('gulp-strip-css-comments');
+const size = require('gulp-size');
+const rename = require('gulp-rename');
+const gzip = require('gulp-gzip');
+const fileinclude = require('gulp-file-include');
+const cached = require('gulp-cached');
+const dependents = require('gulp-dependents');
+const sass = require('gulp-sass')(require('sass'));
+const debug = require('gulp-debug');
+const favicons = require('gulp-favicons');
+const cssnano = require('gulp-cssnano');
+const uglify = require('gulp-uglify');
+const fonter = require('gulp-fonter-unx');
+const ttf2woff2 = require('gulp-ttf2woff2');
+const rigger = require('gulp-rigger');
+const filter = require('gulp-filter');
+const plumber = require('gulp-plumber');
+const gulpHtmlImgWrapper = require('gulp-html-img-wrapper');
+const panini = require('panini');
+const imagemin = require('gulp-imagemin');
+const webp = require('gulp-webp');
+const autoprefixer = require("gulp-autoprefixer");
+const sourcemaps = require('gulp-sourcemaps');
+const notify = require('gulp-notify');
+const browserSync = require('browser-sync').create();
 
 /* Пути */
-const srcPath = "src/"
-const distPath = "build/"
+const srcPath = "src/";
+const distPath = "build/";
 
 const path = {
     build: {
@@ -58,11 +58,11 @@ const path = {
         favicon: srcPath + "assets/images/favicon/*.{svg,png,jpg,jpeg}",
     },
     clean: "./" + distPath
-}
+};
 
 /* HTML */
 function html() {
-    panini.refresh()
+    panini.refresh();
     return src(path.src.html, { base: srcPath })
         .pipe(plumber())
         .pipe(panini({
@@ -77,7 +77,7 @@ function html() {
         }))
         .pipe(dest(path.build.html))
         .pipe(browserSync.reload({ stream: true }))
-        .pipe(size({ showFiles: true }))
+        .pipe(size({ showFiles: true }));
 }
 
 /* CSS */
@@ -88,8 +88,8 @@ function css() {
                 notify.onError({
                     title: "SASS Error",
                     message: "Error: <%= error.message %>"
-                })(err)
-                this.emit('end')
+                })(err);
+                this.emit('end');
             }
         }))
         .pipe(sourcemaps.init())
@@ -107,7 +107,7 @@ function css() {
         .pipe(sourcemaps.write('.'))
         .pipe(dest(path.build.css))
         .pipe(browserSync.reload({ stream: true }))
-        .pipe(size({ showFiles: true }))
+        .pipe(size({ showFiles: true }));
 }
 
 /* JS */
@@ -118,8 +118,8 @@ function js() {
                 notify.onError({
                     title: "JS Error",
                     message: "Error: <%= error.message %>"
-                })(err)
-                this.emit('end')
+                })(err);
+                this.emit('end');
             }
         }))
         .pipe(sourcemaps.init())
@@ -129,7 +129,7 @@ function js() {
         .pipe(sourcemaps.write('.'))
         .pipe(dest(path.build.js))
         .pipe(browserSync.reload({ stream: true }))
-        .pipe(size({ showFiles: true }))
+        .pipe(size({ showFiles: true }));
 }
 
 /* Images */
@@ -150,7 +150,7 @@ function images() {
         .pipe(webp({ quality: 82 }))
         .pipe(dest(path.build.images))
         .pipe(browserSync.reload({ stream: true }))
-        .pipe(size())
+        .pipe(size());
 }
 
 /* Favicons */
@@ -172,7 +172,7 @@ function favicon() {
         .pipe(dest(path.build.favicon))
         .pipe(filter(['favicon.ico', 'apple-touch-icon.png', 'manifest.json']))
         .pipe(dest(path.build.html))
-        .pipe(size())
+        .pipe(size());
 }
 
 /* Fonts */
@@ -182,38 +182,40 @@ function fonts() {
         .pipe(ttf2woff2())
         .pipe(dest(path.build.fonts))
         .pipe(browserSync.reload({ stream: true }))
-        .pipe(size())
+        .pipe(size());
 }
 
 /* Сервер */
-function serve() {
+function serve(done) {
     browserSync.init({
         server: {
             baseDir: "./" + distPath
         }
-    })
+    });
+    done(); // сигнал Gulp'у, что задача настроена и "готова"
 }
 
 /* Watcher */
-function watchFiles() {
-    // gulp.watch([path.watch.html], html)
-    gulp.watch([path.watch.css], css)
-    gulp.watch([path.watch.js], js)
-    gulp.watch([path.watch.images], images)
-    gulp.watch([path.watch.fonts], fonts)
-    gulp.watch([path.watch.favicon], favicon)
+function watchFiles(done) {
+    // gulp.watch([path.watch.html], html);
+    gulp.watch([path.watch.css], css);
+    gulp.watch([path.watch.js], js);
+    gulp.watch([path.watch.images], images);
+    gulp.watch([path.watch.fonts], fonts);
+    gulp.watch([path.watch.favicon], favicon);
+    done(); // задача настроила вотчеры – можно сигналить завершение
 }
 
 /* Сборка */
-const build = gulp.series(gulp.parallel(css, js, images, fonts, favicon))
-const watch = gulp.parallel(build, watchFiles, serve)
+const build = gulp.series(gulp.parallel(css, js, images, fonts, favicon));
+const watch = gulp.series(build, gulp.parallel(watchFiles, serve));
 
-// exports.html = html
-exports.css = css
-exports.js = js
-exports.images = images
-exports.favicon = favicon
-exports.fonts = fonts
-exports.build = build
-exports.watch = watch
-exports.default = watch
+// exports.html = html;
+exports.css = css;
+exports.js = js;
+exports.images = images;
+exports.favicon = favicon;
+exports.fonts = fonts;
+exports.build = build;
+exports.watch = watch;
+exports.default = watch;

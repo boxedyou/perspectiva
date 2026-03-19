@@ -76,11 +76,13 @@
         --indent: 2.4rem
     & ol
       counter-reset: counter
+      margin-bottom: 0!important
       & li
         counter-increment: counter
         font-size: 3.6rem
         font-weight: 600
-        margin-bottom: var(--indent)
+        &:not(:last-of-type)
+          margin-bottom: var(--indent)
         @media (width <= 1560px)
           font-size: 2.4rem
         @media (width <= 991px)
@@ -94,7 +96,8 @@
             counter-increment: sub-counter
             font-size: 1.6rem
             font-weight: 400
-            margin-bottom: 1.6rem
+            &:not(:last-of-type)
+              margin-bottom: 1.6rem
             @media (width <= 1560px)
               font-size: 1.4rem
             &:before

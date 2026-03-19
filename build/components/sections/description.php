@@ -1,97 +1,170 @@
-<section class="description">
+<?php
+if ( ! function_exists('perspectiva_h2_anchor_id') ) {
+  /**
+   * Заголовок → латинский slug для id (a-z0-9-)
+   */
+  function perspectiva_h2_anchor_id($text) {
+    $text = trim(wp_strip_all_tags($text));
+    if ($text === '') {
+      return 'section';
+    }
+
+    $ru = array(
+      'а'=>'a','б'=>'b','в'=>'v','г'=>'g','д'=>'d','е'=>'e','ё'=>'yo','ж'=>'zh','з'=>'z',
+      'и'=>'i','й'=>'y','к'=>'k','л'=>'l','м'=>'m','н'=>'n','о'=>'o','п'=>'p','р'=>'r',
+      'с'=>'s','т'=>'t','у'=>'u','ф'=>'f','х'=>'h','ц'=>'ts','ч'=>'ch','ш'=>'sh','щ'=>'sch',
+      'ъ'=>'','ы'=>'y','ь'=>'','э'=>'e','ю'=>'yu','я'=>'ya',
+      'А'=>'A','Б'=>'B','В'=>'V','Г'=>'G','Д'=>'D','Е'=>'E','Ё'=>'Yo','Ж'=>'Zh','З'=>'Z',
+      'И'=>'I','Й'=>'Y','К'=>'K','Л'=>'L','М'=>'M','Н'=>'N','О'=>'O','П'=>'P','Р'=>'R',
+      'С'=>'S','Т'=>'T','У'=>'U','Ф'=>'F','Х'=>'H','Ц'=>'Ts','Ч'=>'Ch','Ш'=>'Sh','Щ'=>'Sch',
+      'Ъ'=>'','Ы'=>'Y','Ь'=>'','Э'=>'E','Ю'=>'Yu','Я'=>'Ya',
+    );
+
+    $text = strtr($text, $ru);
+    $text = strtolower($text);
+    $text = preg_replace('/[^a-z0-9]+/', '-', $text);
+    $text = trim($text, '-');
+
+    if ($text === '') {
+      $text = 'section';
+    }
+
+    return $text;
+  }
+}
+
+$product_id = get_the_ID();
+
+$card_group = get_field('card_group', $product_id);
+$card_info  = isset($card_group['card_info']) ? $card_group['card_info'] : '';
+
+$size_terms = get_the_terms($product_id, 'size');
+if ( is_wp_error($size_terms) || empty($size_terms) ) {
+  $size_terms = array();
+}
+
+$h2_list     = array();
+$card_output = $card_info;
+
+if ( $card_info !== '' && is_string($card_info) && class_exists('DOMDocument') ) {
+
+  $wrap_id = 'card-info-root';
+  $html    = '<div id="' . esc_attr($wrap_id) . '">' . $card_info . '</div>';
+
+  $dom = new DOMDocument();
+  libxml_use_internal_errors(true);
+  $dom->loadHTML('<?xml encoding="utf-8" ?>' . $html);
+  libxml_clear_errors();
+
+  $xpath = new DOMXPath($dom);
+  $nodes = $xpath->query('//div[@id="' . $wrap_id . '"]//h2');
+
+  $used_ids = array();
+
+  foreach ( $nodes as $node ) {
+    $text = trim($node->textContent);
+    if ( $text === '' ) {
+      continue;
+    }
+
+    $id = $node->getAttribute('id');
+
+    if ( $id === '' ) {
+      if ( $text === 'Характеристики' ) {
+        $id = 'info';
+      } elseif ( $text === 'Описание' ) {
+        $id = 'card-description';
+      } else {
+        $base = perspectiva_h2_anchor_id($text);
+        $id = $base;
+        $n = 2;
+        while ( in_array($id, $used_ids, true) ) {
+          $id = $base . '-' . $n;
+          $n++;
+        }
+      }
+
+      if ( in_array($id, $used_ids, true) ) {
+        $base_id = $id;
+        $n = 2;
+        $id = $base_id . '-' . $n;
+        while ( in_array($id, $used_ids, true) ) {
+          $n++;
+          $id = $base_id . '-' . $n;
+        }
+      }
+
+      $node->setAttribute('id', $id);
+    }
+
+    if ( ! in_array($id, $used_ids, true) ) {
+      $used_ids[] = $id;
+    }
+
+    $h2_list[] = array(
+      'id'   => $id,
+      'text' => $text,
+    );
+  }
+
+  $root = $dom->getElementById($wrap_id);
+  if ( $root ) {
+    $card_output = '';
+    foreach ( $root->childNodes as $child ) {
+      $card_output .= $dom->saveHTML($child);
+    }
+  }
+}
+?>
+
+<section class="description" id="description">
     <div class="container">
         <div class="description__wrapper">
+
             <div class="description__item">
-                <h3>Описание</h3>
-                <p>Наш российский завод по производству фиброцементных панелей предлагает материалы, в основе которых использованы качественные листы фиброцемента с нанесением грунтовки и ЛКМ силами нашего производства. Плиты с гладкой поверхностью могут быть окрашены разными материалами:</p>
+
+              <?= $card_output; ?>
+
+                <h2 id="size">Размеры фиброцементных панелей</h2>
                 <ul>
-                    <li>Матовыми акриловыми для серии «Премиум».</li>
-                    <li>Глянцевыми полиуретановыми для серии <span>«Антивандал»</span>.</li>
+                  <?php foreach ( $size_terms as $term ) : ?>
+                      <li><?php echo esc_html($term->name); ?></li>
+                  <?php endforeach; ?>
                 </ul>
-                <p>В процессе производства фиброцементные плиты «Фасад-Колор» получают максимально гладкую ровную поверхность, а также высокое европейское качество с сохранением доступной цены за счет применения лучших импортных материалов.</p>
-                <h3>Характеристики</h3>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Физико-механические показатели</th>
-                        <th>Значение</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Вес 1 м2 плиты толщиной 8 мм, кг</td>
-                        <td>14</td>
-                    </tr>
-                    <tr>
-                      <td>Плотность, не менее, кг/м3</td>
-                      <td>1550</td>
-                    </tr>
-                    <tr>
-                      <td>Ударная вязкость, не менее, кДж/м2</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td>Водопоглощение, не более, %</td>
-                      <td>20</td>
-                    </tr>
-                    <tr>
-                      <td>Предел прочности при изгибе, не менее, МПа</td>
-                      <td>22</td>
-                    </tr>
-                    <tr>
-                      <td>Модуль упругости при изгибе, МПа</td>
-                      <td>9000</td>
-                    </tr>
-                    <tr>
-                      <td>Морозостойкость, не менее, число циклов</td>
-                      <td>150</td>
-                    </tr>
-                    <tr>
-                      <td>Теплопроводность, Вт/(м·К)</td>
-                      <td>0,22</td>
-                    </tr>
-                    <tr>
-                      <td>Огнестойкость</td>
-                      <td>Г1</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <h3>Размеры фиброцементных панелей</h3>
-                <ul>
-                    <li>1200*1500*8 мм;</li>
-                    <li>1200*1500*8 мм;</li>
-                    <li>1200*1500*8 мм;</li>
-                    <li>1200*1500*8 мм;</li>
-                    <li>1200*1500*8 мм;</li>
-                    <li>1200*1500*8 мм;</li>
-                    <li>По согласованию с заказчиком плиты могут быть изготовлены различных размеров, по длине не более 3000 мм.</li>
-                </ul>
-              <h3>Сертификаты</h3>
-                <div class="certificates">
-                      <div class="certificate">
-                          <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
-                          <p>Сертификат соответствия на плиты фиброцементные «Фасад-Колор»</p>
-                      </div>
-                      <div class="certificate">
-                          <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
-                          <p>Сертификат соответствия на плиты фиброцементные «Фасад-Колор»</p>
-                      </div>
-                      <div class="certificate">
-                          <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
-                          <p>Сертификат соответствия на плиты фиброцементные «Фасад-Колор»</p>
-                      </div>
-                      <div class="certificate">
-                          <img src="<?= get_template_directory_uri() ?>/assets/images/certificates/1.png" alt="Сертификаты" title="Сертификаты" width="" height="" loading="lazy">
-                          <p>Сертификат соответствия на плиты фиброцементные «Фасад-Колор»</p>
-                      </div>
-                  </div>
+
+                <h2 id="certificates">Сертификаты</h2>
+              <?php get_template_part('components/elements/certificates'); ?>
             </div>
+
             <div class="description__item">
-              <a class="description__anchor" href="#">Описание</a>
-              <a class="description__anchor" href="#">Характеристики</a>
-              <a class="description__anchor" href="#">Размеры</a>
-              <a class="description__anchor" href="#">Сертификаты</a>
+                <div class="description__item-sidebar-inner">
+                    <ul class="description__item-sidebar">
+                      <?php foreach ( $h2_list as $h2 ) : ?>
+                        <?php if ( $h2['id'] === 'description' ) { continue; } ?>
+                          <li class="description__anchor">
+                              <a href="#<?php echo esc_attr($h2['id']); ?>">
+                                <?php echo esc_html($h2['text']); ?>
+                              </a>
+                          </li>
+                      <?php endforeach; ?>
+
+                        <li class="description__anchor">
+                            <a href="#size">Размеры</a>
+                        </li>
+                        <li class="description__anchor">
+                            <a href="#certificates">Сертификаты</a>
+                        </li>
+
+                    </ul>
+                </div>
             </div>
+
         </div>
+    </div>
+</section>
+
+<section class="products-small-section">
+    <div class="container">
+      <?php get_template_part('components/elements/products-small'); ?>
     </div>
 </section>

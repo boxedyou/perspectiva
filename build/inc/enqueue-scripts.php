@@ -1,8 +1,8 @@
 <?php
-add_action( 'wp_enqueue_scripts', 'foundationpress_scripts' );
+add_action( 'wp_enqueue_scripts', 'perspectiva_scripts' );
 
-function foundationpress_scripts() {
-  // Базовый handle от названия сайта: напр. "perspectiva"
+function perspectiva_scripts() {
+  // Базовый handle от названия сайта
   $handle_base = sanitize_title( get_bloginfo( 'name' ) );
 
   $main_style_handle   = $handle_base . '-main';
@@ -13,13 +13,13 @@ function foundationpress_scripts() {
   $style_src  = get_template_directory() . '/assets/css/main.min.css';
   $script_src = get_template_directory() . '/assets/js/index.min.js';
 
-  // Временные метки для кэша (версия файлов)
-  $style_version  = file_exists( $style_src ) ? filemtime( $style_src ) : false;
-  $script_version = file_exists( $script_src ) ? filemtime( $script_src ) : false;
+  // Версии по времени изменения файлов
+  $style_version  = file_exists( $style_src )  ? filemtime( $style_src )  : null;
+  $script_version = file_exists( $script_src ) ? filemtime( $script_src ) : null;
 
   // =============== Стили ===============
 
-  // Основной style.css темы
+  // style.css
   wp_enqueue_style(
     $main_style_handle,
     get_template_directory_uri() . '/style.css',
@@ -30,7 +30,7 @@ function foundationpress_scripts() {
     'all'
   );
 
-  // Тема (assets/css/main.min.css), зависит от основного стиля
+  // main.min.css
   wp_enqueue_style(
     $theme_style_handle,
     get_template_directory_uri() . '/assets/css/main.min.css',
@@ -41,11 +41,11 @@ function foundationpress_scripts() {
 
   // =============== Скрипты ===============
 
-  // 1. Убираем стандартные jQuery и jQuery Migrate WordPress
+  // Отключаем встроенный jQuery и migrate
   wp_deregister_script( 'jquery' );
   wp_deregister_script( 'jquery-migrate' );
 
-  // 2. Подключаем jQuery с CDN
+  // jQuery с CDN
   wp_register_script(
     'jquery',
     'https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js',
@@ -55,7 +55,7 @@ function foundationpress_scripts() {
   );
   wp_enqueue_script( 'jquery' );
 
-  // 3. Подключаем jQuery Migrate с CDN
+  // jQuery Migrate с CDN
   wp_register_script(
     'jquery-migrate',
     'https://code.jquery.com/jquery-migrate-3.4.1.min.js',
@@ -65,7 +65,7 @@ function foundationpress_scripts() {
   );
   wp_enqueue_script( 'jquery-migrate' );
 
-  // 4. Основной скрипт темы (assets/js/index.min.js)
+  // Основной скрипт (куда собран и send.js)
   wp_enqueue_script(
     $theme_script_handle,
     get_template_directory_uri() . '/assets/js/index.min.js',
@@ -74,26 +74,23 @@ function foundationpress_scripts() {
     true
   );
 
-  // === Передача базовых URL в JS ===
+  // Передаём ajaxurl и базовые URL в JS
   wp_localize_script(
     $theme_script_handle,
     'ajaxurl_object',
     [
       'ajaxurl'    => admin_url( 'admin-ajax.php' ),
       'site_url'   => home_url( '/' ),
-      'assets_url' => function_exists( 'get_assets_url' ) ? get_assets_url() : get_template_directory_uri() . '/assets',
+      'assets_url' => function_exists( 'get_assets_url' )
+        ? get_assets_url()
+        : get_template_directory_uri() . '/assets',
     ]
   );
 
-  // === Inline-данные для single-записей (например, для счётчика просмотров) ===
-  if ( is_single() ) {
-    wp_add_inline_script(
-      $theme_script_handle,
-      'const viewCounterAjax = ' . wp_json_encode( [
-        'ajax_url' => admin_url( 'admin-ajax.php' ),
-        'post_id'  => get_the_ID(),
-      ] ) . ';',
-      'before'
-    );
-  }
+  // (Опционально) совместимость со старым кодом, который ждёт window.ajaxurl
+  wp_add_inline_script(
+    $theme_script_handle,
+    'if (typeof ajaxurl === "undefined" && typeof ajaxurl_object !== "undefined") { window.ajaxurl = ajaxurl_object.ajaxurl; }',
+    'before'
+  );
 }

@@ -1,99 +1,89 @@
 <?php
-// Данные всех объектов
-$all_objects = [
-  [
-    'image' => '1.jpg',
-    'alt' => 'Объект 1',
-    'title' => 'Объект 1',
-    'tags' => ['Вентфасады' , 'Другое'],
-    'object_title' => 'Жилой дом Аднан Мендерес',
-    'place' => 'Казахстан, Туркестан',
-    'text' => 'Проект включает комплекс работ: от обследования и дизайна до монтажа вентилируемого фасада с утеплением под ключ.',
-    'filter' => 'Вентфасады'
-  ],
-  [
-    'image' => '2.jpg',
-    'alt' => 'Объект 2',
-    'title' => 'Объект 2',
-    'tags' => ['Фибросайдинг', 'Другое'],
-    'object_title' => 'Название объекта 2',
-    'place' => 'Местоположение объекта 2',
-    'text' => 'Описание объекта 2',
-    'filter' => 'Фибросайдинг'
-  ],
-  [
-    'image' => '3.jpg',
-    'alt' => 'Объект 3',
-    'title' => 'Объект 3',
-    'tags' => ['Вентфасады'],
-    'object_title' => 'Название объекта 3',
-    'place' => 'Местоположение объекта 3',
-    'text' => 'Описание объекта 3',
-    'filter' => 'Вентфасады'
-  ],
-  [
-    'image' => '4.jpg',
-    'alt' => 'Объект 4',
-    'title' => 'Объект 4',
-    'tags' => ['Фибросайдинг'],
-    'object_title' => 'Название объекта 4',
-    'place' => 'Местоположение объекта 4',
-    'text' => 'Описание объекта 4',
-    'filter' => 'Фибросайдинг'
-  ],
-  [
-    'image' => '5.jpg',
-    'alt' => 'Объект 5',
-    'title' => 'Объект 5',
-    'tags' => ['Вентфасады', 'Другое'],
-    'object_title' => 'Название объекта 5',
-    'place' => 'Местоположение объекта 5',
-    'text' => 'Описание объекта 5',
-    'filter' => 'Вентфасады'
-  ],
-  [
-    'image' => '6.jpg',
-    'alt' => 'Объект 6',
-    'title' => 'Объект 6',
-    'tags' => ['Фибросайдинг'],
-    'object_title' => 'Название объекта 6',
-    'place' => 'Местоположение объекта 6',
-    'text' => 'Описание объекта 6',
-    'filter' => 'Фибросайдинг'
-  ]
+// 1. Текущий фильтр из GET (?filter=slug | all)
+$current_filter = isset($_GET['filter']) ? sanitize_key($_GET['filter']) : 'all';
+
+// 2. Базовый URL для ссылок фильтра
+$base_url = get_permalink();
+
+// 3. Термины для кнопок-фильтров
+$filter_terms = get_terms([
+  'taxonomy'   => 'object_type',
+  'hide_empty' => true,
+  'orderby'    => 'name',
+  'order'      => 'ASC',
+]);
+
+// 4. Сколько объектов показывать
+if ( is_page('category') ) {
+  $objects_per_page = isset($objects_count) ? (int) $objects_count : -1;
+} else {
+  $objects_per_page = isset($objects_count) ? min(12, (int) $objects_count) : 12;
+}
+
+// 5. Аргументы WP_Query
+$objects_args = [
+  'post_type'      => 'object',
+  'posts_per_page' => $objects_per_page,
+  'post_status'    => 'publish',
+  'orderby'        => 'date',
+  'order'          => 'DESC',
 ];
 
-// Количество объектов для вывода (по умолчанию все)
-$objects_count = isset($objects_count) ? min($objects_count, count($all_objects)) : count($all_objects);
-$objects_to_show = array_slice($all_objects, 0, $objects_count);
+if ($current_filter !== 'all') {
+  $objects_args['tax_query'] = [[
+    'taxonomy' => 'object_type',
+    'field'    => 'slug',
+    'terms'    => $current_filter,
+  ]];
+}
 
+$objects_query = new WP_Query($objects_args);
 ?>
-
 <section class="objects">
     <div class="container">
         <div class="objects__title-wrapper">
             <h2 class="objects__title">Объекты с нашей продукцией</h2>
-            <aside class="objects__filter-inner">
-                <button class="objects__filter-button active" type="button" data-filter="Все">Все</button>
-                <button class="objects__filter-button" type="button" data-filter="Вентфасады">Вентфасады</button>
-                <button class="objects__filter-button" type="button" data-filter="Фибросайдинг">Фибросайдинг</button>
-            </aside>
+
+          <?php if (!is_front_page() && !is_wp_error($filter_terms) && !empty($filter_terms)) : ?>
+              <aside class="objects__filter-inner">
+                  <a
+                          class="objects__filter-button <?= $current_filter === 'all' ? 'active' : ''; ?>"
+                          href="<?= esc_url(add_query_arg('filter', 'all', $base_url)); ?>"
+                  >
+                      Все объекты
+                  </a>
+
+                <?php foreach ($filter_terms as $term) : ?>
+                  <?php
+                  $term_url  = add_query_arg('filter', $term->slug, $base_url);
+                  $is_active = ($current_filter === $term->slug);
+                  ?>
+                    <a
+                            class="objects__filter-button <?= $is_active ? 'active' : ''; ?>"
+                            href="<?= esc_url($term_url); ?>"
+                    >
+                      <?= esc_html($term->name); ?>
+                    </a>
+                <?php endforeach; ?>
+              </aside>
+          <?php endif; ?>
         </div>
+
         <div class="objects__wrapper">
-          <?php foreach ($objects_to_show as $object) :
-            // Передаем данные в шаблон
-            $object_image = $object['image'];
-            $object_alt = $object['alt'];
-            $object_title = $object['title'];
-            $object_tags = $object['tags'];
-            $object_filter = $object['filter'];
-            $object_item_title = $object['object_title'];
-            $object_place = $object['place'];
-            $object_text = $object['text'];
-            // Подключаем шаблон объекта
-            include __DIR__ . '/../elements/object.php';
-          endforeach; ?>
+          <?php if ($objects_query->have_posts()) : ?>
+            <?php while ($objects_query->have_posts()) : $objects_query->the_post(); ?>
+              <?php get_template_part('components/elements/object'); ?>
+            <?php endwhile; ?>
+            <?php wp_reset_postdata(); ?>
+          <?php else : ?>
+              <p>Объекты не найдены.</p>
+          <?php endif; ?>
         </div>
-        <a class="objects__link" href="#">Смотреть все объекты</a>
+
+      <?php if (!is_page('category')) : ?>
+          <a class="objects__link" href="<?= esc_url(home_url('/category/')); ?>">
+              Смотреть все объекты
+          </a>
+      <?php endif; ?>
     </div>
 </section>

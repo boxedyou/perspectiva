@@ -1,4 +1,4 @@
-<form class="form">
+<form class="form" data-ajax-send>
     <fieldset class="form__wrapper">
         <div class="form__inner">
             <label class="form__label">

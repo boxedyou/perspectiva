@@ -2,7 +2,11 @@
     <section class="contact-us">
         <div class="container">
             <div class="contact-us__wrapper">
-              <?php get_template_part('components/elements/form'); ?>
+                <div class="contact-us__form-inner">
+                    <h2 class="contact-us__form-inner-title">Напишите нам</h2>
+                    <p class="contact-us__form-inner-subtitle">Наши специалисты оперативно проконсультируют вас и подготовят предварительный расчёт стоимости продукции и работ.</p>
+                  <?php get_template_part('components/elements/form'); ?>
+                </div>
             </div>
         </div>
     </section>

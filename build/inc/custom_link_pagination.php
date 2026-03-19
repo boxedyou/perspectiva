@@ -29,7 +29,7 @@ function get_custom_pagenum_link($page_number, $post_type = null, $filter = '') 
 add_action('init', function() {
   add_rewrite_rule(
     '^news/page/([0-9]+)/?$',
-    'index.php?pagename=news&paged=$matches[1]',
+    'tpl-home.php?pagename=news&paged=$matches[1]',
     'top'
   );
 }, 10, 0);

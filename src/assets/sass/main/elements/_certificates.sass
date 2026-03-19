@@ -1,9 +1,7 @@
 .certificates
   display: flex
   gap: .8rem
-  //margin-left: -1.6rem
-  //width: calc(100% + 3.2rem)
-  //padding-left: 1.6rem
+  flex-wrap: wrap
   overflow-x: auto
 
 .certificate
@@ -11,13 +9,12 @@
   flex-direction: column
   width: fit-content
   gap: 1.6rem
-
   min-width: 14rem
-
   & img
     padding: .8rem
     border-radius: .6rem
     border: 1px solid rgba(240, 245, 250, 1)
+    width: fit-content
 
   & p
     text-align: center

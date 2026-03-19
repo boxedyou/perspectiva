@@ -1,10 +1,4 @@
-(function () {
     'use strict';
-
-    function getScrollbarWidth() {
-        return window.innerWidth - document.documentElement.clientWidth;
-    }
-
     function lockScroll() {
         document.documentElement.style.marginRight = getScrollbarWidth() + 'px';
         document.documentElement.style.overflow = document.body.style.overflow = 'hidden';
@@ -31,7 +25,8 @@
             p.classList.remove('is-open');
             p.setAttribute('aria-hidden', 'true');
         });
-        unlockScroll();
+        const burgerOpen = document.querySelector('[data-burger-menu]')?.classList.contains('active');
+        if (!burgerOpen) unlockScroll();
     }
 
     let openByTrigger = {
@@ -61,6 +56,11 @@
     });
 
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeAllPopups();
+        if (e.key !== 'Escape') return;
+        const hasOpenPopup = document.querySelector('[data-popup].is-open');
+        if (hasOpenPopup) {
+            closeAllPopups();
+        } else if ($burgerMenu.classList.contains('active')) {
+            setMenuOpen(false);
+        }
     });
-})();

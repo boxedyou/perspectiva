@@ -1,0 +1,71 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+@use 'production-hero'
+
+.about-description
+  @extend .production-hero
+  margin-bottom: .8rem
+
+  &__wrapper
+    @extend .production-hero__wrapper
+    justify-content: space-between
+    background-image: none
+    margin-bottom: .8rem
+    @media (width <= 991px)
+      flex-direction: column
+
+  &__item
+    min-width: 1px
+    width: 50%
+    @media (width <= 991px)
+      width: 100%
+    &:nth-child(1)
+      max-width: 68.8rem
+      @media (width <= 991px)
+        max-width: 100%
+
+    & h2
+      font-size: 4.4rem
+      margin-bottom: 1.6rem
+      line-height: 1.2
+      @media (width <= 1560px)
+        font-size: 3.2rem
+      @media (width <= 991px)
+        font-size: 2.4rem
+      @media (width <= 370px)
+        font-size: 2rem
+
+  &__swiper-big
+    margin-bottom: 1.2rem
+
+  &__slide, &__slide-thumb
+    border-radius: .8rem
+    overflow: clip
+    & img
+      width: 100%
+  &__slide-thumb
+    &.swiper-slide-active
+      padding: .4rem
+      border: 1px solid rgba(22, 26, 31, 1)
+
+  &__pagination
+    display: none
+    @media (width <= 560px)
+      display: flex
+      align-self: center
+      justify-content: center
+      position: static
+      margin-top: 16px
+    & .swiper-pagination-bullet
+      border-radius: unset
+      width: 10px
+      height: 10px
+      background-color: rgba(188, 205, 224, 1)
+      clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)
+      &.swiper-pagination-bullet-active
+        background-color: rgba(196, 37, 57, 1)
+
+  &__swiper-thumb
+    @media (width <= 560px)
+      display: none

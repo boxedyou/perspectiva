@@ -48,6 +48,7 @@
                 li.classList.remove('active');
             });
             item.classList.add('active');
+            closeAllPopups();
         }
     });
 })();

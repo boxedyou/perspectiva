@@ -97,6 +97,22 @@ const singleCategoryHeroThumbSwiper = new Swiper("[data-single-category-hero-swi
 singleCategoryHeroSwiper.controller.control = singleCategoryHeroThumbSwiper;
 singleCategoryHeroThumbSwiper.controller.control = singleCategoryHeroSwiper;
 
+// Связка двух свайперов + пагинация для about-description
+const aboutDescriptionSwiper = new Swiper("[data-about-description-swiper]", {
+    slidesPerView: 1,
+    pagination: {
+        el: "[data-about-description-pagination]",
+    },
+});
+
+const aboutDescriptionThumbSwiper = new Swiper("[data-about-description-swiper-thumb]", {
+    slidesPerView: 6.5,
+    spaceBetween: 12,
+});
+
+aboutDescriptionSwiper.controller.control = aboutDescriptionThumbSwiper;
+aboutDescriptionThumbSwiper.controller.control = aboutDescriptionSwiper;
+
 // Слайдер для объектов
 const objectsProductSwiper = new Swiper("[data-objects-product-swiper]", {
     slidesPerView: 1,

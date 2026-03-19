@@ -121,7 +121,8 @@ if (is_front_page()) {
     'active' => true
   ];
 
-} elseif (is_tax() || is_category() || is_tag()) {
+}
+elseif (is_tax() || is_category() || is_tag()) {
   $term = get_queried_object();
 
   if ($term->parent) {
@@ -145,7 +146,9 @@ if (is_front_page()) {
     'active' => true
   ];
 
-} elseif (is_search()) {
+}
+
+elseif (is_search()) {
   $breadcrumbs[] = [
     'title'  => 'Поиск: ' . get_search_query(),
     'url'    => '',

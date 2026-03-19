@@ -1,0 +1,62 @@
+// Подключаем миксины и переменные
+@use '../abstracts/mixins'
+@use '../abstracts/variables'
+@use 'category-hero'
+
+.about-hero
+  @include mixins.sectionIndentBottom
+  background-color: rgba(255, 255, 255, 1)
+
+  &__wrapper
+    display: flex
+    justify-content: space-between
+    gap: 6.4rem
+    @media (width <= 1560px)
+      gap: 4rem
+    @media (width <= 991px)
+      gap: 2.4rem
+      flex-direction: column
+
+  &__item
+    &:nth-child(1)
+      padding-bottom: 6.4rem
+      @media (width <= 1560px)
+        padding-bottom: 4rem
+      @media (width <= 991px)
+        padding-bottom: 0
+    &:nth-child(2)
+      align-self: flex-end
+      @media (width <= 991px)
+        align-self: center
+
+  &__title
+    @extend .category-hero__title
+
+  &__text
+    margin-bottom: 4rem
+    @media (width <= 1560px)
+      font-size: 1.4rem
+      margin-bottom: 2.4rem
+
+  &__button-wrapper
+    display: flex
+    gap: .8rem
+    @media (width <= 560px)
+      flex-direction: column
+
+  &__button
+    @media (width <= 1560px)
+      font-size: 1.4rem
+    @media (width <= 560px)
+      width: 100%
+    &--button
+      @include mixins.buttonMain()
+    &--link
+      @include mixins.buttonMain(rgba(22, 26, 31, 1), rgba(255, 255, 255, 1))
+
+  &__img
+    min-width: 57.6rem
+    @media (width <= 1400px)
+      min-width: 32.8rem
+    @media (width <= 991px)
+      min-width: auto

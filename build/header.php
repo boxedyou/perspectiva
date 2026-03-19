@@ -21,7 +21,7 @@
 $logo_url = get_assets_url('images/logo/logo.svg');
 $logo_mobile_url = get_assets_url('images/logo/logo-mobile.svg');
 ?>
-<header class="header">
+<header class="header" data-header>
     <div class="header__wrapper">
         <a class="header__logo-inner" href="<?php echo esc_url(home_url('/')); ?>">
             <img class="header__logo" src="<?php echo esc_url($logo_url); ?>" alt="<?php bloginfo('name'); ?>" width="168" height="120" loading="lazy">
@@ -31,16 +31,86 @@ $logo_mobile_url = get_assets_url('images/logo/logo-mobile.svg');
                 <a class="header__logo-mobile-inner" href="<?php echo esc_url(home_url('/')); ?>">
                     <img class="header__logo-mobile" src="<?php echo esc_url($logo_mobile_url); ?>" alt="<?php bloginfo('name'); ?>" width="172" height="40" loading="lazy">
                 </a>
-                <nav class="header__nav">
-                        <ul class="header__nav-list">
-                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/catalog/')); ?>">Каталог</a></li>
-                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/price-list/')); ?>">Прайс-лист</a></li>
-                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/about/')); ?>">О компании</a></li>
-                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/category/')); ?>">Объекты с нашей продукцией</a></li>
-                            <li class="header__list-item"><a href="<?php echo esc_url(home_url('/contacts/')); ?>">Контакты</a></li>
-                        </ul>
 
+
+                <nav class="header__nav">
+                    <ul class="header__nav-list">
+                        <li class="header__list-item has-children">
+                            <a href="<?php echo esc_url( home_url( '/catalog/' ) ); ?>">Каталог</a>
+                            <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0.5 0.5L5.5 5.5L10.5 0.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+
+                          <?php
+                          // Термины таксономии categories, у которых есть товары (product)
+                          $catalog_terms = get_terms( [
+                            'taxonomy'   => 'categories',
+                            'hide_empty' => true,
+                            'orderby'    => 'name',
+                            'order'      => 'ASC',
+                          ] );
+                          ?>
+
+                          <?php if ( ! is_wp_error( $catalog_terms ) && ! empty( $catalog_terms ) ) : ?>
+                              <ul class="header__sub-list">
+                                <?php foreach ( $catalog_terms as $term ) : ?>
+                                    <li class="header__sub-item">
+                                        <a class="header__sub-link" href="<?php echo esc_url( get_term_link( $term ) ); ?>">
+                                          <?php echo esc_html( $term->name ); ?>
+                                        </a>
+
+                                      <?php
+                                      // Товары этого термина
+                                      $products_query = new WP_Query( [
+                                        'post_type'      => 'product',
+                                        'posts_per_page' => -1,
+                                        'post_status'    => 'publish',
+                                        'tax_query'      => [
+                                          [
+                                            'taxonomy' => 'categories',
+                                            'field'    => 'term_id',
+                                            'terms'    => $term->term_id,
+                                          ],
+                                        ],
+                                      ] );
+                                      ?>
+
+                                      <?php if ( $products_query->have_posts() ) : ?>
+                                          <ul class="header__deep-list">
+                                            <?php while ( $products_query->have_posts() ) : $products_query->the_post(); ?>
+                                                <li class="header__deep-item">
+                                                    <a class="header__deep-link" href="<?php the_permalink(); ?>">
+                                                        – <?php the_title(); ?>
+                                                    </a>
+                                                </li>
+                                            <?php endwhile; ?>
+                                          </ul>
+                                        <?php wp_reset_postdata(); ?>
+                                      <?php endif; ?>
+                                    </li>
+                                <?php endforeach; ?>
+                              </ul>
+                          <?php else : ?>
+                              <!-- Если терминов нет, можно оставить твой статичный запасной вариант или ничего не выводить -->
+                          <?php endif; ?>
+                        </li>
+
+                        <li class="header__list-item">
+                            <a href="<?php echo esc_url( home_url( '/price-list/' ) ); ?>">Прайс-лист</a>
+                        </li>
+                        <li class="header__list-item">
+                            <a href="<?php echo esc_url( home_url( '/about/' ) ); ?>">О компании</a>
+                        </li>
+                        <li class="header__list-item">
+                            <a href="<?php echo esc_url( home_url( '/category/' ) ); ?>">Объекты с нашей продукцией</a>
+                        </li>
+                        <li class="header__list-item">
+                            <a href="<?php echo esc_url( home_url( '/contacts/' ) ); ?>">Контакты</a>
+                        </li>
+                    </ul>
                 </nav>
+
+
                 <div class="header__text-inner">
                     <p class="header__text">Производство и продажа фиброцементных панелей и фасадных систем</p>
                     <button class="header__button-icon" type="button" data-callback-popup-open>
@@ -49,11 +119,16 @@ $logo_mobile_url = get_assets_url('images/logo/logo-mobile.svg');
                             <path d="M27.551 11.776a1.34 1.34 0 00-1.344-1.336H13.793a1.34 1.34 0 00-1.344 1.336v16.448a1.34 1.34 0 001.344 1.336h12.414a1.34 1.34 0 001.344-1.336V11.776zM15.872 25.448c.4 0 .725.323.725.72 0 .398-.325.72-.725.72h-.01a.722.722 0 01-.724-.72c0-.397.324-.72.724-.72h.01zm4.138 0c.4 0 .724.323.724.72 0 .398-.324.72-.724.72H20a.722.722 0 01-.724-.72c0-.397.324-.72.724-.72h.01zm3.403.72v-4.112c0-.397.325-.72.725-.72.4 0 .724.323.724.72v4.112c0 .398-.324.72-.724.72a.722.722 0 01-.725-.72zm-7.54-4.832c.4 0 .724.323.724.72 0 .397-.325.72-.725.72h-.01a.722.722 0 01-.724-.72c0-.397.324-.72.724-.72h.01zm4.137 0c.4 0 .724.323.724.72 0 .397-.324.72-.724.72H20a.722.722 0 01-.724-.72c0-.397.324-.72.724-.72h.01zm-4.138-4.112c.4 0 .725.323.725.72 0 .397-.325.72-.725.72h-.01a.722.722 0 01-.724-.72c0-.397.324-.72.724-.72h.01zm4.138 0c.4 0 .724.323.724.72 0 .397-.324.72-.724.72H20a.722.722 0 01-.724-.72c0-.397.324-.72.724-.72h.01zm4.138 0c.4 0 .724.323.724.72 0 .397-.324.72-.724.72h-.01a.722.722 0 01-.725-.72c0-.397.325-.72.725-.72h.01zm-.01-4.112c.4 0 .724.322.724.72 0 .397-.324.72-.724.72h-8.276a.722.722 0 01-.724-.72c0-.398.324-.72.724-.72h8.276zM29 28.224A2.785 2.785 0 0126.207 31H13.793A2.785 2.785 0 0111 28.224V11.776A2.785 2.785 0 0113.793 9h12.414A2.785 2.785 0 0129 11.776v16.448z" fill="#fff"/>
                         </svg>
                     </button>
-                    <button class="header__button-icon" type="button" data-burger-menu>
-                        <svg class="header__burger-menu" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <button class="header__button-icon" type="button" >
+                        <svg class="header__burger-menu" data-burger-menu-open width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="0.5" y="0.5" width="39" height="39" rx="5.5" stroke="white" stroke-opacity="0.3"/>
                             <path d="M10 14H30M10 20H30M10 26H30" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
+                        <svg class="header__burger-menu" data-burger-menu-close width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="6" fill="white"/>
+                            <path d="M24.9983 14.1718C25.2273 13.9427 25.5992 13.9427 25.8282 14.1718C26.0573 14.4008 26.0573 14.7727 25.8282 15.0017L20.83 20L25.8282 24.9983C26.0573 25.2273 26.0573 25.5992 25.8282 25.8282C25.5992 26.0573 25.2273 26.0573 24.9983 25.8282L20 20.83L15.0017 25.8282C14.7727 26.0573 14.4008 26.0573 14.1718 25.8282C13.9427 25.5992 13.9427 25.2273 14.1718 24.9983L19.17 20L14.1718 15.0017C13.9427 14.7727 13.9427 14.4008 14.1718 14.1718C14.4008 13.9427 14.7727 13.9427 15.0017 14.1718L20 19.17L24.9983 14.1718Z" fill="#161A1F"/>
+                        </svg>
+
                     </button>
                 </div>
             </div>

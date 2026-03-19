@@ -39,14 +39,14 @@
   &__list-item
     &:nth-child(1)
       color: variables.$colorText
+    &.has-children
+      color: #fff
 
   &__sub-list
     margin-top: var(--listItemIndent)
 
   &__sub-item
-    display: flex
-    align-items: center
-    gap: .8rem
+    display: block
     &:before
       content: '-'
 
@@ -76,9 +76,6 @@
     @media (width < 1710px )
       font-size: 1.4rem
 
-  &__social-inner
-    display: flex
-    gap: .8rem
 
   &__bottom
     display: flex

@@ -38,7 +38,16 @@ require_once( 'inc/remove_default_post.php' );
 /**
  * Кастомные ссылки пагинации для страниц с кастомными запросами
  */
-
 require_once( 'inc/custom_link_pagination.php' );
+
+/**
+ * Кастомные тайтлы и сео мета тэги (если пустые выводится стандартные WP)
+ */
+require_once( 'inc/custom_seo_meta_tags.php' );
+
+/**
+ * Отправка писем через PHP
+ */
+require_once( 'inc/send.php' );
 
 

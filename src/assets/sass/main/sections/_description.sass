@@ -3,6 +3,7 @@
 @use '../abstracts/variables'
 
 .description
+  scroll-margin-top: 30px
   margin-bottom: 4.8rem
   @media (width <= 1560px)
     margin-bottom: 3.6rem
@@ -10,6 +11,7 @@
     margin-bottom: 2.4rem
 
   &__wrapper
+    position: relative
     display: flex
     gap: 6.4rem
     background-color: rgba(255, 255, 255, 1)
@@ -24,14 +26,16 @@
       padding: 2rem 1.6rem
 
   &__item
-    overflow: hidden
+    width: 100%
     &:nth-child(2)
-      display: flex
-      flex-direction: column
-      gap: .8rem
-      min-width: 32.8rem
-      @media (width <= 1220px)
-        display: none
+      max-width: 32.8rem
+
+  &__item-sidebar
+    display: flex
+    flex-direction: column
+    gap: .8rem
+    @media (width <= 1220px)
+      display: none
 
   &__anchor
     text-align: center
@@ -39,10 +43,14 @@
     border: 1px solid rgba(188, 205, 224, 1)
     border-radius: .8rem
 
-  & h3
+  & .certificates
+    flex-wrap: nowrap
+
+  & h2
     font-size: 2.8rem
     margin-bottom: 1.6rem
     line-height: 1.2
+    scroll-margin-top: 20px
     @media (width <= 1560px)
       font-size: 2rem
       margin-bottom: 1.2rem
@@ -56,3 +64,15 @@
     @media (width <= 1560px)
       margin-bottom: 1.2rem
       font-size: 1.4rem
+
+  & ol
+    counter-reset: number
+
+    & li
+      counter-increment: number
+      &:not(:last-child)
+        margin-bottom: 1.2rem
+      &:before
+        content: counter(number)'. '
+        color: #b81618
+        margin-right: .8rem
