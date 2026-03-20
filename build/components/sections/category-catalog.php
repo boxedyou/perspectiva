@@ -1,8 +1,6 @@
 <?php
-// Текущий объект запроса (может быть терм таксономии или что-то ещё)
 $current_term = get_queried_object();
 
-// Все термины таксономии для табов
 $terms = get_terms([
   'taxonomy'   => 'categories',
   'hide_empty' => false,
@@ -10,32 +8,53 @@ $terms = get_terms([
   'order'      => 'ASC',
 ]);
 
-// Определяем, находимся ли мы на странице термина таксономии categories
 $is_term_page = $current_term instanceof WP_Term && $current_term->taxonomy === 'categories';
 
-// Базовый URL для таба "Все": архив товаров или своя страница каталога
-$all_url = get_post_type_archive_link('product'); // или home_url('/catalog/')
+// Фильтруем термины: оставляем только те, у которых есть хотя бы 1 product
+$terms_with_products = [];
 
-// Какой фильтр активен сейчас
-$current_slug = $is_term_page ? $current_term->slug : 'all';
+if (!is_wp_error($terms) && !empty($terms)) {
+  foreach ($terms as $term) {
+    $check = new WP_Query([
+      'post_type'      => 'product',
+      'posts_per_page' => 1,
+      'post_status'    => 'publish',
+      'tax_query'      => [[
+        'taxonomy' => 'categories',
+        'field'    => 'term_id',
+        'terms'    => (int) $term->term_id,
+      ]],
+      'no_found_rows' => true,
+    ]);
+
+    if ($check->have_posts()) {
+      $terms_with_products[] = $term;
+    }
+
+    wp_reset_postdata();
+  }
+}
+
+// Если мы не на странице термина и вообще нет терминов с product — не выводим блок
+if (!$is_term_page && empty($terms_with_products)) {
+  return;
+}
 ?>
 
 <section class="category-catalog">
     <div class="container">
 
         <div class="category-catalog__filter-inner">
-            <a href="<?php echo esc_url( home_url( '/categories/' ) ); ?>"
-               class="category-catalog__filter <?= $current_slug === 'all' ? 'active' : ''; ?>">
+            <a href="<?php echo esc_url(home_url('/categories/')); ?>"
+               class="category-catalog__filter <?= (!$is_term_page || empty($current_term->slug)) ? 'active' : ''; ?>">
                 Все
             </a>
 
-          <?php if ( ! is_wp_error($terms) && ! empty($terms) ) : ?>
-            <?php foreach ( $terms as $term ) : ?>
+          <?php if (!empty($terms_with_products)) : ?>
+            <?php foreach ($terms_with_products as $term) : ?>
               <?php
-              // Ссылка на архив ТОЛЬКО с товаром этого термина
-              // (страница таксономии, но мы сами ограничим вывод product’ами)
               $term_link = get_term_link($term);
-              $is_active = $current_slug === $term->slug;
+              $is_active = $is_term_page && isset($current_term->slug) && $current_term->slug === $term->slug;
               ?>
                   <a href="<?= esc_url($term_link); ?>"
                      class="category-catalog__filter <?= $is_active ? 'active' : ''; ?>">
@@ -47,15 +66,13 @@ $current_slug = $is_term_page ? $current_term->slug : 'all';
 
         <div class="category-catalog__wrapper">
           <?php
-          // Собираем WP_Query ТОЛЬКО для product
           $args = [
             'post_type'      => 'product',
             'posts_per_page' => 12,
             'post_status'    => 'publish',
           ];
 
-          // Если мы на странице термина categories — фильтруем по нему
-          if ( $is_term_page ) {
+          if ($is_term_page && !empty($current_term->slug)) {
             $args['tax_query'] = [[
               'taxonomy' => 'categories',
               'field'    => 'slug',
@@ -65,15 +82,17 @@ $current_slug = $is_term_page ? $current_term->slug : 'all';
 
           $products_query = new WP_Query($args);
 
-          if ( $products_query->have_posts() ) :
-            while ( $products_query->have_posts() ) : $products_query->the_post();
+          if ($products_query->have_posts()) :
+            while ($products_query->have_posts()) : $products_query->the_post();
               get_template_part('components/elements/category-item');
             endwhile;
             wp_reset_postdata();
           else :
             ?>
               <p>Товары не найдены.</p>
-          <?php endif; ?>
+          <?php
+          endif;
+          ?>
         </div>
 
     </div>

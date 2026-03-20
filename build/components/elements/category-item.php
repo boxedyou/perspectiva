@@ -33,6 +33,7 @@ if ( ! is_array( $card_group ) ) {
 
 // 4.1. Цена из группы
 $price = isset( $card_group['price'] ) ? $card_group['price'] : '';
+$warp = $card_group['warp'];
 
 // 4.2. Галерея изображений из группы
 $card_imgs = isset( $card_group['card_imgs'] ) ? $card_group['card_imgs'] : null;
@@ -75,6 +76,9 @@ if ( ! $thumb_url ) {
 
 // 6. Таксономия size: размеры, которые принадлежат этому продукту
 $sizes = get_the_terms( $product_id, 'size' );
+
+$czena_i_razmery = (!empty($card_group['czena_i_razmery']) && is_array($card_group['czena_i_razmery'])) ? $card_group['czena_i_razmery'] : array();
+
 ?>
 
 <a class="category-item"
@@ -96,7 +100,8 @@ $sizes = get_the_terms( $product_id, 'size' );
     <h3 class="category-item__title">
       <?php the_title(); ?>
     </h3>
-
+    <p class="category-item__text">Основа:</p>
+    <p><?= $warp ?></p>
   <?php // Блок "Цвета" — пока статичный текст, как у вас ?>
     <p class="category-item__text">Цвета:</p>
     <div class="category-item__color-inner">
@@ -105,29 +110,52 @@ $sizes = get_the_terms( $product_id, 'size' );
     </div>
 
   <?php // Блок "Размеры" из таксономии size, если термины найдены ?>
-  <?php if ( ! is_wp_error( $sizes ) && ! empty( $sizes ) ) : ?>
+  <?php if ( ! is_wp_error( $czena_i_razmery ) && ! empty( $czena_i_razmery ) ) : ?>
       <p class="category-item__text">Размеры:</p>
       <div class="category-item__size-wrapper">
-        <?php foreach ( $sizes as $size_term ) : ?>
+        <?php foreach ( $czena_i_razmery as $razmery ) : ?>
             <p class="category-item__size">
-              <?php echo esc_html( $size_term->name ); ?>
+              <?php echo esc_html( $razmery['size'] ); ?>
             </p>
         <?php endforeach; ?>
       </div>
   <?php endif; ?>
 
   <?php // Цена: внутри строки меняем "м2" на "м<sup>2</sup>" ?>
-  <?php if ( $price ) : ?>
-      <p class="category-item__price">
-        <?php
-        // str_replace не экранирует HTML, поэтому:
-        // 1) экранируем текст,
-        // 2) потом подменяем уже безопасную строку.
-        $safe_price = esc_html( $price );
-        echo str_replace( 'м2', 'м<sup>2</sup>', $safe_price );
-        ?>
-      </p>
-  <?php endif; ?>
+  <?php
+  if ( ! empty($czena_i_razmery) && is_array($czena_i_razmery) ) :
+
+    $min_price_raw = '';
+    $min_price_val = null;
+
+    foreach ($czena_i_razmery as $item) {
+      if ( ! is_array($item) || empty($item['price']) ) {
+        continue;
+      }
+
+      $price_raw = trim((string) $item['price']);
+      if ($price_raw === '') continue;
+
+      // Берём первое число из строки (поддержка "12,5" и "12.5")
+      if ( preg_match('/(\d+(?:[.,]\d+)?)/u', $price_raw, $m) ) {
+        $num = str_replace(',', '.', $m[1]);
+        $num = (float) $num;
+
+        if ($min_price_val === null || $num < $min_price_val) {
+          $min_price_val = $num;
+          $min_price_raw = $price_raw;
+        }
+      }
+    }
+
+    if ($min_price_raw !== '') :
+      // Подмена "м2" -> "м<sup>2</sup>" после экранирования
+      $safe_price = esc_html($min_price_raw);
+      echo '<p class="category-item__price">' . str_replace('м2', 'м<sup>2</sup>', $safe_price) . '</p>';
+    endif;
+
+  endif;
+  ?>
 
     <button class="category-item__button" type="button">
         Смотреть подробнее

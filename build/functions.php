@@ -50,4 +50,9 @@ require_once( 'inc/custom_seo_meta_tags.php' );
  */
 require_once( 'inc/send.php' );
 
+/**
+ * Подключение фавиконок
+ */
+require_once( 'inc/favicon.php' );
+
 

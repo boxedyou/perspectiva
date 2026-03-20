@@ -25,31 +25,23 @@ if ( ! function_exists('perspectiva_h2_anchor_id') ) {
     $text = preg_replace('/[^a-z0-9]+/', '-', $text);
     $text = trim($text, '-');
 
-    if ($text === '') {
-      $text = 'section';
-    }
-
-    return $text;
+    return $text !== '' ? $text : 'section';
   }
 }
 
 $product_id = get_the_ID();
-
 $card_group = get_field('card_group', $product_id);
-$card_info  = isset($card_group['card_info']) ? $card_group['card_info'] : '';
+$card_group = is_array($card_group) ? $card_group : array();
 
-$size_terms = get_the_terms($product_id, 'size');
-if ( is_wp_error($size_terms) || empty($size_terms) ) {
-  $size_terms = array();
-}
+$card_info = isset($card_group['card_info']) ? (string) $card_group['card_info'] : '';
+$czena_i_razmery = (!empty($card_group['czena_i_razmery']) && is_array($card_group['czena_i_razmery'])) ? $card_group['czena_i_razmery'] : array();
 
-$h2_list     = array();
+$h2_list = array();
 $card_output = $card_info;
 
-if ( $card_info !== '' && is_string($card_info) && class_exists('DOMDocument') ) {
-
+if ($card_info !== '' && is_string($card_info) && class_exists('DOMDocument')) {
   $wrap_id = 'card-info-root';
-  $html    = '<div id="' . esc_attr($wrap_id) . '">' . $card_info . '</div>';
+  $html = '<div id="' . esc_attr($wrap_id) . '">' . $card_info . '</div>';
 
   $dom = new DOMDocument();
   libxml_use_internal_errors(true);
@@ -61,45 +53,37 @@ if ( $card_info !== '' && is_string($card_info) && class_exists('DOMDocument') )
 
   $used_ids = array();
 
-  foreach ( $nodes as $node ) {
+  foreach ($nodes as $node) {
     $text = trim($node->textContent);
-    if ( $text === '' ) {
-      continue;
-    }
+    if ($text === '') continue;
 
     $id = $node->getAttribute('id');
 
-    if ( $id === '' ) {
-      if ( $text === 'Характеристики' ) {
+    // Если id нет — генерим
+    if ($id === '') {
+      if ($text === 'Характеристики') {
         $id = 'info';
-      } elseif ( $text === 'Описание' ) {
+      } elseif ($text === 'Описание') {
         $id = 'card-description';
       } else {
-        $base = perspectiva_h2_anchor_id($text);
-        $id = $base;
-        $n = 2;
-        while ( in_array($id, $used_ids, true) ) {
-          $id = $base . '-' . $n;
-          $n++;
-        }
+        $id = perspectiva_h2_anchor_id($text);
       }
-
-      if ( in_array($id, $used_ids, true) ) {
-        $base_id = $id;
-        $n = 2;
-        $id = $base_id . '-' . $n;
-        while ( in_array($id, $used_ids, true) ) {
-          $n++;
-          $id = $base_id . '-' . $n;
-        }
-      }
-
-      $node->setAttribute('id', $id);
     }
 
-    if ( ! in_array($id, $used_ids, true) ) {
-      $used_ids[] = $id;
+    // Делаем уникальным
+    if (in_array($id, $used_ids, true)) {
+      $base = $id;
+      $n = 2;
+      $new_id = $base . '-' . $n;
+      while (in_array($new_id, $used_ids, true)) {
+        $n++;
+        $new_id = $base . '-' . $n;
+      }
+      $id = $new_id;
     }
+
+    $used_ids[] = $id;
+    $node->setAttribute('id', $id);
 
     $h2_list[] = array(
       'id'   => $id,
@@ -107,10 +91,11 @@ if ( $card_info !== '' && is_string($card_info) && class_exists('DOMDocument') )
     );
   }
 
+  // Забираем только внутренности root
   $root = $dom->getElementById($wrap_id);
-  if ( $root ) {
+  if ($root) {
     $card_output = '';
-    foreach ( $root->childNodes as $child ) {
+    foreach ($root->childNodes as $child) {
       $card_output .= $dom->saveHTML($child);
     }
   }
@@ -120,15 +105,15 @@ if ( $card_info !== '' && is_string($card_info) && class_exists('DOMDocument') )
 <section class="description" id="description">
     <div class="container">
         <div class="description__wrapper">
-
             <div class="description__item">
-
               <?= $card_output; ?>
 
                 <h2 id="size">Размеры фиброцементных панелей</h2>
                 <ul>
-                  <?php foreach ( $size_terms as $term ) : ?>
-                      <li><?php echo esc_html($term->name); ?></li>
+                  <?php foreach ($czena_i_razmery as $term) :
+                    if (!is_array($term) || empty($term['size'])) continue;
+                    ?>
+                      <li><?= esc_html($term['size']); ?></li>
                   <?php endforeach; ?>
                 </ul>
 
@@ -139,11 +124,12 @@ if ( $card_info !== '' && is_string($card_info) && class_exists('DOMDocument') )
             <div class="description__item">
                 <div class="description__item-sidebar-inner">
                     <ul class="description__item-sidebar">
-                      <?php foreach ( $h2_list as $h2 ) : ?>
-                        <?php if ( $h2['id'] === 'description' ) { continue; } ?>
+                      <?php foreach ($h2_list as $h2) :
+                        if ($h2['id'] === 'description') continue;
+                        ?>
                           <li class="description__anchor">
-                              <a href="#<?php echo esc_attr($h2['id']); ?>">
-                                <?php echo esc_html($h2['text']); ?>
+                              <a href="#<?= esc_attr($h2['id']); ?>">
+                                <?= esc_html($h2['text']); ?>
                               </a>
                           </li>
                       <?php endforeach; ?>
@@ -154,7 +140,6 @@ if ( $card_info !== '' && is_string($card_info) && class_exists('DOMDocument') )
                         <li class="description__anchor">
                             <a href="#certificates">Сертификаты</a>
                         </li>
-
                     </ul>
                 </div>
             </div>
