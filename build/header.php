@@ -11,6 +11,32 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="//cdn.callibri.ru/callibri.js" type="text/javascript" charset="utf-8" defer></script>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () {
+                (m[i].a = m[i].a || []).push(arguments)
+            };
+            m[i].l = 1 * new Date();
+            for (var j = 0; j < document.scripts.length; j++) {
+                if (document.scripts[j].src === r) return;
+            }
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a);
+        })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        // ЗАМЕНИ 12345678 на ID твоего счётчика
+        ym(94256132, "init", {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true
+        });
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/94256132" style="position:absolute; left:-9999px;" alt=""/></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -58,35 +84,6 @@ $logo_mobile_url = get_assets_url('images/logo/logo-mobile.svg');
                                         <a class="header__sub-link" href="<?php echo esc_url( get_term_link( $term ) ); ?>">
                                           <?php echo esc_html( $term->name ); ?>
                                         </a>
-
-                                      <?php
-                                      // Товары этого термина
-                                      $products_query = new WP_Query( [
-                                        'post_type'      => 'product',
-                                        'posts_per_page' => -1,
-                                        'post_status'    => 'publish',
-                                        'tax_query'      => [
-                                          [
-                                            'taxonomy' => 'categories',
-                                            'field'    => 'term_id',
-                                            'terms'    => $term->term_id,
-                                          ],
-                                        ],
-                                      ] );
-                                      ?>
-
-                                      <?php if ( $products_query->have_posts() ) : ?>
-                                          <ul class="header__deep-list">
-                                            <?php while ( $products_query->have_posts() ) : $products_query->the_post(); ?>
-                                                <li class="header__deep-item">
-                                                    <a class="header__deep-link" href="<?php the_permalink(); ?>">
-                                                        – <?php the_title(); ?>
-                                                    </a>
-                                                </li>
-                                            <?php endwhile; ?>
-                                          </ul>
-                                        <?php wp_reset_postdata(); ?>
-                                      <?php endif; ?>
                                     </li>
                                 <?php endforeach; ?>
                               </ul>
@@ -98,8 +95,22 @@ $logo_mobile_url = get_assets_url('images/logo/logo-mobile.svg');
                         <li class="header__list-item">
                             <a href="<?php echo esc_url( home_url( '/price-list/' ) ); ?>">Прайс-лист</a>
                         </li>
-                        <li class="header__list-item">
+                        <li class="header__list-item has-children">
                             <a href="<?php echo esc_url( home_url( '/about/' ) ); ?>">О компании</a>
+                            <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0.5 0.5L5.5 5.5L10.5 0.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <ul class="header__sub-list">
+                                <li class="header__sub-item">
+                                    <a class="header__sub-link" href="<?php echo esc_url(home_url('/production/')); ?>">Производство</a>
+                                </li>
+                                <li class="header__sub-item">
+                                    <a class="header__sub-link" href="<?php echo esc_url(home_url('/certificates/')); ?>">Сертификаты</a>
+                                </li>
+                                <li class="header__sub-item">
+                                    <a class="header__sub-link" href="<?php echo esc_url(home_url('/novosti-i-stati/')); ?>">Новости и статьи</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="header__list-item">
                             <a href="<?php echo esc_url( home_url( '/category/' ) ); ?>">Объекты с нашей продукцией</a>

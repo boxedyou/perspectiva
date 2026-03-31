@@ -17,6 +17,12 @@ require_once( 'inc/initial_path.php' );
 require_once( 'inc/get_url.php' );
 
 /**
+ * Передача данных объектов в JS
+ */
+require_once( 'inc/object_on_map.php' );
+
+
+/**
  * Подключаем стили, скрипты, ajax, доп функции для WP
  */
 require_once( 'inc/enqueue-scripts.php' );
@@ -54,5 +60,7 @@ require_once( 'inc/send.php' );
  * Подключение фавиконок
  */
 require_once( 'inc/favicon.php' );
+
+
 
 

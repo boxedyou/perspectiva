@@ -84,7 +84,9 @@ function perspectiva_scripts() {
       'assets_url' => function_exists( 'get_assets_url' )
         ? get_assets_url()
         : get_template_directory_uri() . '/assets',
-    ]
+      'projects_data' => function_exists('perspectiva_get_projects_map_data') ? perspectiva_get_projects_map_data() : [],
+    ],
+
   );
 
   // (Опционально) совместимость со старым кодом, который ждёт window.ajaxurl
@@ -94,3 +96,4 @@ function perspectiva_scripts() {
     'before'
   );
 }
+

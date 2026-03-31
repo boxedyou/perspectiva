@@ -1,3 +1,6 @@
+// Подключаем миксины и переменные
+@use '../../abstracts/mixins'
+
 .popup
   position: fixed
   display: none
@@ -9,6 +12,13 @@
   z-index: 100
   &.is-open
     display: flex
+  &--thanks
+    & .popup__body-subtitle
+      font-size: 1.8rem
+      color: rgba(35, 40, 51, 1)
+      margin-bottom: 1.6rem
+      @media (max-width: 991px)
+        font-size: 1.6rem
 
   & .form__inner, & .form__button-inner
     flex-direction: column
@@ -92,3 +102,18 @@
     @media (width <= 1560px)
       right: 1.6rem
       top: 2.4rem
+
+  &__body-title
+    font-size: 3.2rem
+    margin-bottom: 2.4rem
+    @media (width <= 1560px)
+      font-size: 2.4rem
+      margin-bottom: 2rem
+    @media (width <= 991px)
+      font-size: 2rem
+
+  &__button
+    @include mixins.buttonMain()
+
+  &__icon
+    margin-bottom: 2.4rem

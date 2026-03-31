@@ -22,35 +22,6 @@
                         <a class="burger-menu__item-link" href="<?php echo esc_url( get_term_link( $term ) ); ?>">
                           <?php echo esc_html( $term->name ); ?>
                         </a>
-
-                      <?php
-                      // Товары этого термина
-                      $products_query = new WP_Query( [
-                        'post_type'      => 'product',
-                        'posts_per_page' => -1,
-                        'post_status'    => 'publish',
-                        'tax_query'      => [
-                          [
-                            'taxonomy' => 'categories',
-                            'field'    => 'term_id',
-                            'terms'    => $term->term_id,
-                          ],
-                        ],
-                      ] );
-                      ?>
-
-                      <?php if ( $products_query->have_posts() ) : ?>
-                          <ul class="burger-menu__sub-list">
-                            <?php while ( $products_query->have_posts() ) : $products_query->the_post(); ?>
-                                <li class="burger-menu__sub-item">
-                                    <a class="burger-menu__sub-link" href="<?php the_permalink(); ?>">
-                                        – <?php the_title(); ?>
-                                    </a>
-                                </li>
-                            <?php endwhile; ?>
-                          </ul>
-                        <?php wp_reset_postdata(); ?>
-                      <?php endif; ?>
                     </li>
                 <?php
                 endforeach;

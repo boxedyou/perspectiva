@@ -1,65 +1,244 @@
+<?php
+
+$ral_items = [
+  // Yellows / Beiges
+  ['code' => 'RAL 1000', 'hex' => '#BEBD7F'],
+  ['code' => 'RAL 1001', 'hex' => '#C2B078'],
+  ['code' => 'RAL 1002', 'hex' => '#C6A664'],
+  ['code' => 'RAL 1003', 'hex' => '#F7BA0B'],
+  ['code' => 'RAL 1004', 'hex' => '#EAA900'],
+  ['code' => 'RAL 1005', 'hex' => '#C79600'],
+  ['code' => 'RAL 1006', 'hex' => '#E6BF00'],
+  ['code' => 'RAL 1007', 'hex' => '#E1CC4F'],
+  ['code' => 'RAL 1011', 'hex' => '#AF8A54'],
+  ['code' => 'RAL 1012', 'hex' => '#D9C022'],
+  ['code' => 'RAL 1013', 'hex' => '#E9E5CE'],
+  ['code' => 'RAL 1014', 'hex' => '#DFCEA1'],
+  ['code' => 'RAL 1015', 'hex' => '#E6D2B5'],
+  ['code' => 'RAL 1016', 'hex' => '#F1DD38'],
+  ['code' => 'RAL 1017', 'hex' => '#F6A950'],
+  ['code' => 'RAL 1018', 'hex' => '#FACA30'],
+  ['code' => 'RAL 1019', 'hex' => '#A48F7A'],
+  ['code' => 'RAL 1020', 'hex' => '#A08F65'],
+  ['code' => 'RAL 1021', 'hex' => '#F6B600'],
+  ['code' => 'RAL 1023', 'hex' => '#F7B500'],
+  ['code' => 'RAL 1024', 'hex' => '#B08D57'],
+  ['code' => 'RAL 1026', 'hex' => '#FFFF00'],
+  ['code' => 'RAL 1027', 'hex' => '#A77F0E'],
+  ['code' => 'RAL 1028', 'hex' => '#FF9B00'],
+  ['code' => 'RAL 1032', 'hex' => '#E2A300'],
+  ['code' => 'RAL 1033', 'hex' => '#F99A1C'],
+  ['code' => 'RAL 1034', 'hex' => '#EB9C52'],
+  ['code' => 'RAL 1035', 'hex' => '#908370'],
+  ['code' => 'RAL 1036', 'hex' => '#80643F'],
+  ['code' => 'RAL 1037', 'hex' => '#F09200'],
+
+  // Oranges
+  ['code' => 'RAL 2000', 'hex' => '#DA6E00'],
+  ['code' => 'RAL 2001', 'hex' => '#BA481B'],
+  ['code' => 'RAL 2002', 'hex' => '#BF3922'],
+  ['code' => 'RAL 2003', 'hex' => '#F67828'],
+  ['code' => 'RAL 2004', 'hex' => '#E25303'],
+  ['code' => 'RAL 2005', 'hex' => '#FF4D06'],
+  ['code' => 'RAL 2007', 'hex' => '#FFB200'],
+  ['code' => 'RAL 2008', 'hex' => '#EC6B22'],
+  ['code' => 'RAL 2009', 'hex' => '#DE5307'],
+  ['code' => 'RAL 2010', 'hex' => '#D05D28'],
+  ['code' => 'RAL 2011', 'hex' => '#E26E0E'],
+  ['code' => 'RAL 2012', 'hex' => '#D5654D'],
+  ['code' => 'RAL 2013', 'hex' => '#923E25'],
+
+  // Reds
+  ['code' => 'RAL 3000', 'hex' => '#AF2B1E'],
+  ['code' => 'RAL 3001', 'hex' => '#A52019'],
+  ['code' => 'RAL 3002', 'hex' => '#A2231D'],
+  ['code' => 'RAL 3003', 'hex' => '#9B111E'],
+  ['code' => 'RAL 3004', 'hex' => '#75151E'],
+  ['code' => 'RAL 3005', 'hex' => '#5E2129'],
+  ['code' => 'RAL 3007', 'hex' => '#412227'],
+  ['code' => 'RAL 3009', 'hex' => '#642424'],
+  ['code' => 'RAL 3011', 'hex' => '#781F19'],
+  ['code' => 'RAL 3012', 'hex' => '#C1876B'],
+  ['code' => 'RAL 3013', 'hex' => '#A12312'],
+  ['code' => 'RAL 3014', 'hex' => '#D36E70'],
+  ['code' => 'RAL 3015', 'hex' => '#EA899A'],
+  ['code' => 'RAL 3016', 'hex' => '#B32821'],
+  ['code' => 'RAL 3017', 'hex' => '#E63244'],
+  ['code' => 'RAL 3018', 'hex' => '#D53032'],
+  ['code' => 'RAL 3020', 'hex' => '#CC0605'],
+  ['code' => 'RAL 3022', 'hex' => '#D95030'],
+  ['code' => 'RAL 3024', 'hex' => '#F80000'],
+  ['code' => 'RAL 3026', 'hex' => '#FE0000'],
+  ['code' => 'RAL 3027', 'hex' => '#C51D34'],
+  ['code' => 'RAL 3028', 'hex' => '#CB3234'],
+  ['code' => 'RAL 3031', 'hex' => '#B32428'],
+  ['code' => 'RAL 3032', 'hex' => '#721422'],
+  ['code' => 'RAL 3033', 'hex' => '#B44C43'],
+
+  // Violets
+  ['code' => 'RAL 4001', 'hex' => '#6D3F5B'],
+  ['code' => 'RAL 4002', 'hex' => '#922B3E'],
+  ['code' => 'RAL 4003', 'hex' => '#DE4C8A'],
+  ['code' => 'RAL 4004', 'hex' => '#641C34'],
+  ['code' => 'RAL 4005', 'hex' => '#6C4675'],
+  ['code' => 'RAL 4006', 'hex' => '#A03472'],
+  ['code' => 'RAL 4007', 'hex' => '#4A192C'],
+  ['code' => 'RAL 4008', 'hex' => '#924E7D'],
+  ['code' => 'RAL 4009', 'hex' => '#A18594'],
+  ['code' => 'RAL 4010', 'hex' => '#CF3476'],
+  ['code' => 'RAL 4011', 'hex' => '#8673A1'],
+  ['code' => 'RAL 4012', 'hex' => '#6C6874'],
+
+  // Blues
+  ['code' => 'RAL 5000', 'hex' => '#354D73'],
+  ['code' => 'RAL 5001', 'hex' => '#1F4E79'],
+  ['code' => 'RAL 5002', 'hex' => '#1A2B5F'],
+  ['code' => 'RAL 5003', 'hex' => '#1D1E33'],
+  ['code' => 'RAL 5004', 'hex' => '#18171C'],
+  ['code' => 'RAL 5005', 'hex' => '#005387'],
+  ['code' => 'RAL 5007', 'hex' => '#376B8C'],
+  ['code' => 'RAL 5008', 'hex' => '#2B3A44'],
+  ['code' => 'RAL 5009', 'hex' => '#225F78'],
+  ['code' => 'RAL 5010', 'hex' => '#004F7C'],
+  ['code' => 'RAL 5011', 'hex' => '#1A2B44'],
+  ['code' => 'RAL 5012', 'hex' => '#0089B6'],
+  ['code' => 'RAL 5013', 'hex' => '#1E213D'],
+  ['code' => 'RAL 5014', 'hex' => '#606E8C'],
+  ['code' => 'RAL 5015', 'hex' => '#2271B3'],
+  ['code' => 'RAL 5017', 'hex' => '#0A5D9E'],
+  ['code' => 'RAL 5018', 'hex' => '#138992'],
+  ['code' => 'RAL 5019', 'hex' => '#1C542D'],
+  ['code' => 'RAL 5020', 'hex' => '#0F415F'],
+  ['code' => 'RAL 5021', 'hex' => '#07737A'],
+  ['code' => 'RAL 5022', 'hex' => '#2F2A5A'],
+  ['code' => 'RAL 5023', 'hex' => '#4D668E'],
+  ['code' => 'RAL 5024', 'hex' => '#6A93B0'],
+  ['code' => 'RAL 5025', 'hex' => '#296478'],
+  ['code' => 'RAL 5026', 'hex' => '#102C54'],
+
+  // Greens
+  ['code' => 'RAL 6000', 'hex' => '#3C7460'],
+  ['code' => 'RAL 6001', 'hex' => '#366735'],
+  ['code' => 'RAL 6002', 'hex' => '#325928'],
+  ['code' => 'RAL 6003', 'hex' => '#50533C'],
+  ['code' => 'RAL 6004', 'hex' => '#024442'],
+  ['code' => 'RAL 6005', 'hex' => '#114232'],
+  ['code' => 'RAL 6006', 'hex' => '#3C392E'],
+  ['code' => 'RAL 6007', 'hex' => '#2C3222'],
+  ['code' => 'RAL 6008', 'hex' => '#37342A'],
+  ['code' => 'RAL 6009', 'hex' => '#27352A'],
+  ['code' => 'RAL 6010', 'hex' => '#4D6F39'],
+  ['code' => 'RAL 6011', 'hex' => '#6C7C59'],
+  ['code' => 'RAL 6012', 'hex' => '#303D3A'],
+  ['code' => 'RAL 6013', 'hex' => '#7D765A'],
+  ['code' => 'RAL 6014', 'hex' => '#474135'],
+  ['code' => 'RAL 6015', 'hex' => '#3D3D36'],
+  ['code' => 'RAL 6016', 'hex' => '#00694C'],
+  ['code' => 'RAL 6017', 'hex' => '#587F40'],
+  ['code' => 'RAL 6018', 'hex' => '#61993B'],
+  ['code' => 'RAL 6019', 'hex' => '#B9CEAC'],
+  ['code' => 'RAL 6020', 'hex' => '#37422F'],
+  ['code' => 'RAL 6021', 'hex' => '#8A9977'],
+  ['code' => 'RAL 6022', 'hex' => '#3A3327'],
+  ['code' => 'RAL 6024', 'hex' => '#008351'],
+  ['code' => 'RAL 6025', 'hex' => '#5E6E3B'],
+  ['code' => 'RAL 6026', 'hex' => '#005F4E'],
+  ['code' => 'RAL 6027', 'hex' => '#7EBAB5'],
+  ['code' => 'RAL 6028', 'hex' => '#2F3A2F'],
+  ['code' => 'RAL 6029', 'hex' => '#1A7F4B'],
+  ['code' => 'RAL 6032', 'hex' => '#2D6A4F'],
+  ['code' => 'RAL 6033', 'hex' => '#478A84'],
+  ['code' => 'RAL 6034', 'hex' => '#7FB0B2'],
+  ['code' => 'RAL 6035', 'hex' => '#1B542C'],
+  ['code' => 'RAL 6036', 'hex' => '#005D52'],
+  ['code' => 'RAL 6037', 'hex' => '#25E712'],
+  ['code' => 'RAL 6038', 'hex' => '#00F700'],
+
+  // Greys / Blacks / Whites
+  ['code' => 'RAL 7000', 'hex' => '#7E8B92'],
+  ['code' => 'RAL 7001', 'hex' => '#8F999F'],
+  ['code' => 'RAL 7002', 'hex' => '#817F68'],
+  ['code' => 'RAL 7003', 'hex' => '#7A7B6D'],
+  ['code' => 'RAL 7004', 'hex' => '#9EA0A1'],
+  ['code' => 'RAL 7005', 'hex' => '#6B716F'],
+  ['code' => 'RAL 7006', 'hex' => '#766A5E'],
+  ['code' => 'RAL 7008', 'hex' => '#745E3D'],
+  ['code' => 'RAL 7009', 'hex' => '#5D6058'],
+  ['code' => 'RAL 7010', 'hex' => '#585C56'],
+  ['code' => 'RAL 7011', 'hex' => '#52595D'],
+  ['code' => 'RAL 7012', 'hex' => '#575D5E'],
+  ['code' => 'RAL 7013', 'hex' => '#575044'],
+  ['code' => 'RAL 7015', 'hex' => '#4F5358'],
+  ['code' => 'RAL 7016', 'hex' => '#383E42'],
+  ['code' => 'RAL 7021', 'hex' => '#2F3234'],
+  ['code' => 'RAL 7022', 'hex' => '#4C4A44'],
+  ['code' => 'RAL 7023', 'hex' => '#808076'],
+  ['code' => 'RAL 7024', 'hex' => '#45494E'],
+  ['code' => 'RAL 7026', 'hex' => '#374345'],
+  ['code' => 'RAL 7030', 'hex' => '#928E85'],
+  ['code' => 'RAL 7031', 'hex' => '#5B686D'],
+  ['code' => 'RAL 7032', 'hex' => '#B5B0A1'],
+  ['code' => 'RAL 7033', 'hex' => '#7F8274'],
+  ['code' => 'RAL 7034', 'hex' => '#92886F'],
+  ['code' => 'RAL 7035', 'hex' => '#CBD0CC'],
+  ['code' => 'RAL 7036', 'hex' => '#7F7679'],
+  ['code' => 'RAL 7037', 'hex' => '#7D7F7D'],
+  ['code' => 'RAL 7038', 'hex' => '#B8B8B0'],
+  ['code' => 'RAL 7039', 'hex' => '#6B695F'],
+  ['code' => 'RAL 7040', 'hex' => '#9DA3A6'],
+  ['code' => 'RAL 7042', 'hex' => '#8F9695'],
+  ['code' => 'RAL 7043', 'hex' => '#4E5452'],
+  ['code' => 'RAL 7044', 'hex' => '#BDBDB2'],
+  ['code' => 'RAL 7045', 'hex' => '#91969A'],
+  ['code' => 'RAL 7046', 'hex' => '#82898E'],
+  ['code' => 'RAL 7047', 'hex' => '#CFD0CF'],
+
+  ['code' => 'RAL 8000', 'hex' => '#887142'],
+  ['code' => 'RAL 8001', 'hex' => '#9C6B30'],
+  ['code' => 'RAL 8002', 'hex' => '#7B5141'],
+  ['code' => 'RAL 8003', 'hex' => '#80542F'],
+  ['code' => 'RAL 8004', 'hex' => '#8F4E35'],
+  ['code' => 'RAL 8007', 'hex' => '#6F4A2F'],
+  ['code' => 'RAL 8008', 'hex' => '#6F4F28'],
+  ['code' => 'RAL 8011', 'hex' => '#5A3A29'],
+  ['code' => 'RAL 8012', 'hex' => '#673831'],
+  ['code' => 'RAL 8014', 'hex' => '#4C2F27'],
+  ['code' => 'RAL 8015', 'hex' => '#5B3A29'],
+  ['code' => 'RAL 8016', 'hex' => '#4F3128'],
+  ['code' => 'RAL 8017', 'hex' => '#45322E'],
+  ['code' => 'RAL 8019', 'hex' => '#403A3A'],
+  ['code' => 'RAL 8022', 'hex' => '#212121'],
+  ['code' => 'RAL 8023', 'hex' => '#A65E2E'],
+  ['code' => 'RAL 8024', 'hex' => '#79553C'],
+  ['code' => 'RAL 8025', 'hex' => '#755C49'],
+  ['code' => 'RAL 8028', 'hex' => '#4E3B31'],
+
+  ['code' => 'RAL 9001', 'hex' => '#E9E0D2'],
+  ['code' => 'RAL 9002', 'hex' => '#D7D5CB'],
+  ['code' => 'RAL 9003', 'hex' => '#ECECE7'],
+  ['code' => 'RAL 9004', 'hex' => '#2B2B2C'],
+  ['code' => 'RAL 9005', 'hex' => '#0E0E10'],
+  ['code' => 'RAL 9006', 'hex' => '#A1A1A0'],
+  ['code' => 'RAL 9007', 'hex' => '#878581'],
+  ['code' => 'RAL 9010', 'hex' => '#F1ECE1'],
+  ['code' => 'RAL 9011', 'hex' => '#27292B'],
+  ['code' => 'RAL 9016', 'hex' => '#F6F6F6'],
+  ['code' => 'RAL 9017', 'hex' => '#1E1E1E'],
+  ['code' => 'RAL 9018', 'hex' => '#D7D7D7'],
+  ['code' => 'RAL 9022', 'hex' => '#9C9C9C'],
+  ['code' => 'RAL 9023', 'hex' => '#828282'],
+]; ?>
+
 <div class="popup-ral" data-popup data-popup-ral>
-  <div class="popup-ral__wrapper" data-popup-inner>
-    <h2 class="popup-ral__title">Выбрать цвет RAL</h2>
-    <ul class="popup-ral__list" data-ral-list>
-      <li class="popup-ral__list-item" data-ral="RAL 9016">
-        <span class="popup-ral__list-color" style="background:#F6F6F6;"></span>
-        <span class="popup-ral__list-item-text">RAL 9016</span>
-      </li>
-
-      <li class="popup-ral__list-item" data-ral="RAL 1000">
-        <span class="popup-ral__list-color" style="background:#BEBD7F;"></span>
-        <span class="popup-ral__list-item-text">RAL 1000</span>
-      </li>
-
-      <li class="popup-ral__list-item" data-ral="RAL 1001">
-        <span class="popup-ral__list-color" style="background:#C2B078;"></span>
-        <span class="popup-ral__list-item-text">RAL 1001</span>
-      </li>
-
-      <li class="popup-ral__list-item" data-ral="RAL 1003">
-        <span class="popup-ral__list-color" style="background:#F7BA0B;"></span>
-        <span class="popup-ral__list-item-text">RAL 1003</span>
-      </li>
-
-      <li class="popup-ral__list-item" data-ral="RAL 1004">
-        <span class="popup-ral__list-color" style="background:#EAA900;"></span>
-        <span class="popup-ral__list-item-text">RAL 1004</span>
-      </li>
-
-      <li class="popup-ral__list-item" data-ral="RAL 1005">
-        <span class="popup-ral__list-color" style="background:#C79600;"></span>
-        <span class="popup-ral__list-item-text">RAL 1005</span>
-      </li>
-
-      <li class="popup-ral__list-item" data-ral="RAL 1006">
-        <span class="popup-ral__list-color" style="background:#E6BF00;"></span>
-        <span class="popup-ral__list-item-text">RAL 1006</span>
-      </li>
-
-      <li class="popup-ral__list-item" data-ral="RAL 1007">
-        <span class="popup-ral__list-color" style="background:#E1CC4F;"></span>
-        <span class="popup-ral__list-item-text">RAL 1007</span>
-      </li>
-
-      <li class="popup-ral__list-item" data-ral="RAL 1011">
-        <span class="popup-ral__list-color" style="background:#AF8A54;"></span>
-        <span class="popup-ral__list-item-text">RAL 1011</span>
-      </li>
-
-      <li class="popup-ral__list-item" data-ral="RAL 1012">
-        <span class="popup-ral__list-color" style="background:#D9C022;"></span>
-        <span class="popup-ral__list-item-text">RAL 1012</span>
-      </li>
-
-      <li class="popup-ral__list-item" data-ral="RAL 1013">
-        <span class="popup-ral__list-color" style="background:#E9E5CE;"></span>
-        <span class="popup-ral__list-item-text">RAL 1013</span>
-      </li>
-    </ul>
-  </div>
-  <svg class="popup-ral__close" data-popup-close width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M16.9983 6.17176C17.2273 5.94275 17.5992 5.94275 17.8282 6.17176C18.0573 6.40078 18.0573 6.77271 17.8282 7.00173L12.83 12L17.8282 16.9983C18.0573 17.2273 18.0573 17.5992 17.8282 17.8282C17.5992 18.0573 17.2273 18.0573 16.9983 17.8282L12 12.83L7.00173 17.8282C6.77271 18.0573 6.40078 18.0573 6.17176 17.8282C5.94275 17.5992 5.94275 17.2273 6.17176 16.9983L11.17 12L6.17176 7.00173C5.94275 6.77271 5.94275 6.40078 6.17176 6.17176C6.40078 5.94275 6.77271 5.94275 7.00173 6.17176L12 11.17L16.9983 6.17176Z" fill="#161A1F"/>
-  </svg>
-
+    <div class="popup-ral__wrapper" data-popup-inner>
+        <h2 class="popup-ral__title">Выбрать цвет RAL</h2>
+        <ul class="popup-ral__list" data-ral-list>
+          <?php foreach ($ral_items as $item) : ?>
+              <li class="popup-ral__list-item" data-ral="<?= esc_attr($item['code']); ?>">
+                  <span class="popup-ral__list-color" style="background:<?= esc_attr($item['hex']); ?>;"></span>
+                  <span class="popup-ral__list-item-text"><?= esc_html($item['code']); ?></span>
+              </li>
+          <?php endforeach; ?>
+        </ul>
+    </div>
 </div>

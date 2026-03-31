@@ -71,7 +71,40 @@
       padding-inline: var(--gapCalc)
 
   &__certificates
+    position: relative
     min-width: 14rem
+    padding: .8rem
+    border-radius: .6rem
+    border: 1px solid rgba(216, 225, 235, 1)
+    &:before
+      position: absolute
+      content: ''
+      inset: 0
+      background: rgba(255, 255, 255, .6)
+      pointer-events: none
+      opacity: 0
+      transition: opacity .4s
+    &:after
+      position: absolute
+      content: ''
+      width: 4.8rem
+      height: 4.8rem
+      background-color: rgba(22, 26, 31, 1)
+      border-radius: .6rem
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18.5797 10.9638C18.5797 6.75743 15.1702 3.34791 10.9638 3.34791C6.75743 3.34791 3.34791 6.75743 3.34791 10.9638C3.34791 15.1702 6.75743 18.5797 10.9638 18.5797C13.0379 18.5797 14.9172 17.7498 16.2907 16.405C16.3072 16.3839 16.3228 16.3617 16.3423 16.3423C16.3617 16.3228 16.3839 16.3072 16.405 16.2907C17.7498 14.9172 18.5797 13.0379 18.5797 10.9638ZM10.2898 14.0725V11.6377H7.8551C7.48311 11.6377 7.18115 11.3358 7.18115 10.9638C7.18115 10.5918 7.48311 10.2898 7.8551 10.2898H10.2898V7.8551C10.2898 7.48311 10.5918 7.18115 10.9638 7.18115C11.3358 7.18115 11.6377 7.48311 11.6377 7.8551V10.2898H14.0725C14.4445 10.2898 14.7464 10.5918 14.7464 10.9638C14.7464 11.3358 14.4445 11.6377 14.0725 11.6377H11.6377V14.0725C11.6377 14.4445 11.3358 14.7464 10.9638 14.7464C10.5918 14.7464 10.2898 14.4445 10.2898 14.0725ZM19.9276 10.9638C19.9276 13.1965 19.1085 15.2366 17.758 16.8057L21.8027 20.8495C22.0658 21.1125 22.0658 21.5397 21.8027 21.8027C21.5397 22.0658 21.1125 22.0658 20.8495 21.8027L16.8057 17.758C15.2366 19.1085 13.1965 19.9276 10.9638 19.9276C6.01345 19.9276 2 15.9141 2 10.9638C2 6.01345 6.01345 2 10.9638 2C15.9141 2 19.9276 6.01345 19.9276 10.9638Z' fill='white'/%3E%3C/svg%3E%0A")
+      background-size: 2.4rem
+      background-position: center
+      background-repeat: no-repeat
+      opacity: 0
+      transition: opacity .4s
+
+    @media (hover: hover) and (pointer: fine)
+      &:hover
+        &:before, &:after
+          opacity: 1
 
   &__info-wrapper
     --gapIndent: 1.6rem
@@ -145,3 +178,12 @@
       width: 100%
     &:nth-of-type(2)
       @include mixins.buttonMain(variables.$colorButtonBackSecond, variables.$mainColor)
+      &:hover
+        background-color: #b81618
+    &--svg
+      &:hover
+        background-color: #b81618 !important
+        color: #fff !important
+        & svg path
+          fill: #fff
+

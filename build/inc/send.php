@@ -17,8 +17,9 @@ function sendOrder() {
     wp_die('Not allowed', 400);
   }
 
-  $to   = 'evstifeevoleg1989@gmail.com';
-  $from = 'no-reply@perspectiva.ru';
+  $to   = 'info@fasad-material.ru';
+//  $to   = 'evstifeevoleg1989@gmail.com';
+  $from = 'no-reply@fasad-material.ru';
 
   // Тема
   $subject_raw = isset($_POST['form_subject']) ? trim(strip_tags($_POST['form_subject'])) : 'Заявка с сайта';

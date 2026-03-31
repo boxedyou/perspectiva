@@ -19,5 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
         //= scripts/utm_save.js
         //= scripts/burger_menu_open.js
         //= scripts/send.js
+        //= scripts/mask-phone.js
     }) ()
 }, false) ;

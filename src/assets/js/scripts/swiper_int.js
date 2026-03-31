@@ -64,38 +64,28 @@ const swiperMaterials = new Swiper("[data-materials-swiper]", {
     },
 });
 
-// Синхронизированные слайдеры для single-category-hero
-const singleCategoryHeroSwiper = new Swiper("[data-single-category-hero-swiper]", {
-    slidesPerView: 1,
-});
-
+// Сначала миниатюры
 const singleCategoryHeroThumbSwiper = new Swiper("[data-single-category-hero-swiper-thumb]", {
     slidesPerView: 2,
     spaceBetween: 6,
+    watchSlidesProgress: true,
+    watchSlidesVisibility: true,
     slideToClickedSlide: true,
     breakpoints: {
-        320: {
-            slidesPerView: 3,
-            spaceBetween: 8,
-        },
-        374: {
-            slidesPerView: 4,
-            spaceBetween: 10,
-        },
-        600: {
-            slidesPerView: 6,
-            spaceBetween: 12,
-        },
-        768: {
-            slidesPerView: 7.5,
-            spaceBetween: 12,
-        },
+        320: { slidesPerView: 3, spaceBetween: 8 },
+        374: { slidesPerView: 4, spaceBetween: 10 },
+        600: { slidesPerView: 6, spaceBetween: 12 },
+        768: { slidesPerView: 7.5, spaceBetween: 12 },
     },
 });
 
-// Синхронизация: при изменении основного слайдера обновляем миниатюры
-singleCategoryHeroSwiper.controller.control = singleCategoryHeroThumbSwiper;
-singleCategoryHeroThumbSwiper.controller.control = singleCategoryHeroSwiper;
+// Потом основной
+const singleCategoryHeroSwiper = new Swiper("[data-single-category-hero-swiper]", {
+    slidesPerView: 1,
+    thumbs: {
+        swiper: singleCategoryHeroThumbSwiper,
+    },
+});
 
 // Связка двух свайперов + пагинация для about-description
 const aboutDescriptionSwiper = new Swiper("[data-about-description-swiper]", {

@@ -42,3 +42,6 @@
   &__link
     width: var(--objectWidth)
     @include mixins.buttonMain(variables.$colorButtonBackSecond, variables.$mainColor)
+    @media (hover: hover) and (pointer: fine)
+      &:hover
+        background-color: variables.$colorButtonBack

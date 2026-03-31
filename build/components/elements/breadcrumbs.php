@@ -33,13 +33,8 @@ if (is_front_page()) {
   $post = get_queried_object();
 
   // FIX: на страницах catalog/categories должны быть только 3 крошки:
-  // Главная / Каталог / Название страницы
-  if (is_page('category') || is_page('categories')) {
-    $breadcrumbs[] = [
-      'title'  => 'Каталог',
-      'url'    => home_url('/catalog/'),
-      'active' => false
-    ];
+  // Главная /  Название страницы
+  if (is_page('category')) {
 
     $breadcrumbs[] = [
       'title'  => get_the_title(),
@@ -72,11 +67,7 @@ if (is_front_page()) {
           'url'    => home_url('/catalog/'),
           'active' => false
         ];
-        $breadcrumbs[] = [
-          'title'  => 'Категории',
-          'url'    => home_url('/categories/'),
-          'active' => false
-        ];
+
       } elseif ($post_type === 'news') {
         $news_page = get_page_by_path('novosti-i-stati');
         if ($news_page) {
@@ -105,17 +96,6 @@ if (is_front_page()) {
         if ($terms && !is_wp_error($terms)) {
           $term = array_shift($terms);
           if (!$term) break;
-
-          // Для product на этом этапе добавляем только сам term (без ancestors),
-          // т.к. каталог/категории уже добавлены.
-          if ($post_type === 'product' && $taxonomy === 'categories') {
-            $breadcrumbs[] = [
-              'title'  => $term->name,
-              'url'    => get_term_link($term),
-              'active' => false
-            ];
-            break;
-          }
 
           if (!empty($term->parent)) {
             $ancestors = get_ancestors($term->term_id, $taxonomy);
@@ -163,7 +143,7 @@ if (is_front_page()) {
   $term = get_queried_object();
 
   // Для taxonomy categories (относятся к product):
-  // Главная / Каталог / Категории / Название категории
+  // Главная / Каталог / Название категории
   if ($term instanceof WP_Term && $term->taxonomy === 'categories') {
     $tax_obj = get_taxonomy('categories');
     $object_types = $tax_obj ? (array) $tax_obj->object_type : [];
@@ -172,11 +152,6 @@ if (is_front_page()) {
       $breadcrumbs[] = [
         'title'  => 'Каталог',
         'url'    => home_url('/catalog/'),
-        'active' => false
-      ];
-      $breadcrumbs[] = [
-        'title'  => 'Категории',
-        'url'    => home_url('/categories/'),
         'active' => false
       ];
       $breadcrumbs[] = [

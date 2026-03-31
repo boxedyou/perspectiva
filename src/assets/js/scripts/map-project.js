@@ -2,78 +2,41 @@ if (typeof window.mapLoaded === 'undefined') {
     window.mapLoaded = false;
 }
 
-const loaderYandexProject = document.querySelector(".map-project__loader");
+const loaderYandexProject = document.querySelector('.map-project__loader');
 
-// Базовые URL, которые пришли из WP через wp_localize_script
 const siteUrl = (window.ajaxurl_object && window.ajaxurl_object.site_url) || '/';
 const assetsUrl = (window.ajaxurl_object && window.ajaxurl_object.assets_url) || '';
 
-// Тестовые данные проектов
-const projectsData = [
-    {
-        coords: [55.7558, 37.6173], // Москва
-        city: 'Москва',
-        title: 'Проект 1',
-        company_name: 'Компания 1',
-        description: 'Описание проекта 1',
-        link: siteUrl + 'project/1',
-        img: assetsUrl + '/images/object/1.jpg'
-    },
-    {
-        coords: [59.9343, 30.3351], // Санкт-Петербург
-        city: 'Санкт-Петербург',
-        title: 'Проект 2',
-        company_name: 'Компания 2',
-        description: 'Описание проекта 2',
-        link: siteUrl + 'project/2',
-        img: assetsUrl + '/images/object/2.jpg'
-    },
-    {
-        coords: [56.8431, 60.6454], // Екатеринбург
-        city: 'Екатеринбург',
-        title: 'Проект 3',
-        company_name: 'Компания 3',
-        description: 'Описание проекта 3',
-        link: siteUrl + 'project/3',
-        img: assetsUrl + '/images/object/3.jpg'
-    },
-    {
-        coords: [55.0084, 82.9357], // Новосибирск
-        city: 'Новосибирск',
-        title: 'Проект 4',
-        company_name: 'Компания 4',
-        description: 'Описание проекта 4',
-        link: siteUrl + 'project/4',
-        img: assetsUrl + '/images/object/4.jpg'
-    },
-    {
-        coords: [55.0080, 82.9350], // Новосибирск
-        city: 'Новосибирск',
-        title: 'Проект 4',
-        company_name: 'Компания 4',
-        description: 'Описание проекта 4',
-        link: siteUrl + 'project/4',
-        img: assetsUrl + '/images/object/4.jpg'
-    },
-    {
-        coords: [53.2001, 50.15], // Самара
-        city: 'Самара',
-        title: 'Проект 5',
-        company_name: 'Компания 5',
-        description: 'Описание проекта 5',
-        link: siteUrl + 'project/5',
-        img: assetsUrl + '/images/object/5.jpg'
-    },
-    {
-        coords: [56.3269, 44.0075], // Нижний Новгород
-        city: 'Нижний Новгород',
-        title: 'Проект 6',
-        company_name: 'Компания 6',
-        description: 'Описание проекта 6',
-        link: siteUrl + 'project/6',
-        img: assetsUrl + '/images/object/6.jpg'
-    }
-];
+const projectsData =
+    (window.ajaxurl_object && Array.isArray(window.ajaxurl_object.projects_data))
+        ? window.ajaxurl_object.projects_data
+        : [];
+
+function spreadDuplicateCoords(points) {
+    const seen = new Map();
+
+    return points
+        .filter(p => p && Array.isArray(p.coords) && p.coords.length === 2)
+        .map((p) => {
+            const lat = Number(p.coords[0]);
+            const lng = Number(p.coords[1]);
+
+            if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+
+            const key = `${lat.toFixed(6)},${lng.toFixed(6)}`;
+            const idx = seen.get(key) || 0;
+            seen.set(key, idx + 1);
+
+            if (idx === 0) {
+                return { ...p, coords: [lat, lng] };
+            }
+
+            // Небольшое смещение для дубликатов (~10-20 м)
+            const step = 0.00015 * idx;
+            return { ...p, coords: [lat + step, lng + step] };
+        })
+        .filter(Boolean);
+}
 
 function loadYandexMap() {
     if (window.mapLoaded) return;
@@ -86,15 +49,15 @@ function loadYandexMap() {
 
     window.mapLoaded = true;
 
-    const script = document.createElement("script");
-    script.src = "https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=46bd9dbf-9967-413d-b14e-fc1e1b2980f7";
+    const script = document.createElement('script');
+    script.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=46bd9dbf-9967-413d-b14e-fc1e1b2980f7';
     script.onload = initMap;
     document.body.appendChild(script);
 }
 
 function initMap() {
     ymaps.ready(function () {
-        const map = new ymaps.Map("map-project", {
+        const map = new ymaps.Map('map-project', {
             center: [58.925528, 81.592772],
             zoom: 3.5,
             controls: ['zoomControl']
@@ -107,12 +70,13 @@ function initMap() {
             'rightMouseButtonMagnifier'
         ]);
 
-        // Используем данные из массива
         createMapMarkers(projectsData, map);
     });
 }
 
 function createMapMarkers(points, map) {
+    const normalizedPoints = spreadDuplicateCoords(points);
+
     const CustomBalloonLayout = ymaps.templateLayoutFactory.createClass(
         `<div class="custom-balloon">
             <div class="custom-balloon__close" title="Закрыть">
@@ -123,13 +87,12 @@ function createMapMarkers(points, map) {
             <h3 class="custom-balloon__city">{{properties.city}}</h3>
             <div class="custom-balloon__wrapper">
                 {% if properties.img %}
-                <img class="custom-balloon__img" src="{{properties.img}}" alt="Ангары" width="472" height="282" loading="lazy">
+                <img class="custom-balloon__img" src="{{properties.img}}" alt="{{properties.title}}" width="472" height="282" loading="lazy">
                 {% endif %}
                 <div class="custom-balloon__inner">
                     <div class="custom-balloon__company">{{properties.company_name}}</div>
                     <div class="custom-balloon__description">{{properties.description}}</div>
                     <div class="custom-balloon__city-bottom">{{properties.city}}</div>
-                    <div class="custom-balloon__link"><a href="{{properties.link}}" target="_blank">Узнать подробнее</a></div>
                 </div>
             </div>
         </div>`,
@@ -138,7 +101,8 @@ function createMapMarkers(points, map) {
                 CustomBalloonLayout.superclass.build.call(this);
                 this._$element = document.querySelector('.custom-balloon');
                 if (this._$element) {
-                    this._$element.querySelector('.custom-balloon__close')
+                    this._$element
+                        .querySelector('.custom-balloon__close')
                         .addEventListener('click', () => this.events.fire('userclose'));
                 }
             }
@@ -150,7 +114,8 @@ function createMapMarkers(points, map) {
         clusterDisableClickZoom: false,
         clusterHideIconOnBalloonOpen: false,
         geoObjectHideIconOnBalloonOpen: false,
-        gridSize: 100000,
+        gridSize: 64, // вместо 100000
+        clusterOpenBalloonOnClick: true,
         clusterIcons: [{
             href: '',
             size: [52, 52],
@@ -162,30 +127,27 @@ function createMapMarkers(points, map) {
                 height:52px;
                 border-radius:50%;
                 background:#fff;
-                border: 6px solid rgba(196, 37, 57, 1);
+                border:6px solid rgba(196, 37, 57, 1);
                 display:flex;
                 align-items:center;
                 justify-content:center;
                 font-size:14px;
-                color: rgba(31, 31, 31, 1);
+                color:rgba(31, 31, 31, 1);
             ">$[properties.geoObjects.length]</div>`
         )
     });
 
-    // URL иконки пина относительно assets (из WP)
     const pinUrl = assetsUrl + '/images/map-projects/pin.svg';
 
-    const placemarks = points.map(point => {
-        const screenWidth = window.innerWidth;
-
+    const placemarks = normalizedPoints.map(point => {
         return new ymaps.Placemark(point.coords, {
             city: point.city || point.title,
-            title: point.title,
-            company_name: point.company_name,
-            description: point.description,
-            link: point.link,
-            hintContent: point.city || point.title,
-            img: point.img
+            title: point.title || '',
+            company_name: point.company_name || '',
+            description: point.description || '',
+            link: point.link || '',
+            hintContent: point.city || point.title || '',
+            img: point.img || ''
         }, {
             balloonLayout: CustomBalloonLayout,
             balloonPanelMaxMapArea: 0,
@@ -206,10 +168,8 @@ function createMapMarkers(points, map) {
 
             const screenWidth = window.innerWidth;
 
-            // Динамически обновляем смещение при открытии баллуна
             if (screenWidth <= 991) {
                 const balloonWidth = balloonElement.offsetWidth;
-                // Центрируем: смещаем влево на половину ширины
                 placemark.options.set('balloonOffset', [-balloonWidth / 2, 0]);
             } else {
                 const balloonWidth = balloonElement.offsetWidth;
@@ -221,23 +181,19 @@ function createMapMarkers(points, map) {
             const globalPixel = projection.toGlobalPixels(coords, map.getZoom());
 
             const balloonHeight = balloonElement.offsetHeight;
-            let offsetY = balloonHeight / 2;
-
-            const newGlobalPixel = [
-                globalPixel[0],
-                globalPixel[1] + offsetY
-            ];
-
+            const newGlobalPixel = [globalPixel[0], globalPixel[1] + balloonHeight / 2];
             const newCoords = projection.fromGlobalPixels(newGlobalPixel, map.getZoom());
-            map.setCenter(newCoords, map.getZoom(), {duration: 300});
+
+            map.setCenter(newCoords, map.getZoom(), { duration: 300 });
         });
     });
 
-    if (loaderYandexProject) loaderYandexProject.classList.add("hidden");
+    if (loaderYandexProject) {
+        loaderYandexProject.classList.add('hidden');
+    }
 }
 
-// Инициализация карты при появлении в viewport
-const targetYandexProject = document.querySelector("[data-map-project]");
+const targetYandexProject = document.querySelector('[data-map-project]');
 if (targetYandexProject) {
     const mapProjectObserver = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) {
@@ -248,8 +204,7 @@ if (targetYandexProject) {
     mapProjectObserver.observe(targetYandexProject);
 }
 
-// Альтернатива для тестовой страницы
-const mapElement = document.getElementById("map-project");
+const mapElement = document.getElementById('map-project');
 if (mapElement && !targetYandexProject) {
     loadYandexMap();
 }

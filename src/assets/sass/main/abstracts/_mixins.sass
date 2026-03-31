@@ -12,12 +12,16 @@
   color: $color
   font-weight: 600
   gap: 12px
+  transition: all .4s
   @media (width <= 1710px)
     padding: 1.6rem 3.6rem
   @media (width < 1440px)
     padding: 1.6rem
   @media (width <= 991px)
     font-size: 1.4rem
+  @media (hover: hover) and (pointer: fine)
+    &:hover
+      background-color: #161a1f
 
 @mixin buttonSecond()
   display: flex
@@ -27,11 +31,13 @@
   padding: 1.6rem 2rem
   border: 1px solid rgba(88, 104, 122, 1)
   color: rgba(22, 26, 31, 1)
+  transition: all .4s
   @media (width <=1560px)
     font-size: 1.4rem
     padding: .8rem 1.2rem
   &.active,
-  &:active
+  &:active,
+  &:hover
     color: variables.$mainColor
     background-color: rgba(88, 104, 122, 1)
 

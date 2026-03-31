@@ -21,10 +21,15 @@
   &__item
     font-size: 14px
     white-space: nowrap
+    transition: color .4s
     &:not(:first-child)
       &:before
         content: '/'
         margin-inline: 1.2rem
+
+    @media (hover: hover) and (pointer: fine)
+      &:hover
+        color: #161a1f
 
     &:has(a)
       color: variables.$colorTextSecond

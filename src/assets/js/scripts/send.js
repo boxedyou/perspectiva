@@ -50,12 +50,18 @@ forms.forEach(function (form) {
                     console.error('Ошибка:', msg);
                     return;
                 }
+                // Цель Яндекс.Метрики
+                if (typeof ym === 'function') {
+                    ym(94256132, 'reachGoal', 'order'); // подставь свой ID и имя цели
+                }
+
 
                 form.reset();
 
                 if (typeof closeAllPopups === 'function') {
                     closeAllPopups();
                 }
+                document.querySelector('[data-popup-thanks]').classList.add('is-open')
             })
             .catch(function (err) {
                 console.error('Ошибка запроса:', err);

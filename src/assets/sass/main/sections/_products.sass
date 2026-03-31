@@ -35,6 +35,9 @@
     &:nth-child(2)
       & .products__item-link
         @include mixins.buttonMain(rgba(22, 26, 31, 1), rgba(255, 255, 255, 1))
+        @media (hover: hover) and (pointer: fine)
+          &:hover
+            background-color: variables.$colorButtonBack
 
   &__img
     overflow: clip

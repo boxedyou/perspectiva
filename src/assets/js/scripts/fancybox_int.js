@@ -16,6 +16,9 @@ Fancybox.bind('[data-fancybox="production-gallery"]', {
     }
 });
 
+Fancybox.bind('[data-fancybox="hero-production-video"]', {
+});
+
 
 
 

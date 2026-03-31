@@ -2,8 +2,8 @@
     <fieldset class="form__wrapper">
         <div class="form__inner">
             <label class="form__label">
-                <span class="form__label-text">Ваше имя <span class="form__label-required">*</span></span>
-                <input class="form__input" type="text" name="Имя" placeholder="Введите имя" required>
+                <span class="form__label-text">Ваше имя <span class="form__label-required"></span></span>
+                <input class="form__input" type="text" name="Имя" placeholder="Введите имя">
             </label>
             <label class="form__label">
                 <span class="form__label-text">Контактный телефон <span class="form__label-required">*</span></span>

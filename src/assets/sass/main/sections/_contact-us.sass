@@ -50,10 +50,14 @@
 
   &__info
     font-weight: 600
+    transition: color .4s
     @media (width <= 991px)
       font-size: 1.4rem
     &:not(:last-of-type)
       margin-bottom: .4rem
+    @media (hover: hover) and (pointer: fine)
+      &:hover
+        color: #58687a
 
   &__form-inner
     padding: 4rem

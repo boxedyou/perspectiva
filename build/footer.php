@@ -61,17 +61,6 @@
                                         <a class="footer__list-item-link" href="<?php echo esc_url( $term_link ); ?>">
                                           <?php echo esc_html( $term->name ); ?>
                                         </a>
-
-                                        <ul class="footer__sub-list">
-                                          <?php while ( $products_query->have_posts() ) : $products_query->the_post(); ?>
-                                              <li class="footer__sub-item">
-                                                  <a class="footer__sub-item-link" href="<?php the_permalink(); ?>">
-                                                    <?php the_title(); ?>
-                                                  </a>
-                                              </li>
-                                          <?php endwhile; ?>
-                                          <?php wp_reset_postdata(); ?>
-                                        </ul>
                                     </li>
                               <?php endif; ?>
 
@@ -122,6 +111,7 @@
 <?php
 
 get_template_part('components/popups/popup-callback');
+get_template_part('components/popups/popup-thanks');
 get_template_part('components/popups/burger-menu');
 ?>
 

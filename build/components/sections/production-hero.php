@@ -39,7 +39,7 @@ $section_classes  = 'production-hero' . ( $is_about_page ? ' production-hero--no
                 <div class="production-hero__gallery">
                     <!-- Превью видео (Fancybox-галерея) -->
                     <a class="production-hero__gallery-item"
-                       href="<?= esc_url($video_img_url); ?>"
+                       href="<?= get_template_directory_uri(); ?>/assets/video/compressed_watermarkless.mp4"
                        data-fancybox="production-gallery"
                        data-caption="<?= esc_attr($video_alt); ?>">
                         <img
