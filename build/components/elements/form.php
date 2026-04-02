@@ -19,7 +19,7 @@
             <label class="form__checkbox-inner">
                 <input class="form__checkbox" type="checkbox" name="Согласие" required>
                 <span class="form__fake-checkbox"></span>
-                <span class="form__text-checkbox">Нажимая кнопку «Отправить», я соглашаюсь с <a class="form__text-link" href="#" target="_blank">политикой конфиденциальности и обработки персональных данных</a></span>
+                <span class="form__text-checkbox">Нажимая кнопку «Отправить», я соглашаюсь с <a class="form__text-link" href="<?php echo esc_url(home_url('/politic/')); ?>" target="_blank">политикой конфиденциальности и обработки персональных данных</a></span>
             </label>
         </div>
     </fieldset>

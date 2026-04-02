@@ -60,6 +60,7 @@
     width: 100%
     @media (width <= 1100px)
       min-width: auto
+      max-width: 100%
 
   &__subject
     display: flex
@@ -71,11 +72,18 @@
     align-items: center
     justify-content: space-between
     font-weight: 600
+    cursor: pointer
+    & svg
+      transition: all .4s
+    &.active
+      & svg
+        transform: rotate(180deg)
 
   &__subject-menus
     margin-top: 1.2rem
-    @media (width <= 1100px)
-      display: none
+    display: none
+    &.active
+      display: block
 
   &__menus-list
     display: flex
@@ -86,14 +94,19 @@
     display: flex
     align-items: center
     justify-content: center
+    line-height: 1.2
+    &.active
+      & .news-content__menu-anchor
+        color: rgba(255, 255, 255, 1)
+        background-color: rgba(88, 104, 122, 1)
+        border-color: rgba(88, 104, 122, 1)
+
+  &__menu-anchor
     padding: .8rem 1.2rem
     border-radius: .6rem
     border: 1px solid rgba(188, 205, 224, 1)
-    line-height: 1.2
-    &.active
-      color: rgba(255, 255, 255, 1)
-      background-color: rgba(88, 104, 122, 1)
-      border-color: rgba(88, 104, 122, 1)
+    width: 100%
+    text-align: center
 
   &__more
     display: flex
@@ -130,6 +143,7 @@
     width: 100%
 
   &__item
+    width: 100%
     & h2
       font-size: 3.6rem
       margin-bottom: 2.4rem
@@ -139,8 +153,6 @@
         margin-top: 4.8rem
         @media (width <= 1560px)
           margin-top: 3.6rem
-
-
 
     & h3
       font-size: 2.8rem
@@ -159,8 +171,18 @@
         font-size: 1.4rem
       &:has(b), &:has(+ ul), &:has(+ ul)
         margin-bottom: 2.4rem
-      &:not(:last-of-type)
+      &:has(img)
+        width: 100%
+      &:not(:last-child)
         margin-bottom: 1.6rem
+      &:last-child
+        margin-bottom: 0
+
+    & img[class~="aligncenter"]
+      margin-inline: auto
+
+    & img[class~="alignright"]
+      margin-left: auto
 
     & ul
       padding-left: 3.2rem
@@ -183,16 +205,14 @@
           @media (width < 1560px )
             left: -2.8rem
             top: .8rem
-        &:not(:last-child)
-          margin-bottom: 1.6rem
-          @media (width < 1560px )
-            margin-bottom: 1.2rem
 
     & img
       border-radius: .8rem
       overflow: clip
       margin-bottom: 2.4rem
       &:has(+ figcaption)
+        margin-bottom: 0
+      &:has(+ br)
         margin-bottom: 0
 
     & figcaption
@@ -201,3 +221,19 @@
       margin-bottom: 2.4rem
       @media (width <= 1560px)
         font-size: 1.4rem
+
+    & blockquote
+      position: relative
+      margin-bottom: 1.6rem
+      padding-left: 2rem
+      &:before, &:after
+        position: absolute
+        font-size: 3.6rem
+        color: #565656
+      &:before
+        content: '\201C'
+        left: 0
+        top: -1rem
+
+
+

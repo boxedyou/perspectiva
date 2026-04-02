@@ -65,7 +65,7 @@
                                     allowfullscreen=""
                                     style="border:0;"
                                     loading="lazy"
-                                    data-src="https://yandex.ru/map-widget/v1/?um=constructor%3A3dec1fcdbb10c32dfef13e6205261754e1d4031252ec1b0ebd6c47a926e4a209&amp;source=constructor&scroll=false">
+                                    data-src="https://yandex.ru/map-widget/v1/?um=constructor%3A723062e841823bbd571ea279197875b74a529d9f3a1173278be6d0c8f01b97d7&amp;source=constructor">
                             </iframe>
                         </div>
                     </div>

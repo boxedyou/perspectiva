@@ -39,32 +39,27 @@ if (!empty($term_ids)) {
 $related_query = new WP_Query($query_args);
 ?>
 
-<section class="materials">
-    <div class="container">
-        <div class="materials__title-inner">
-            <h2 class="materials__title">Другие материалы по теме</h2>
-            <div class="materials__button-inner">
-                <div class="materials__button swiper-button-prev" data-materials-swiper-prev></div>
-                <div class="materials__button swiper-button-next" data-materials-swiper-next></div>
+<?php if ($related_query->have_posts()) : ?>
+    <section class="materials">
+        <div class="container">
+            <div class="materials__title-inner">
+                <h2 class="materials__title">Другие материалы по теме</h2>
+                <div class="materials__button-inner">
+                    <div class="materials__button swiper-button-prev" data-materials-swiper-prev></div>
+                    <div class="materials__button swiper-button-next" data-materials-swiper-next></div>
+                </div>
+            </div>
+
+            <div class="materials__swiper swiper" data-materials-swiper>
+                <div class="materials__slider-wrapper swiper-wrapper">
+                  <?php while ($related_query->have_posts()) : $related_query->the_post(); ?>
+                      <div class="materials__slide swiper-slide">
+                        <?php get_template_part('components/elements/news-element'); ?>
+                      </div>
+                  <?php endwhile; ?>
+                </div>
             </div>
         </div>
-        <div class="materials__swiper swiper" data-materials-swiper>
-            <div class="materials__slider-wrapper swiper-wrapper">
-              <?php
-              if ($related_query->have_posts()) :
-                while ($related_query->have_posts()) : $related_query->the_post();
-                  ?>
-                    <div class="materials__slide swiper-slide">
-                      <?php get_template_part('components/elements/news-element'); ?>
-                    </div>
-                <?php
-                endwhile;
-                wp_reset_postdata();
-              else :
-                ?>
-                  <p class="materials__empty">Другие материалы пока отсутствуют.</p>
-              <?php endif; ?>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
+  <?php wp_reset_postdata(); ?>
+<?php endif; ?>

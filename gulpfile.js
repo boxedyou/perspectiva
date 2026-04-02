@@ -207,7 +207,7 @@ function watchFiles(done) {
 }
 
 /* Сборка */
-const build = gulp.series(gulp.parallel(css, js, images, fonts, favicon));
+const build = gulp.series(gulp.parallel(css, js, fonts));
 const watch = gulp.series(build, gulp.parallel(watchFiles, serve));
 
 // exports.html = html;

@@ -1,5 +1,5 @@
 <?php
-$table_content = get_field('table_content');
+$tables= get_field('tables');
 ?>
 
 <section class="price-list">
@@ -13,9 +13,22 @@ $table_content = get_field('table_content');
 <!---->
 <!--      </a>-->
     </div>
-    <time class="price-list__date" datetime="<?php echo date( 'Y-m-d' ); ?>">
-      Прайс-лист на фиброцементные панели на <?php echo date( 'd.m.Y' ); ?> года.
-    </time>
-    <?= $table_content  ?>
+        <div class="price-list__wrapper">
+          <?php foreach ($tables as $table) :
+            $name = $table['name'];
+            $content = $table['content'];
+            ?>
+
+              <div class="price-list__item">
+                  <time class="price-list__date" datetime="<?php echo date( 'Y-m-d' ); ?>">
+                      Прайс-лист на <?= $name ?> панели на <?php echo date( 'd.m.Y' ); ?> года.
+                  </time>
+                <?= $content  ?>
+              </div>
+          <?php endforeach; ?>
+        </div>
   </div>
 </section>
+
+
+

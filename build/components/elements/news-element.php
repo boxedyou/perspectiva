@@ -25,13 +25,35 @@ $news_alt = get_the_title();
 $news_title = $news_alt;
 $news_date = get_the_date('d.m.Y');
 $news_item_title = get_the_title();
-$excerpt = get_the_excerpt();
-$news_text = mb_strlen($excerpt) > 200 ? mb_substr($excerpt, 0, 200) . '...' : $excerpt;
+
+$post_id = get_the_ID();
+$excerpt_plain = trim(wp_strip_all_tags(get_the_excerpt()));
+
+if ($excerpt_plain === '') {
+  $contents = function_exists('get_field') ? get_field('news_contents', $post_id) : null;
+  if (is_array($contents)) {
+    foreach ($contents as $row) {
+      $layout = $row['acf_fc_layout'] ?? '';
+      if ($layout === 'text_block' && !empty($row['text'])) {
+        $excerpt_plain = trim(wp_strip_all_tags($row['text']));
+        break;
+      }
+    }
+  }
+}
+
+$news_text = '';
+if ($excerpt_plain !== '') {
+  $news_text = mb_strlen($excerpt_plain) > 200
+    ? mb_substr($excerpt_plain, 0, 200) . '...'
+    : $excerpt_plain;
+}
+$news_link = get_permalink();
 $news_link = get_permalink();
 ?>
 
 <div class="news-element">
-    <div class="news-element__img-inner">
+    <a class="news-element__img-inner" href="<?= esc_url($news_link) ?>">
         <img src="<?= esc_url($news_image) ?>"
              alt="<?= esc_attr($news_alt ?: 'Новость') ?>"
              title="<?= esc_attr($news_title ?: '') ?>"
@@ -49,12 +71,12 @@ $news_link = get_permalink();
               </div>
           <?php endif; ?>
         </div>
-    </div>
+    </a>
   <?php if ($news_date) : ?>
       <time class="news-element__date" datetime="<?= esc_attr(get_the_date('c')) ?>"><?= esc_html($news_date) ?></time>
   <?php endif; ?>
   <?php if ($news_item_title) : ?>
-      <h3 class="news-element__title"><?= esc_html($news_item_title) ?></h3>
+      <h3 class="news-element__title"><a href="<?= esc_url($news_link) ?>"><?= esc_html($news_item_title) ?></a></h3>
   <?php endif; ?>
   <?php if ($news_text) : ?>
       <p class="news-element__text"><?= esc_html($news_text) ?></p>

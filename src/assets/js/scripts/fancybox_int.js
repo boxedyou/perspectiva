@@ -19,6 +19,11 @@ Fancybox.bind('[data-fancybox="production-gallery"]', {
 Fancybox.bind('[data-fancybox="hero-production-video"]', {
 });
 
+Fancybox.bind('[data-fancybox^="news-gallery"]', {
+    Thumbs: { type: 'classic' },
+
+});
+
 
 
 

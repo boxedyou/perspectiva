@@ -39,13 +39,11 @@ const swiperMaterials = new Swiper("[data-materials-swiper]", {
     breakpoints: {
         320: {
             slidesPerView: 1.1,
-            loop: true,
             centeredSlides: true,
         },
 
         700: {
             slidesPerView: 2.1,
-            loop: true,
             centeredSlides: true,
         },
         991: {

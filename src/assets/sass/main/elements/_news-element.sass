@@ -11,6 +11,11 @@
   &__img-inner
     @extend .object__img-inner
     margin-bottom: 1.6rem
+    border-radius: .6rem
+    transition: opacity .4s
+    @media (hover: hover) and (pointer: fine)
+      &:hover
+        opacity: .6
     & img
       width: 100%
       height: 32rem
@@ -26,6 +31,10 @@
 
   &__title
     @extend .object__title
+    transition: color .4s
+    @media (hover: hover) and (pointer: fine)
+      &:hover
+        color: rgba(196, 37, 57, 1)
 
   &__date, &__text
     @extend .object__text
@@ -38,7 +47,13 @@
     color: rgba(196, 37, 57, 1)
     font-weight: 600
     margin-top: auto
+    & svg
+      transition: all .4s
     @media (width <= 991px)
       font-size: 1.4rem
       & svg
         max-width: 18px
+    @media (hover: hover) and (pointer: fine)
+      &:hover
+        & svg
+          transform: translateX(6px)

@@ -5,6 +5,12 @@
 .price-list
   @include mixins.sectionIndentBottom
 
+  &__item
+    &:not(:last-child)
+      margin-bottom: 4.8rem
+      @media (width <= 1540px)
+        margin-bottom: 2.4rem
+
   &__title-inner
     display: flex
     justify-content: space-between
@@ -31,13 +37,13 @@
     display: block
     font-weight: 600
     font-size: 2rem
-    margin-bottom: 4.8rem
+    margin-bottom: 2.4rem
     @media (width <= 1560px)
       font-size: 1.6rem
-      margin-bottom: 3.2rem
+      margin-bottom: 2rem
     @media (width <= 991px)
       font-size: 1.4rem
-      margin-bottom: 2.4rem
+      margin-bottom: 1.8rem
 
   & table
     & th:first-child, td:first-child
