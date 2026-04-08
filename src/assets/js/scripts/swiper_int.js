@@ -62,28 +62,38 @@ const swiperMaterials = new Swiper("[data-materials-swiper]", {
     },
 });
 
-// Сначала миниатюры
-const singleCategoryHeroThumbSwiper = new Swiper("[data-single-category-hero-swiper-thumb]", {
-    slidesPerView: 2,
-    spaceBetween: 6,
-    watchSlidesProgress: true,
-    watchSlidesVisibility: true,
-    slideToClickedSlide: true,
-    breakpoints: {
-        320: { slidesPerView: 3, spaceBetween: 8 },
-        374: { slidesPerView: 4, spaceBetween: 10 },
-        600: { slidesPerView: 6, spaceBetween: 12 },
-        768: { slidesPerView: 7.5, spaceBetween: 12 },
-    },
-});
+const thumbEl = document.querySelector('[data-single-category-hero-swiper-thumb]');
+const mainEl = document.querySelector('[data-single-category-hero-swiper]');
 
-// Потом основной
-const singleCategoryHeroSwiper = new Swiper("[data-single-category-hero-swiper]", {
-    slidesPerView: 1,
-    thumbs: {
-        swiper: singleCategoryHeroThumbSwiper,
-    },
-});
+if (!mainEl) {
+    // на странице нет основного блока — выходим
+} else if (thumbEl) {
+    const singleCategoryHeroThumbSwiper = new Swiper(thumbEl, {
+        slidesPerView: 2,
+        spaceBetween: 6,
+        watchSlidesProgress: true,
+        watchSlidesVisibility: true,
+        slideToClickedSlide: true,
+        breakpoints: {
+            320: { slidesPerView: 3, spaceBetween: 8 },
+            374: { slidesPerView: 4, spaceBetween: 10 },
+            600: { slidesPerView: 6, spaceBetween: 12 },
+            768: { slidesPerView: 7.5, spaceBetween: 12 },
+        },
+    });
+
+    const singleCategoryHeroSwiper = new Swiper(mainEl, {
+        slidesPerView: 1,
+        thumbs: {
+            swiper: singleCategoryHeroThumbSwiper,
+        },
+    });
+} else {
+    // миниатюр нет — только основной слайдер
+    const singleCategoryHeroSwiper = new Swiper(mainEl, {
+        slidesPerView: 1,
+    });
+}
 
 // Связка двух свайперов + пагинация для about-description
 const aboutDescriptionSwiper = new Swiper("[data-about-description-swiper]", {
