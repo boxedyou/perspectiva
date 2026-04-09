@@ -61,6 +61,12 @@ require_once( 'inc/send.php' );
  */
 require_once( 'inc/favicon.php' );
 
+/**
+ * Загрузка svg картинок
+ */
+require_once( 'inc/upload_svg.php' );
+
+
 
 
 

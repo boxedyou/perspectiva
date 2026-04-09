@@ -79,6 +79,7 @@ $style_attr = $bg_url ? ' style="background-image: url(' . esc_url($bg_url) . ')
 
                   $title = !empty($group['title']) ? (string) $group['title'] : (string) $term->name;
                   $description = !empty($group['description']) ? (string) $group['description'] : '';
+                  $icon = $group['svg'];
 
                   $term_link = get_term_link($term);
                   if (!$term_link || is_wp_error($term_link)) continue;
@@ -94,10 +95,29 @@ $style_attr = $bg_url ? ' style="background-image: url(' . esc_url($bg_url) . ')
 
                         <div class="hero__icon-inner">
                             <p class="hero__icon-text" data-text-anchor><?= esc_html($description); ?></p>
-                            <svg class="hero__icon" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3.0127 18C3.01199 18.2869 3.09351 18.568 3.24758 18.81C3.40166 19.0519 3.62183 19.2446 3.88198 19.3651L16.7713 25.2306C17.1598 25.4066 17.5813 25.4977 18.0078 25.4977C18.4342 25.4977 18.8558 25.4066 19.2443 25.2306L32.1036 19.3801C32.3689 19.2608 32.5938 19.0667 32.7508 18.8217C32.9078 18.5766 32.9902 18.2911 32.9879 18M3.0127 25.5006C3.01199 25.7875 3.09351 26.0686 3.24758 26.3106C3.40166 26.5525 3.62183 26.7452 3.88198 26.8657L16.7713 32.7311C17.1598 32.9072 17.5813 32.9983 18.0078 32.9983C18.4342 32.9983 18.8558 32.9072 19.2443 32.7311L32.1036 26.8807C32.3689 26.7613 32.5938 26.5673 32.7508 26.3222C32.9078 26.0772 32.9902 25.7917 32.9879 25.5006M19.2443 3.26885C18.8537 3.09056 18.4295 2.99829 18.0003 2.99829C17.5711 2.99829 17.1468 3.09056 16.7563 3.26885L3.91196 9.1193C3.646 9.23668 3.41988 9.42893 3.26114 9.67263C3.10239 9.91634 3.01788 10.201 3.01788 10.4919C3.01788 10.7828 3.10239 11.0675 3.26114 11.3112C3.41988 11.5549 3.646 11.7471 3.91196 11.8645L16.7713 17.73C17.1618 17.9083 17.5861 18.0005 18.0153 18.0005C18.4445 18.0005 18.8687 17.9083 19.2593 17.73L32.1186 11.8795C32.3846 11.7621 32.6107 11.5699 32.7694 11.3262C32.9282 11.0825 33.0127 10.7978 33.0127 10.5069C33.0127 10.216 32.9282 9.93134 32.7694 9.68763C32.6107 9.44393 32.3846 9.25168 32.1186 9.1343L19.2443 3.26885Z"
-                                      stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                            <?php
+                            if (!empty($icon)) {
+                                $path = get_attached_file($icon);
+
+                                if ($path && file_exists($path) && strtolower(pathinfo($path, PATHINFO_EXTENSION)) === 'svg') {
+                                    $svg = file_get_contents($path);
+                                    // Минимально безопасный вывод
+                                    echo wp_kses(
+                                            $svg,
+                                            [
+                                                    'svg' => ['class'=>true,'xmlns'=>true,'viewBox'=>true,'width'=>true,'height'=>true,'fill'=>true,'stroke'=>true],
+                                                    'path' => ['d'=>true,'fill'=>true,'stroke'=>true,'stroke-width'=>true,'stroke-linecap'=>true,'stroke-linejoin'=>true],
+                                                    'g' => ['fill'=>true,'stroke'=>true,'transform'=>true],
+                                                    'circle' => ['cx'=>true,'cy'=>true,'r'=>true,'fill'=>true,'stroke'=>true],
+                                                    'rect' => ['x'=>true,'y'=>true,'width'=>true,'height'=>true,'rx'=>true,'fill'=>true,'stroke'=>true],
+                                                    'defs' => [],
+                                                    'clipPath' => ['id'=>true],
+                                                    'use' => ['href'=>true,'xlink:href'=>true],
+                                            ]
+                                    );
+                                }
+                            }
+                            ?>
                         </div>
                     </a>
 
